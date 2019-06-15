@@ -1,0 +1,72 @@
+{
+  "name": "Zalarify",
+  "version": "1.0.0",
+  "description": "This is the official repository of the Zalarify platform.",
+  "main": "truffle.js",
+  "scripts": {
+    "test": "truffle test",
+    "deploy-ganache": "truffle migrate --network ganache",
+    "test-ganache": "truffle test --network ganache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salazarguille/Zalarify.git"
+  },
+  "keywords": [
+    "zalarify",
+    "payroll",
+    "crypto",
+    "payment",
+    "ethereum",
+    "stablepay",
+    "kyber",
+    "compound"
+  ],
+  "author": "Guillermo Salazar <guillesalazar@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salazarguille/zalarify/issues"
+  },
+  "homepage": "https://github.com/salazarguille/zalarify#readme",
+  "dependencies": {
+    "bignumber.js": "8.0.1",
+    "bluebird": "3.5.1",
+    "ethereumjs-util": "5.1.5",
+    "ethereumjs-testrpc-sc": "6.1.6",
+    "ethers": "4.0.20",
+    "jsonfile": "4.0.0",
+    "lodash": "4.17.5",
+    "run-s": "^0.0.0",
+    "truffle": "^5.0.18",
+    "truffle-core": "5.0.18",
+    "truffle-plugin-verify": "^0.2.1",
+    "truffle-legacy-system": "^1.0.7",
+    "web3-provider-engine": "^15.0.0",
+    "web3": "1.0.0-beta.55",
+    "web3-utils": "1.0.0-beta.55",
+    "zeppelin-solidity": "1.7.0"
+  },
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "chai": "4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-bignumber": "^2.0.2",
+    "cross-env": "^5.1.4",
+    "dotenv": "5.0.1",
+    "ethereum-types": "^1.0.5",
+    "ethereumjs-wallet": "0.6.0",
+    "ganache-cli": "^6.1.8",
+    "leche": "2.2.3",
+    "make-promises-safe": "^1.1.0",
+    "mocha": "5.0.4",
+    "npm-run-all": "^4.1.2",
+    "shx": "^0.2.2",
+    "solidity-coverage": "leapdao/solidity-coverage",
+    "solidity-docgen": "^0.1.1",
+    "solium": "1.1.2",
+    "truffle": "5.0.2",
+    "truffle-assertions": "^0.8.0",
+    "truffle-config": "1.1.2",
+    "truffle-hdwallet-provider": "^1.0.2"
+  }
+}
