@@ -19,11 +19,7 @@ KeyValue.prototype.hasValue = function() {
 }
 
 KeyValue.prototype.get = function() {
-    return this.value;
-}
-
-KeyValue.prototype.getOrDefault = function() {
-    return this.hasValue() ? this.get() : this.defaultValue;
+    return this.hasValue() ? this.value : this.defaultValue;
 }
 
 module.exports = KeyValue;
