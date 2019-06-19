@@ -1,7 +1,7 @@
 pragma solidity 0.5.9;
 
 import "./BasicToken.sol";
-import "../erc20/ERC20.sol";
+import "../../services/erc20/ERC20.sol";
 
 
 /**

@@ -1,4 +1,5 @@
 const { BigNumber } = require( 'bignumber.js');
+const util = require('ethereumjs-util');
 
 // tslint:disable-next-line:custom-no-magic-numbers
 const ONE_SECOND_MS = 1000;
@@ -32,5 +33,11 @@ module.exports = {
     title: function (who, func, desc, fail) {
         const failText = fail ? '\x1b[31mMustFail\x1b[0m .' : '\x1b[0m';
         return '\x1b[32m.' + func + ' => \x1b[36m' + who + '\x1b[0m\033[01;34m : ' + desc + ' '+ failText;
-    }
+    },
+    toBytes: function (text) {
+        return util.bufferToHex(text);
+    },
+    toString: function (bytes) {
+        return util.toBuffer(bytes);
+    },
 }

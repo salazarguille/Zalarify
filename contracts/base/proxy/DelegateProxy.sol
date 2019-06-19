@@ -16,7 +16,7 @@ contract DelegateProxy is IERCProxy, IsContract {
     * @param _calldata Calldata for the delegatecall
     */
     function delegatedFwd(address _dst, bytes memory _calldata) internal {
-        require(isContract(_dst));
+        require(isContract(_dst), "Destination address is not a contract.");
         uint256 fwdGasLimit = FWD_GAS_LIMIT;
 
         assembly {

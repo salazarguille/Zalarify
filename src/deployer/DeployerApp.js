@@ -1,6 +1,6 @@
 const _ = require('lodash');
+const fs = require('fs');
 const jsonfile = require('jsonfile');
-const BigNumber = require('bignumber.js');
 const ContractInfo = require('./ContractInfo');
 
 class DeployerApp {
@@ -17,12 +17,10 @@ class DeployerApp {
 }
 
 DeployerApp.prototype.deployWith = async function(contractName, contract, ...params) {
-    const initialAccountBalance = await this.web3.eth.getBalance(this.account);
     // https://ethereum.stackexchange.com/questions/42950/how-to-get-the-transaction-cost-in-a-truffle-unit-test
     // const estimatedGas = await contract.new.estimateGas(...params);
     // console.log(`Estimated Gas: ${estimatedGas.toString()}`);
-    const txInfo = await this.deployer.deploy(contract, ...params);
-    
+    await this.deployer.deploy(contract, ...params);
     const newContractInfo = new ContractInfo(
         this.web3,
         this.contracts.length + 1,
@@ -77,7 +75,7 @@ DeployerApp.prototype.links = async function(contract, libraries) {
     }
 }
 
-DeployerApp.prototype.writeJson = function(outputJson = './build/contracts.json') {
+DeployerApp.prototype.writeJson = function(outputJson = 'contracts.json', folder = './build/') {
     const jsonData = {
         contracts: [],
         data: []
@@ -102,7 +100,12 @@ DeployerApp.prototype.writeJson = function(outputJson = './build/contracts.json'
         });
     }
 
-    jsonfile.writeFile(outputJson, jsonData, {spaces: 4, EOL: '\r\n'}, function (err) {
+    if(!fs.existsSync(folder)) {
+        console.log(`Creating output folder '${folder}'.`)
+        fs.mkdirSync(folder, { recursive: true });
+    }
+    const outputFile = `${folder}${outputJson}`;
+    jsonfile.writeFile(outputFile, jsonData, {flag: 'a', spaces: 4, EOL: '\r\n'}, function (err) {
       console.log(`JSON file created at '${outputJson}'.`);
       if(err) {
         console.error("Errors: " + err);

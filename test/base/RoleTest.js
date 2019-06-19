@@ -5,7 +5,7 @@ const withData = leche.withData;
 const t = require('../util/consts').title;
 const role = require('../util/events').role;
 
-contract('RoleAdminRoleAddTest', accounts => {
+contract('RoleTest', accounts => {
     const owner = accounts[0];
     const player1 = accounts[3];
     const player2 = accounts[4];

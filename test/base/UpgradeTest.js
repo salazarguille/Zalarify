@@ -3,8 +3,7 @@ const Storage = artifacts.require("./base/Storage.sol");
 const Vault = artifacts.require("./base/Vault.sol");
 const Role = artifacts.require("./base/Role.sol");
 
-const leche = require('leche');
-const withData = leche.withData;
+const withData = require('leche').withData;
 const t = require('../util/consts').title;
 const upgrade = require('../util/events').upgrade;
 
@@ -12,7 +11,7 @@ let oldVault;
 let instance;
 let _storage;
 
-contract('UpgradeUpgradeContractTest', function (accounts) {
+contract('UpgradeTest', function (accounts) {
 
     const owner = accounts[0];
     const player = accounts[3];

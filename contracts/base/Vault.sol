@@ -1,6 +1,6 @@
 pragma solidity 0.5.9;
 
-import "../erc20/ERC20.sol";
+import "../services/erc20/ERC20.sol";
 import "./Base.sol";
 import "../interface/IVault.sol";
 

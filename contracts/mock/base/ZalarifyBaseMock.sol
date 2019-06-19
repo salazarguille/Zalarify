@@ -1,7 +1,7 @@
 pragma solidity 0.5.9;
 pragma experimental ABIEncoderV2;
 
-import "../base/ZalarifyBase.sol";
+import "../../base/ZalarifyBase.sol";
 
 contract ZalarifyBaseMock is ZalarifyBase {
 
