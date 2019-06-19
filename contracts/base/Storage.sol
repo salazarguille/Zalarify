@@ -22,9 +22,9 @@ contract Storage is IStorage {
         // The owner and other contracts are only allowed to set the storage upon deployment to register the initial contracts/settings, afterwards their direct access is disabled
         if (boolStorage[keccak256("contract.storage.initialised")] == true) {
             // Make sure the access is permitted to only contracts in our control
-            require(addressStorage[keccak256(abi.encodePacked("contract.address", msg.sender))] != address(0x0));
+            require(addressStorage[keccak256(abi.encodePacked("contract.address", msg.sender))] != address(0x0), "Sender is not a valid contract.");
         } else {
-            require(boolStorage[keccak256(abi.encodePacked("access.role", "owner", msg.sender))]);
+            require(boolStorage[keccak256(abi.encodePacked("access.role", "owner", msg.sender))], "Sender is not an owner.");
         }
         _;
     }

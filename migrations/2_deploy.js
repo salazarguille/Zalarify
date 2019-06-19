@@ -12,12 +12,13 @@ const platformFee = appConfig.getPlatformFee().get();
 const maxGasForDeploying = 5000000;
 
 // Mock Smart Contracts
+const ProxyBaseMock = artifacts.require("./mock/ProxyBaseMock.sol");
+const ProxyTargetMock = artifacts.require("./mock/ProxyTargetMock.sol");
 
 // Libraries
 const Bytes32ArrayLib = artifacts.require("./util/Bytes32ArrayLib.sol");
 const SafeMath = artifacts.require("./util/SafeMath.sol");
-const AddressLib = artifacts.require("./util/AddressLib.sol");
-console.log('333');
+
 // Official Smart Contracts
 const Settings = artifacts.require("./base/Settings.sol");
 const Role = artifacts.require("./base/Role.sol");
@@ -49,8 +50,7 @@ module.exports = function(deployer, network, accounts) {
     await deployerApp.deploys([
       Bytes32ArrayLib,
       Storage,
-      ZalarifyCommon,
-      AddressLib
+      ZalarifyCommon
     ], {gas: maxGasForDeploying});
 
     await deployerApp.deploy(Settings, Storage.address, {gas: maxGasForDeploying});
@@ -63,6 +63,9 @@ module.exports = function(deployer, network, accounts) {
       SafeMath
     ]);
     await deployerApp.deploy(ZalarifyBase, Storage.address, {gas: maxGasForDeploying});
+
+    await deployerApp.deployMockIf(ProxyTargetMock, Storage.address);
+    await deployerApp.deployMockIf(ProxyBaseMock, Storage.address, 'ProxyTargetMock');
 
     /***************************************************************
      Saving smart contract permissions/roles and closing platform.
@@ -87,7 +90,7 @@ module.exports = function(deployer, network, accounts) {
     deployerApp.addData(PLATFORM_FEE_KEY, platformFee);
 
     /** Writing smart contract data into JSON file. */
-    deployerApp.writeJson(`./build/${Date.now()}_${network}.json`);
+    deployerApp.writeJson(`${Date.now()}_${network}.json`);
     deployerApp.writeJson();
 
     if(printDeployCostValue === true) {

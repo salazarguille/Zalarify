@@ -1,6 +1,6 @@
 pragma solidity 0.5.9;
 
-import "../base/Base.sol";
+import "../../base/Base.sol";
 
 /*
  * @title Mock contract to can test Base functions and modifiers.

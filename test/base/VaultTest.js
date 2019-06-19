@@ -3,13 +3,12 @@ const Storage = artifacts.require("./base/Storage.sol");
 const Vault = artifacts.require("./base/Vault.sol");
 const Role = artifacts.require("./base/Role.sol");
 
-const leche = require('leche');
+const withData = require('leche').withData;
 const BigNumber = require('bignumber.js');
-const withData = leche.withData;
 const t = require('../util/consts').title;
 const base = require('../util/events').base;
 
-contract('VaultDepositTest', function (accounts) {
+contract('VaultTest', function (accounts) {
 
     const account0 = accounts[0];
     const account1 = accounts[1];

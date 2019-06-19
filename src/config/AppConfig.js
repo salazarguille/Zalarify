@@ -84,7 +84,6 @@ AppConfig.prototype.getEtherscanApiKey = function() {
 }
 
 AppConfig.prototype.validate = function() {
-    console.log(process.env);
     if (!this.getInfuraKey().hasValue()) {
         console.log('Error INFURA KEY is empty.');
         throw new Error('The infura key (INFURA_KEY) is empty. It must be defined in .env file.');
