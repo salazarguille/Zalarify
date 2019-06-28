@@ -30,6 +30,19 @@ module.exports = {
             };
         },
     },
+    zalarify: {
+        newCompanyCreated: tx => {
+            const name = 'NewCompanyCreated';
+            return {
+                name: name,
+                emitted: (thisContract, creator) => emitted(tx, name, ev => {
+                    assert.equal(ev.thisContract, thisContract);
+                    assert.equal(ev.creator, creator);
+                }),
+                notEmitted: (assertFunction = () => {} ) => notEmitted(tx, name, assertFunction)
+            };
+        },
+    },
     upgrade: {
         contractUpgraded: tx => {
             const name = 'ContractUpgraded';
@@ -58,6 +71,21 @@ module.exports = {
                 notEmitted: (assertFunction = () => {} ) => notEmitted(tx, name, assertFunction)
             };
         }
+    },
+    receiptRegistry: {
+        newReceiptCreated: tx => {
+            const name = 'NewReceiptCreated';
+            return {
+                name: name,
+                emitted: (thisContract, company, employee, receiptHash) => emitted(tx, name, ev => {
+                    assert.equal(ev.thisContract, thisContract);
+                    assert.equal(ev.company.toString(), company.toString());
+                    assert.equal(ev.employee.toString(), employee.toString());
+                    assert.equal(ev.receiptHash.toString(), receiptHash.toString());
+                }),
+                notEmitted: (assertFunction = () => {} ) => notEmitted(tx, name, assertFunction)
+            };
+        },
     },
     settings: {
         platformFeeUpdated: tx => {

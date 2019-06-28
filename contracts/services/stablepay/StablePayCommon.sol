@@ -15,7 +15,7 @@ contract StablePayCommon {
         bytes32 providerKey;
         uint256 minRate;
         uint256 maxRate;
-        bool exists;
+        bool isSupported;
     }
 
     struct Order {

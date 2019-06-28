@@ -17,6 +17,7 @@ const GAS_WEI_KEY = 'GAS_WEI_KEY';
 const GAS_PRICE_GWEI_KEY = 'GAS_PRICE_GWEI_KEY';
 const ORDER_FACTORY_URL_KEY = 'ORDER_FACTORY_URL';
 const ETHERSCAN_API_KEY_KEY = 'ETHERSCAN_API_KEY';
+const STABLEPAY_ADDRESS_KEY = 'STABLEPAY_ADDRESS';
 
 class AppConfig {
     constructor() {
@@ -26,8 +27,6 @@ class AppConfig {
 }
 
 AppConfig.prototype.initializeConf = function() {
-    this.createItem(ORDER_FACTORY_URL_KEY, undefined, 'It is used to call API endpoint to create an order data.');
-    this.createItem(PRINT_DEPLOY_COST_KEY, DEFAULT_PRINT_DEPLOY_COST, 'It prints the costs per contract.');
     this.createItem(PLATFORM_FEE_KEY, undefined, 'This is the platform fee.');
     this.createItem(DEFAULT_ADDRESS_INDEX_KEY, DEFAULT_ADDRESS_INDEX, 'This is the address index to be used as default.');
     this.createItem(ADDRESS_COUNT_KEY, DEFAULT_ADDRESS_COUNT, 'Addresses needed to deploy smart contracts.');
@@ -36,6 +35,7 @@ AppConfig.prototype.initializeConf = function() {
     this.createItem(GAS_WEI_KEY, DEFAULT_GAS_WEI, 'Default gas value in wei.');
     this.createItem(GAS_PRICE_GWEI_KEY, DEFAULT_GAS_GWEI_PRICE, 'Default gas price value in gwei.');
     this.createItem(ETHERSCAN_API_KEY_KEY, undefined, 'API key to verify smart contracts in Etherscan using truffle-plugin-verify plugin.');
+    this.createItem(STABLEPAY_ADDRESS_KEY, undefined, 'The main StablePay contract address.');
 }
 
 AppConfig.prototype.createItem = function(name, defaultValue = undefined, description = undefined) {
@@ -83,6 +83,10 @@ AppConfig.prototype.getEtherscanApiKey = function() {
     return this.conf.get(ETHERSCAN_API_KEY_KEY);
 }
 
+AppConfig.prototype.getStablePayAddress = function() {
+    return this.conf.get(STABLEPAY_ADDRESS_KEY);
+}
+
 AppConfig.prototype.validate = function() {
     if (!this.getInfuraKey().hasValue()) {
         console.log('Error INFURA KEY is empty.');
@@ -91,6 +95,13 @@ AppConfig.prototype.validate = function() {
     if (!this.getMnemonic().hasValue()) {
         throw new Error('The mnemonic key (MNEMONIC_KEY) is empty. It must be defined in .env file.');
     }
+    if (!this.getStablePayAddress().hasValue()) {
+        throw new Error('The StablePay address key (STABLEPAY_ADDRESS) is empty. It must be defined in .env file.');
+    }
+    if(!this.getPlatformFee()) {
+        throw new Error(`The platform fee key (PLATFORM_FEE) is empty. It must be defined in .env file.`);
+    }
+
     if(!this.getPlatformFee()) {
         throw new Error(`The platform fee key (PLATFORM_FEE) is empty. It must be defined in .env file.`);
     }

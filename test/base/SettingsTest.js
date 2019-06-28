@@ -18,7 +18,7 @@ contract('SettingsTest', function (accounts) {
         _1_owner: [owner, "Pause platform I", '', false],
         _2_account1_invalid: [account1, "Pause platform II", 'Msg sender does not have permission.', true]
     }, function(userAccount, reason, expectedMessage, mustFail) {
-        it(t('anUser', 'pausePlatform', 'Should be able to get the current platform fee.', false), async function() {
+        it(t('anUser', 'pausePlatform', 'Should be able to get the current platform fee.', mustFail), async function() {
             //Setup
             try {
                 //Invocation

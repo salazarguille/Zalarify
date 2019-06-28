@@ -3,6 +3,7 @@ pragma solidity 0.5.9;
 import "../interface/IStorage.sol";
 import "../interface/IVault.sol";
 import "../interface/ISettings.sol";
+import "../interface/IZalarifyCompanyFactory.sol";
 import "../util/ZalarifyCommon.sol";
 
 /**
@@ -11,10 +12,16 @@ import "../util/ZalarifyCommon.sol";
 contract Base {
     /** Constants */
 
+    bytes constant internal ZALARIFY = "Zalarify";
+    uint256 constant internal ZERO = 0;
+    address constant internal ADDRESS_EMPTY = address(0x0);
     uint256 constant internal AVOID_DECIMALS = 100000000000000;
     string constant internal STATE_PAUSED = "state.paused";
+    string constant internal STATE_DISABLED_COMPANY = "state.disabled.company";
     string constant internal PLATFORM_FEE = "config.platform.fee";
 
+    string constant internal STABLE_PAY_NAME = "StablePay";
+    string constant internal ZALARIFY_COMPANY_FACTORY_NAME = "ZalarifyCompanyFactory";
     string constant internal SETTINGS_NAME = "Settings";
     string constant internal VAULT_NAME = "Vault";
     string constant internal ROLE_NAME = "Role";
@@ -111,6 +118,16 @@ contract Base {
         _;
     }
 
+    modifier isDisabledCompany(address _company) {
+        require(_storage.getBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, _company))) == true, "Company is disabled.");
+        _;
+    }
+
+    modifier isEnabledCompany(address _company) {
+        require(_storage.getBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, _company))) == false, "Company is enabled.");
+        _;
+    }
+
     function () external payable {
         require(msg.value > 0, "Msg value > 0");
         bool depositResult = IVault(getVault()).deposit.value(msg.value)();
@@ -143,11 +160,26 @@ contract Base {
         return ISettings(settingsAddress);
     }
 
+    function getZalarifyCompanyFactory()
+        internal
+        view
+        returns (IZalarifyCompanyFactory) {
+        address settingsAddress = _storage.getAddress(keccak256(abi.encodePacked(CONTRACT_NAME, ZALARIFY_COMPANY_FACTORY_NAME)));
+        return IZalarifyCompanyFactory(settingsAddress);
+    }
+
     function getVault()
         internal
         view
         returns (address) {
         return _storage.getAddress(keccak256(abi.encodePacked(CONTRACT_NAME, VAULT_NAME)));
+    }
+
+    function getStablePayAddress()
+        internal
+        view
+        returns (address) {
+        return _storage.getAddress(keccak256(abi.encodePacked(CONTRACT_NAME, STABLE_PAY_NAME)));
     }
 
     function getStorageAddress()

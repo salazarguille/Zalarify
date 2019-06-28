@@ -26,15 +26,14 @@ contract IStablePay {
         @dev This event is emitted when a swap has been executed successfully.
      */
     event ExecutionTransferSuccess(
-        address indexed thisContract,
         bytes32 indexed providerKey,
         address sourceToken,
         address targetToken,
         address from,
         address to,
+        uint fromAmount,
         uint toAmount,
         uint feeAmount,
-        uint timestamp,
         uint16 platformFee,
         bytes data
     );

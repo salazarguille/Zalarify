@@ -2,41 +2,35 @@ pragma solidity 0.5.9;
 pragma experimental ABIEncoderV2;
 
 import "../base/Base.sol";
-import "../base/ZalarifyCompany.sol";
+import "../interface/IZalarifyCompany.sol";
 import "../interface/IZalarify.sol";
-import "../util/SafeMath.sol";
-import "../util/ZalarifyCommon.sol";
 
 contract ZalarifyBase is Base, IZalarify {
-    using SafeMath for uint256;
 
     /** Constants */
 
     /** Properties */
 
-    mapping (bytes32 => ZalarifyCommon.CompanyDefinition) public companies;
+    mapping (bytes32 => address) public companies;
+
+    bytes32[] public companiesList;
 
     /** Events */
 
     /** Modifiers */
 
-    modifier isSender(address _sender, address _to) {
-        require(_sender == _to, "Sender is not equals to 'to' address.");
+    modifier existCompany(bytes32 _id) {
+        require(companies[_id] != address(0x0), "Company definition doesn't exist.");
         _;
     }
 
-    modifier existCompanyDefinition(bytes32 _id) {
-        require(companies[_id].exist == true, "Company definition doesn't exist.");
-        _;
-    }
-
-    modifier notExistCompanyDefinition(bytes32 _id) {
-        require(companies[_id].exist == false, "Company definition already exists.");
+    modifier notExistCompany(bytes32 _id) {
+        require(companies[_id] == address(0x0), "Company definition already exists.");
         _;
     }
 
     modifier isValidBytes32(bytes32 _id) {
-        require(_id != bytes32(0x0), "Id must not be 0x0.");
+        require(_id != bytes32(0x0), "Bytes must not be empty.");
         _;
     }
 
@@ -50,34 +44,68 @@ contract ZalarifyBase is Base, IZalarify {
 
     /** Functions */
 
-    function createCompany(bytes32 _id, bytes32 _name, bool _enabled)
+    function createCompanyStruct(bytes32 _id, bytes32 _name, bytes32 _website, bytes32 _description, address _creator)
+        internal
+        view
+        returns (ZalarifyCommon.Company memory company){
+            company = ZalarifyCommon.Company({
+                id: _id,
+                name: _name,
+                website: _website,
+                description: _description,
+                creator: _creator,
+                createdAt: now
+            });
+    }
+
+    function registerCompany(bytes32 _id, IZalarifyCompany _zalarifyCompany)
+        internal 
+        returns (bool){
+        address zalarifyCompanyAddress = address(_zalarifyCompany);
+        companies[_id] = zalarifyCompanyAddress;
+        companiesList.add(_id);
+        return true;
+    }
+
+    function createCompany(bytes32 _id, bytes32 _name, bytes32 _website, bytes32 _description)
         public
         isValidBytes32(_id)
         isValidBytes32(_name)
-        notExistCompanyDefinition(_id)
-        returns (address zalarifyCompanyAddress) {
+        isValidBytes32(_website)
+        notExistCompany(_id)
+        returns (address companyAddress) {
 
-        ZalarifyCompany zalarifyCompany = new ZalarifyCompany(address(this), Base.getStorageAddress());
-        companies[_id] = ZalarifyCommon.CompanyDefinition({
-            name: _name,
-            zalarifyCompanyAddress: address(zalarifyCompany),
-            enabled: _enabled,
-            exist: true
-        });
-        companies[_id].owners[msg.sender] = true;
-        emit CompanyDefinitionCreated(
+        // Create company struct instance.
+        ZalarifyCommon.Company memory company = createCompanyStruct(_id, _name, _website, _description, msg.sender);
+
+        // Create company contract instance using the company stuct instance.
+        IZalarifyCompany zalarifyCompany = getZalarifyCompanyFactory().createZalarifyCompany(company.creator, company);
+
+        // Register the new company.
+        registerCompany(_id, zalarifyCompany);
+
+        // Emit the event.
+        emit NewCompanyCreated(
             address(this),
-            companies[_id].zalarifyCompanyAddress,
-            now,
-            msg.sender
+            companies[_id],
+            company.createdAt,
+            company.creator
         );
-        return companies[_id].zalarifyCompanyAddress;
+        return address(zalarifyCompany);
     }
 
-    function payEmployees(ZalarifyCommon.CompanyPayment memory _payment)
-    public
-    returns (bool){
-        _payment;
-        return false;
+    function getCompanies()
+        public
+        view
+        returns (ZalarifyCommon.Company[] memory) {
+        ZalarifyCommon.Company[] memory result = new ZalarifyCommon.Company[](companiesList.length);
+        for (uint256 index = 0; index < companiesList.length; index = index.add(1)) {
+            bytes32 companyId = companiesList[index];
+            result[index] = IZalarifyCompany(companies[companyId]).getInfo();
+        }
+        return result;
     }
+
+
+
 }

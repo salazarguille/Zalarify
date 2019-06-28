@@ -16,6 +16,18 @@ contract ZalarifyBaseMock is ZalarifyBase {
         version = 1;
     }
 
-    /** Methods */
+    /** Functions */
 
+    function _createCompanyStruct(bytes32 _id, bytes32 _name, bytes32 _website, bytes32 _description, address _creator)
+        public
+        view
+        returns (ZalarifyCommon.Company memory company){
+            return createCompanyStruct(
+                _id,
+                _name,
+                _website,
+                _description,
+                _creator
+            );
+    }
 }

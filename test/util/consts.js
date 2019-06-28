@@ -37,7 +37,10 @@ module.exports = {
     toBytes: function (text) {
         return util.bufferToHex(text);
     },
+    toBytes32: function (text) {
+        return util.bufferToHex(util.setLengthRight(text, 32));
+    },
     toString: function (bytes) {
-        return util.toBuffer(bytes);
+        return util.toBuffer(bytes).toString();
     },
 }

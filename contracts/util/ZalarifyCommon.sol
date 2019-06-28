@@ -2,14 +2,21 @@ pragma solidity 0.5.9;
 
 contract ZalarifyCommon {
 
-    struct CompanyDefinition {
-        bytes32 name;
-        address zalarifyCompanyAddress;
-        mapping(address => bool) owners;
-        bool enabled;
-        bool exist;
+    /** Enums */
+    enum EmployeeType {
+        Employee,
+        Freelancer
     }
     
+    struct Company {
+        bytes32 id;
+        bytes32 name;
+        bytes32 description;
+        bytes32 website;
+        address creator;
+        uint createdAt;
+    }
+
     struct Receipt {
         uint createdAt;
         bytes32 hash;
@@ -17,22 +24,24 @@ contract ZalarifyCommon {
 
     struct Employee {
         bytes32 name;
+        bytes32 role;
         bytes32 email;
         address preferedTokenPayment;
+        EmployeeType employeeType;
         uint salaryAmount;
-        bool isEmployee;
+        bool enabled;
         bool exist;
     }
 
     struct Payment {
-        address tokenAddress;
-        uint amount;
+        address to;
+        address sourceToken;
+        uint targetAmount;
+        uint sourceAmount;
+        uint minRate;
+        uint maxRate;
+        bytes32 provider;
     }
 
-    struct CompanyPayment {
-        bytes32 companyId;
-        uint totalAmount;
-        Payment[] payments;
-    }
 
 }

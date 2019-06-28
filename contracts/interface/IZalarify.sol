@@ -1,23 +1,25 @@
 pragma solidity 0.5.9;
 pragma experimental ABIEncoderV2;
 
+import "../util/SafeMath.sol";
 import "../util/ZalarifyCommon.sol";
+import "../util/Bytes32ArrayLib.sol";
 
 contract IZalarify {
+    using SafeMath for uint256;
+    using Bytes32ArrayLib for bytes32[];
 
     /** Events */
 
-    event CompanyDefinitionCreated(
+    event NewCompanyCreated(
         address indexed thisContract,
-        address zalarifyCompanyAddress,
+        address companyAddress,
         uint createdAt,
-        address owner
+        address creator
     );
 
     /** Functions */
 
-    function payEmployees(ZalarifyCommon.CompanyPayment memory _payment)
-    public
-    returns (bool);
-    
+    function createCompany(bytes32 _id, bytes32 _name, bytes32 _website, bytes32 _description) public returns (address companyAddress);
+
 }
