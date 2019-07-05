@@ -1,1 +1,3 @@
+# https://medium.com/@kimtnguyen/how-to-deploy-es6-node-js-express-back-end-to-heroku-7e6743e8d2ff
+
 web: NODE_ENV=production npm run start

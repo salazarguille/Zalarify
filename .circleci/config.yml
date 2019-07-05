@@ -24,7 +24,7 @@ jobs:
            <<: *cache-options
       - run:
           name: install-truffle
-          command: sudo npm install -g truffle@5.0.18
+          command: sudo npm install -g truffle@5.0.26
       - run:
           name: install-ganache
           command: sudo npm install -g ganache-cli@6.4.3
