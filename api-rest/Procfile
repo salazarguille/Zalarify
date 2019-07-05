@@ -1,1 +1,1 @@
-web: NODE_ENV=production cd api/rest && npm run start
+web: NODE_ENV=production npm run start

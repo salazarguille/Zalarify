@@ -54,5 +54,8 @@
         "nodemon": "^1.9.2",
         "prettier": "^1.16.4",
         "regenerator-runtime": "^0.12.1"
+    },
+    "engines": {
+        "node": "10.15.x"
     }
 }
