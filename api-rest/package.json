@@ -6,7 +6,8 @@
     "scripts": {
         "dev": "nodemon --exec babel-node src",
         "build": "babel src -s -D -d dist",
-        "start": "babel-node src",
+        "start": "node dist",
+        "prestart": "npm run -s build",
         "test": "jest",
         "test:mocha": "mocha -t 15000 --require @babel/register --require @babel/polyfill \"tests/**/*.js\"",
         "testu": "mocha -t 15000 --require @babel/register --require @babel/polyfill",
