@@ -1,0 +1,1426 @@
+{
+  "contractName": "ISettings",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "thisContract",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "PlatformPaused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "thisContract",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "PlatformUnpaused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "thisContract",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "oldPlatformFee",
+          "type": "uint16"
+        },
+        {
+          "indexed": false,
+          "name": "newPlatformFee",
+          "type": "uint16"
+        }
+      ],
+      "name": "PlatformFeeUpdated",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_fee",
+          "type": "uint16"
+        }
+      ],
+      "name": "setPlatformFee",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getPlatformFee",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint16"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_reason",
+          "type": "string"
+        }
+      ],
+      "name": "pausePlatform",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_reason",
+          "type": "string"
+        }
+      ],
+      "name": "unpausePlatform",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isPlatformPaused",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity 0.5.3;\n\ninterface ISettings {\n\n    /** Events */\n    \n    /**\n        @dev This event is emitted when the platform is paused due to maintenance reasons.\n     */\n    event PlatformPaused (\n        address indexed thisContract,\n        string reason\n    );\n\n    /**\n        @dev This event is emitted when the platform is unpaused.\n     */\n    event PlatformUnpaused (\n        address indexed thisContract,\n        string reason\n    );\n\n    /**\n        @dev This event is emitted when the platform fee is updated.\n     */\n    event PlatformFeeUpdated (\n        address indexed thisContract,\n        uint16 oldPlatformFee,\n        uint16 newPlatformFee\n    );\n\n    /** Functions */\n\n    function setPlatformFee(uint16 _fee) external returns (bool);\n\n    function getPlatformFee() external view returns (uint16);\n\n    function pausePlatform(string calldata _reason) external returns (bool);\n\n    function unpausePlatform(string calldata _reason) external returns (bool);\n\n    function isPlatformPaused() external view returns (bool);\n}\n",
+  "sourcePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/ISettings.sol",
+  "ast": {
+    "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/ISettings.sol",
+    "exportedSymbols": {
+      "ISettings": [
+        3117
+      ]
+    },
+    "id": 3118,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3065,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".3"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:18"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 3117,
+        "linearizedBaseContracts": [
+          3117
+        ],
+        "name": "ISettings",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev This event is emitted when the platform is paused due to maintenance reasons.",
+            "id": 3071,
+            "name": "PlatformPaused",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3070,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3067,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3071,
+                  "src": "212:28:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3066,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "212:7:18",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3069,
+                  "indexed": false,
+                  "name": "reason",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3071,
+                  "src": "250:13:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3068,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "250:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "202:67:18"
+            },
+            "src": "181:89:18"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev This event is emitted when the platform is unpaused.",
+            "id": 3077,
+            "name": "PlatformUnpaused",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3076,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3073,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3077,
+                  "src": "391:28:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3072,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "391:7:18",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3075,
+                  "indexed": false,
+                  "name": "reason",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3077,
+                  "src": "429:13:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3074,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "429:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "381:67:18"
+            },
+            "src": "358:91:18"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev This event is emitted when the platform fee is updated.",
+            "id": 3085,
+            "name": "PlatformFeeUpdated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3084,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3079,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3085,
+                  "src": "575:28:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3078,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "575:7:18",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3081,
+                  "indexed": false,
+                  "name": "oldPlatformFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3085,
+                  "src": "613:21:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint16",
+                    "typeString": "uint16"
+                  },
+                  "typeName": {
+                    "id": 3080,
+                    "name": "uint16",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "613:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint16",
+                      "typeString": "uint16"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3083,
+                  "indexed": false,
+                  "name": "newPlatformFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3085,
+                  "src": "644:21:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint16",
+                    "typeString": "uint16"
+                  },
+                  "typeName": {
+                    "id": 3082,
+                    "name": "uint16",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "644:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint16",
+                      "typeString": "uint16"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "565:106:18"
+            },
+            "src": "540:132:18"
+          },
+          {
+            "body": null,
+            "documentation": "Functions ",
+            "id": 3092,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setPlatformFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3088,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3087,
+                  "name": "_fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3092,
+                  "src": "724:11:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint16",
+                    "typeString": "uint16"
+                  },
+                  "typeName": {
+                    "id": 3086,
+                    "name": "uint16",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "724:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint16",
+                      "typeString": "uint16"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "723:13:18"
+            },
+            "returnParameters": {
+              "id": 3091,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3090,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3092,
+                  "src": "755:4:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3089,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "755:4:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "754:6:18"
+            },
+            "scope": 3117,
+            "src": "700:61:18",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3097,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPlatformFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3093,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "790:2:18"
+            },
+            "returnParameters": {
+              "id": 3096,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3095,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3097,
+                  "src": "816:6:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint16",
+                    "typeString": "uint16"
+                  },
+                  "typeName": {
+                    "id": 3094,
+                    "name": "uint16",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "816:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint16",
+                      "typeString": "uint16"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "815:8:18"
+            },
+            "scope": 3117,
+            "src": "767:57:18",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3104,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "pausePlatform",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3100,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3099,
+                  "name": "_reason",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3104,
+                  "src": "853:23:18",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3098,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "853:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "852:25:18"
+            },
+            "returnParameters": {
+              "id": 3103,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3102,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3104,
+                  "src": "896:4:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3101,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "896:4:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "895:6:18"
+            },
+            "scope": 3117,
+            "src": "830:72:18",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3111,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "unpausePlatform",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3107,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3106,
+                  "name": "_reason",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3111,
+                  "src": "933:23:18",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3105,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "933:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "932:25:18"
+            },
+            "returnParameters": {
+              "id": 3110,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3109,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3111,
+                  "src": "976:4:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3108,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "976:4:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "975:6:18"
+            },
+            "scope": 3117,
+            "src": "908:74:18",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3116,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isPlatformPaused",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3112,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1013:2:18"
+            },
+            "returnParameters": {
+              "id": 3115,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3114,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3116,
+                  "src": "1039:4:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3113,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1039:4:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1038:6:18"
+            },
+            "scope": 3117,
+            "src": "988:57:18",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3118,
+        "src": "24:1023:18"
+      }
+    ],
+    "src": "0:1048:18"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/ISettings.sol",
+    "exportedSymbols": {
+      "ISettings": [
+        3117
+      ]
+    },
+    "id": 3118,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3065,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".3"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:18"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 3117,
+        "linearizedBaseContracts": [
+          3117
+        ],
+        "name": "ISettings",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev This event is emitted when the platform is paused due to maintenance reasons.",
+            "id": 3071,
+            "name": "PlatformPaused",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3070,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3067,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3071,
+                  "src": "212:28:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3066,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "212:7:18",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3069,
+                  "indexed": false,
+                  "name": "reason",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3071,
+                  "src": "250:13:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3068,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "250:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "202:67:18"
+            },
+            "src": "181:89:18"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev This event is emitted when the platform is unpaused.",
+            "id": 3077,
+            "name": "PlatformUnpaused",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3076,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3073,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3077,
+                  "src": "391:28:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3072,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "391:7:18",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3075,
+                  "indexed": false,
+                  "name": "reason",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3077,
+                  "src": "429:13:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3074,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "429:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "381:67:18"
+            },
+            "src": "358:91:18"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev This event is emitted when the platform fee is updated.",
+            "id": 3085,
+            "name": "PlatformFeeUpdated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3084,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3079,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3085,
+                  "src": "575:28:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3078,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "575:7:18",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3081,
+                  "indexed": false,
+                  "name": "oldPlatformFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3085,
+                  "src": "613:21:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint16",
+                    "typeString": "uint16"
+                  },
+                  "typeName": {
+                    "id": 3080,
+                    "name": "uint16",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "613:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint16",
+                      "typeString": "uint16"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3083,
+                  "indexed": false,
+                  "name": "newPlatformFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3085,
+                  "src": "644:21:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint16",
+                    "typeString": "uint16"
+                  },
+                  "typeName": {
+                    "id": 3082,
+                    "name": "uint16",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "644:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint16",
+                      "typeString": "uint16"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "565:106:18"
+            },
+            "src": "540:132:18"
+          },
+          {
+            "body": null,
+            "documentation": "Functions ",
+            "id": 3092,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setPlatformFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3088,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3087,
+                  "name": "_fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3092,
+                  "src": "724:11:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint16",
+                    "typeString": "uint16"
+                  },
+                  "typeName": {
+                    "id": 3086,
+                    "name": "uint16",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "724:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint16",
+                      "typeString": "uint16"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "723:13:18"
+            },
+            "returnParameters": {
+              "id": 3091,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3090,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3092,
+                  "src": "755:4:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3089,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "755:4:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "754:6:18"
+            },
+            "scope": 3117,
+            "src": "700:61:18",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3097,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPlatformFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3093,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "790:2:18"
+            },
+            "returnParameters": {
+              "id": 3096,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3095,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3097,
+                  "src": "816:6:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint16",
+                    "typeString": "uint16"
+                  },
+                  "typeName": {
+                    "id": 3094,
+                    "name": "uint16",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "816:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint16",
+                      "typeString": "uint16"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "815:8:18"
+            },
+            "scope": 3117,
+            "src": "767:57:18",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3104,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "pausePlatform",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3100,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3099,
+                  "name": "_reason",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3104,
+                  "src": "853:23:18",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3098,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "853:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "852:25:18"
+            },
+            "returnParameters": {
+              "id": 3103,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3102,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3104,
+                  "src": "896:4:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3101,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "896:4:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "895:6:18"
+            },
+            "scope": 3117,
+            "src": "830:72:18",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3111,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "unpausePlatform",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3107,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3106,
+                  "name": "_reason",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3111,
+                  "src": "933:23:18",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3105,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "933:6:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "932:25:18"
+            },
+            "returnParameters": {
+              "id": 3110,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3109,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3111,
+                  "src": "976:4:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3108,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "976:4:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "975:6:18"
+            },
+            "scope": 3117,
+            "src": "908:74:18",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3116,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isPlatformPaused",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3112,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1013:2:18"
+            },
+            "returnParameters": {
+              "id": 3115,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3114,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3116,
+                  "src": "1039:4:18",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3113,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1039:4:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1038:6:18"
+            },
+            "scope": 3117,
+            "src": "988:57:18",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3118,
+        "src": "24:1023:18"
+      }
+    ],
+    "src": "0:1048:18"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.3+commit.10d17f24.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.9",
+  "updatedAt": "2019-07-03T19:11:23.159Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {
+      "setPlatformFee(uint16)": {
+        "notice": "Functions "
+      }
+    }
+  }
+}

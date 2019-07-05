@@ -1,0 +1,1241 @@
+{
+  "contractName": "IReceiptRegistry",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "thisContract",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "company",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "employee",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "receiptHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "NewReceiptCreated",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_company",
+          "type": "address"
+        },
+        {
+          "name": "_employee",
+          "type": "address"
+        },
+        {
+          "name": "_receiptHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "createReceipt",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_company",
+          "type": "address"
+        },
+        {
+          "name": "_employee",
+          "type": "address"
+        }
+      ],
+      "name": "getReceipts",
+      "outputs": [
+        {
+          "components": [
+            {
+              "name": "createdAt",
+              "type": "uint256"
+            },
+            {
+              "name": "hash",
+              "type": "bytes32"
+            }
+          ],
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_company",
+          "type": "address"
+        },
+        {
+          "name": "_employee",
+          "type": "address"
+        }
+      ],
+      "name": "hasReceipts",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity 0.5.3;\npragma experimental ABIEncoderV2;\n\nimport \"../util/ZalarifyCommon.sol\";\n\ncontract IReceiptRegistry {\n\n    /** Events */\n\n    event NewReceiptCreated(\n        address indexed thisContract,\n        address company,\n        address employee,\n        bytes32 receiptHash\n    );\n\n    /** Functions */\n\n    /** Company functions */\n    \n    function createReceipt(address _company, address _employee, bytes32 _receiptHash) \n        public\n        returns (bool);\n\n    function getReceipts(address _company, address _employee)\n        public\n        view\n        returns (ZalarifyCommon.Receipt[] memory);\n\n    function hasReceipts(address _company, address _employee)\n        public\n        view\n        returns (bool);\n}",
+  "sourcePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
+  "ast": {
+    "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
+    "exportedSymbols": {
+      "IReceiptRegistry": [
+        3072
+      ]
+    },
+    "id": 3073,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3029,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".3"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:17"
+      },
+      {
+        "id": 3030,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "23:33:17"
+      },
+      {
+        "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
+        "file": "../util/ZalarifyCommon.sol",
+        "id": 3031,
+        "nodeType": "ImportDirective",
+        "scope": 3073,
+        "sourceUnit": 5134,
+        "src": "58:36:17",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 3072,
+        "linearizedBaseContracts": [
+          3072
+        ],
+        "name": "IReceiptRegistry",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "Events ",
+            "id": 3041,
+            "name": "NewReceiptCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3040,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3033,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3041,
+                  "src": "181:28:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3032,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "181:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3035,
+                  "indexed": false,
+                  "name": "company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3041,
+                  "src": "219:15:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3034,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "219:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3037,
+                  "indexed": false,
+                  "name": "employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3041,
+                  "src": "244:16:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3036,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "244:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3039,
+                  "indexed": false,
+                  "name": "receiptHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3041,
+                  "src": "270:19:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3038,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "270:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "171:124:17"
+            },
+            "src": "148:148:17"
+          },
+          {
+            "body": null,
+            "documentation": "Company functions ",
+            "id": 3052,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createReceipt",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3048,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3043,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3052,
+                  "src": "381:16:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3042,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "381:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3045,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3052,
+                  "src": "399:17:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3044,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "399:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3047,
+                  "name": "_receiptHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3052,
+                  "src": "418:20:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3046,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "418:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "380:59:17"
+            },
+            "returnParameters": {
+              "id": 3051,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3050,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3052,
+                  "src": "473:4:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3049,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "473:4:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "472:6:17"
+            },
+            "scope": 3072,
+            "src": "358:121:17",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3062,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getReceipts",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3057,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3054,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3062,
+                  "src": "506:16:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3053,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "506:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3056,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3062,
+                  "src": "524:17:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3055,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "524:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "505:37:17"
+            },
+            "returnParameters": {
+              "id": 3061,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3060,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3062,
+                  "src": "588:31:17",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_Receipt_$5100_memory_$dyn_memory_ptr",
+                    "typeString": "struct ZalarifyCommon.Receipt[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "contractScope": null,
+                      "id": 3058,
+                      "name": "ZalarifyCommon.Receipt",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 5100,
+                      "src": "588:22:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Receipt_$5100_storage_ptr",
+                        "typeString": "struct ZalarifyCommon.Receipt"
+                      }
+                    },
+                    "id": 3059,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "588:24:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_Receipt_$5100_storage_$dyn_storage_ptr",
+                      "typeString": "struct ZalarifyCommon.Receipt[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "587:33:17"
+            },
+            "scope": 3072,
+            "src": "485:136:17",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3071,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hasReceipts",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3067,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3064,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3071,
+                  "src": "648:16:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3063,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "648:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3066,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3071,
+                  "src": "666:17:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3065,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "666:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "647:37:17"
+            },
+            "returnParameters": {
+              "id": 3070,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3069,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3071,
+                  "src": "730:4:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3068,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "730:4:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "729:6:17"
+            },
+            "scope": 3072,
+            "src": "627:109:17",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3073,
+        "src": "96:642:17"
+      }
+    ],
+    "src": "0:738:17"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
+    "exportedSymbols": {
+      "IReceiptRegistry": [
+        3072
+      ]
+    },
+    "id": 3073,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3029,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".3"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:17"
+      },
+      {
+        "id": 3030,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "23:33:17"
+      },
+      {
+        "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
+        "file": "../util/ZalarifyCommon.sol",
+        "id": 3031,
+        "nodeType": "ImportDirective",
+        "scope": 3073,
+        "sourceUnit": 5134,
+        "src": "58:36:17",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 3072,
+        "linearizedBaseContracts": [
+          3072
+        ],
+        "name": "IReceiptRegistry",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "Events ",
+            "id": 3041,
+            "name": "NewReceiptCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3040,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3033,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3041,
+                  "src": "181:28:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3032,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "181:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3035,
+                  "indexed": false,
+                  "name": "company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3041,
+                  "src": "219:15:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3034,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "219:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3037,
+                  "indexed": false,
+                  "name": "employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3041,
+                  "src": "244:16:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3036,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "244:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3039,
+                  "indexed": false,
+                  "name": "receiptHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3041,
+                  "src": "270:19:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3038,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "270:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "171:124:17"
+            },
+            "src": "148:148:17"
+          },
+          {
+            "body": null,
+            "documentation": "Company functions ",
+            "id": 3052,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createReceipt",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3048,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3043,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3052,
+                  "src": "381:16:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3042,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "381:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3045,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3052,
+                  "src": "399:17:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3044,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "399:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3047,
+                  "name": "_receiptHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3052,
+                  "src": "418:20:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3046,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "418:7:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "380:59:17"
+            },
+            "returnParameters": {
+              "id": 3051,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3050,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3052,
+                  "src": "473:4:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3049,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "473:4:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "472:6:17"
+            },
+            "scope": 3072,
+            "src": "358:121:17",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3062,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getReceipts",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3057,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3054,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3062,
+                  "src": "506:16:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3053,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "506:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3056,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3062,
+                  "src": "524:17:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3055,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "524:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "505:37:17"
+            },
+            "returnParameters": {
+              "id": 3061,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3060,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3062,
+                  "src": "588:31:17",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_Receipt_$5100_memory_$dyn_memory_ptr",
+                    "typeString": "struct ZalarifyCommon.Receipt[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "contractScope": null,
+                      "id": 3058,
+                      "name": "ZalarifyCommon.Receipt",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 5100,
+                      "src": "588:22:17",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Receipt_$5100_storage_ptr",
+                        "typeString": "struct ZalarifyCommon.Receipt"
+                      }
+                    },
+                    "id": 3059,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "588:24:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_Receipt_$5100_storage_$dyn_storage_ptr",
+                      "typeString": "struct ZalarifyCommon.Receipt[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "587:33:17"
+            },
+            "scope": 3072,
+            "src": "485:136:17",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3071,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hasReceipts",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3067,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3064,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3071,
+                  "src": "648:16:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3063,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "648:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3066,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3071,
+                  "src": "666:17:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3065,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "666:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "647:37:17"
+            },
+            "returnParameters": {
+              "id": 3070,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3069,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3071,
+                  "src": "730:4:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3068,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "730:4:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "729:6:17"
+            },
+            "scope": 3072,
+            "src": "627:109:17",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3073,
+        "src": "96:642:17"
+      }
+    ],
+    "src": "0:738:17"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.3+commit.10d17f24.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.9",
+  "updatedAt": "2019-07-04T19:19:59.257Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {
+      "createReceipt(address,address,bytes32)": {
+        "notice": "Company functions "
+      }
+    }
+  }
+}
