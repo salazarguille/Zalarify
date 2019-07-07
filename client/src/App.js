@@ -25,7 +25,7 @@ class App extends Component {
         return (
           <Router>
             <Layout config={this.state.config}>
-              <Route path="/" exact render={ (props) => <p>Hola</p>}/>
+              <Route path="/" exact render={ (props) => <p>Hola {process.env.REACT_APP_BACKEND_URL}</p>}/>
               <Route path="/companies/" render={ (props)=> <CompanyList {...props} items={this.state.companies} config={this.state.config}/>}/>
               <Route path="/company/:companyAddress" component={ ({match}) => 
               <WithWeb3
