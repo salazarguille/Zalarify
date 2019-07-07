@@ -15,8 +15,8 @@ config.ropsten = {
         address: 'https://ropsten.etherscan.io/address/'
     },
     urls: {
-        backend: 'http://localhost:8080/api/v1',
-        // https://zalarify-api.herokuapp.com/api/v1/companies
+        backend: 'https://zalarify-api.herokuapp.com/api/v1',
+        // http://localhost:8080/api/v1
     },
     contracts: [
         {
