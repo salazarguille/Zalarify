@@ -12,7 +12,8 @@ coverage.json
 /.soliumrc.json
 /.node*
 .env
-kyber_db/
+db/
 resources/**/
 .DS_Store
 resources/.DS_Store
+client/design

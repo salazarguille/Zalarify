@@ -51,9 +51,6 @@ const styles = theme => ({
 
 class InvalidNetwork extends React.Component {
     state = {}
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const { classes, network } = this.props;
@@ -61,7 +58,7 @@ class InvalidNetwork extends React.Component {
         return (
             <div className={classes.wrapper}>
                 <div className={classes.inner}>
-					<header class={classes.header}>
+					<header className={classes.header}>
 						<h1>Invalid Network</h1>
                     <p>{this.props.children}</p>
                     </header>

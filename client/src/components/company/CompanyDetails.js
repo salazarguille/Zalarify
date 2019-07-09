@@ -1,9 +1,11 @@
 import { withStyles } from '@material-ui/styles';
 import axios from "axios";
 import React from 'react';
-import { Text, Flex, Table, Button, Loader } from 'rimble-ui';
+import { Text, Flex, Table, Button, Loader, Icon } from 'rimble-ui';
 import CompanyDetailsItem from './CompanyDetailsItem';
 import EmployeeFormModal from '../modals/EmployeeFormModal';
+import EmployeePaymentFormModal from '../modals/EmployeePaymentFormModal';
+import { randomHex } from 'web3-utils';
 
 const styles = theme => ({
     wrapper: {
@@ -46,9 +48,9 @@ const styles = theme => ({
         background: '#f3f3f3'
     },
     spotlights: {
-		display: '-moz-flex',
-		display: '-webkit-flex',
-		display: '-ms-flex',
+		// display: '-moz-flex',
+		// display: '-webkit-flex',
+		// display: '-ms-flex',
         display: 'flex',
         backgroundColor: 'red',
 		'-moz-flex-wrap': 'wrap',
@@ -71,11 +73,10 @@ class CompanyDetails extends React.Component {
         company: undefined,
         employees: [],
         isEmployeeFormOpened: false,
+        isEmployeePaymentFormOpened: false,
         loading: true,
         errorMessage: undefined,
-    }
-    constructor(props) {
-        super(props);
+        selectedEmployee: undefined,
     }
 
     updateCompany() {
@@ -91,8 +92,10 @@ class CompanyDetails extends React.Component {
                 loading: false,
             });
         }).catch(reason => {
+            //console.log(reason.response);
+            const errorMessage = reason.response && reason.response.data && reason.response.data.message ? reason.response.data.message : reason.toString();
             this.setState({
-                errorMessage: reason.toString(),
+                errorMessage,
             });
         });
     }
@@ -115,6 +118,12 @@ class CompanyDetails extends React.Component {
         });
     };
 
+    onCloseEmployeePaymentModal = () => {
+        this.setState({
+            isEmployeePaymentFormOpened: false,
+        });
+    }
+
     onClickCreateEmployee = e => {
         this.setState({
             isEmployeeFormOpened: true,
@@ -122,37 +131,64 @@ class CompanyDetails extends React.Component {
     }
 
     onEmployeeCreatedCallback = (item, receipt) => {
-        console.log('onEmployeeCreatedCallback');
         this.onCloseModal();
         this.updateCompany();
     }
 
+    onClickPayment(employee) {
+        console.log(employee);
+        this.setState({
+            isEmployeePaymentFormOpened: true,
+            selectedEmployee: employee,
+        });
+    }
+
+    onClickSeeWallet(employee) {
+        const { config } = this.props;
+        const url = `${config.explorer.address}${employee.wallet}`;
+        const win = window.open(url, '_blank');
+        win.focus();   
+    }
+
     renderEmployees = () => {
+        const { info } = this.props;
+        const { company } = this.state;
+        const isOwner = company ? company.creator.toUpperCase() === info.selectedAddress.toUpperCase() : false;
+
         const employeesRender = this.state.employees.map( employee => {
-            return <tr key={employee.wallet}>
-                <td>{employee.name} / {employee.email}</td>
+            const actionsForOwner = isOwner ? 
+                    <><Icon color="blue" name="Payment" size="24px" onClick={ e => this.onClickPayment(employee)}/></>
+                    : '';
+            return <tr key={`${employee.wallet}_${employee.email}_${employee.name}_${employee.role}_${randomHex(5)}`}>
+                <td>{employee.wallet} / {employee.email}</td>
                 <td>{employee.role} ({employee.employeeType})</td>
                 <td>{employee.salaryAmount} {employee.preferedTokenPayment.symbol}</td>
-                <td></td>
+                <td>
+                    <Flex flexDirection="row" width={1}>
+                    {actionsForOwner}
+                    <Icon color="blue" name="LocalSee" size="24px" onClick={ e => this.onClickSeeWallet(employee)}/>
+                    </Flex>
+                </td>
             </tr>;
         });
         return employeesRender;
     }
 
     renderCompanyDetails = () => {
+        const { classes, ...others} = this.props;
         return this.state.company ? <CompanyDetailsItem
                 width={1}
                 height={1}
                 item={this.state.company}
                 employees={this.state.employees}
-                {...this.props}/> : '';
+                {...others}/> : '';
     }
 
     renderCompany() {
-        const { classes, config, info } = this.props;
+        const { classes, config, info, ...others } = this.props;
         const { company } = this.state;
 
-        const isOwner = company ? company.creator.toUpperCase() == info.selectedAddress.toUpperCase() : false;
+        const isOwner = company ? company.creator.toUpperCase() === info.selectedAddress.toUpperCase() : false;
 
         const companyDetailsRender = this.renderCompanyDetails();
         const employeesRender = this.renderEmployees();
@@ -172,11 +208,11 @@ class CompanyDetails extends React.Component {
                             </Flex>
                             <Flex flexDirection="column" width={3/4} p={2}>
                                 <Flex flexDirection="row" width={1} p={3}>
+                                    <Button.Outline height={'20hv'} m={1} as="a" href="/companies" >
+                                        Companies
+                                    </Button.Outline>
                                     <Button disabled={!isOwner} height={'20hv'} m={1} onClick={ this.onClickCreateEmployee }>
                                         + Employee
-                                    </Button>
-                                    <Button height={'20hv'} m={1}>
-                                        Pause Company 
                                     </Button>
                                 </Flex>
                                 <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
@@ -199,13 +235,24 @@ class CompanyDetails extends React.Component {
                             </Flex>
                             <EmployeeFormModal
                                 config={config}
+                                info={info}
                                 width={2/3}
                                 isOpen={this.state.isEmployeeFormOpened}
                                 companies={this.state.companies}
                                 closeModal={this.onCloseModal}
                                 currentCompany={this.state.company}
                                 employeeCreatedCallback={this.onEmployeeCreatedCallback}
-                                {...this.props}
+                                {...others}
+                            />
+                            <EmployeePaymentFormModal
+                                config={config}
+                                info={info}
+                                width={2/3}
+                                isOpen={this.state.isEmployeePaymentFormOpened}
+                                closeModal={this.onCloseEmployeePaymentModal}
+                                employee={this.state.selectedEmployee}
+                                //employeeCreatedCallback={this.onEmployeeCCallback}
+                                {...others}
                             />
                         </Flex>
                     {/* </div> */}

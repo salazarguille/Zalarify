@@ -71,16 +71,13 @@ const styles = theme => ({
 });
 
 class Header extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     onClickMenuButton = (e, name) => {
         console.log(name);
     }
 
     render() {
-        const { classes } = this.props;
+        //const { classes } = this.props;
         return (
             <Flex
                 //className={classes.header}
@@ -102,7 +99,7 @@ class Header extends React.Component {
                 <Flex width={3 / 4} flexDirection={'row'}>
                     <MenuButton width="25vw" text="Home" value="home" link="/" onClick={this.onClickMenuButton} />
                     <MenuButton width="25vw" text="Companies" value="company" link="/companies" onClick={this.onClickMenuButton} />
-                    <MenuButton width="25vw" text="Integration" value="integration" onClick={this.onClickMenuButton} />
+                    <MenuButton width="25vw" text="Integration" value="integration" link="/integration" onClick={this.onClickMenuButton} />
                 </Flex>
 			</Flex>
         );

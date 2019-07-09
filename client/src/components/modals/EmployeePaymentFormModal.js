@@ -9,9 +9,9 @@ import {
   Box,
 } from "rimble-ui";
 import ModalCard from './ModalCard';
-import EmployeeForm from "../forms/EmployeeForm";
+import EmployeePaymentForm from "../forms/EmployeePaymentForm";
 
-class EmployeeFormModal extends React.Component {
+class EmployeePaymentFormModal extends React.Component {
   state = {
     processing: false,
   };
@@ -39,6 +39,17 @@ class EmployeeFormModal extends React.Component {
     });
   }
 
+  static getDerivedStateFromProps(nextProps, nextContext) {
+    console.log('Derivative Form Modal  ', nextProps);
+    if( nextProps.processing && nextProps.employee) {
+        return {
+          processing: nextProps.processing,
+          employee: nextProps.employee,
+        };
+    }
+    return null;
+  }
+
   toast = (component, isError = false) => {
     if (isError) {
       this.setNotProcessing();
@@ -52,25 +63,15 @@ class EmployeeFormModal extends React.Component {
     }
   }
 
-  invokeContract = (item) => {
-    const { web3, info } = this.props;
-    const { utils } = web3;
+  invokeZalarifyContractPay = (payment) => {
+    const { info, config } = this.props;
     let result;
 
     try {
       const zalarifyCompany = this.getZalarifyCompanyContract();
       this.setProcessing();
-      result = zalarifyCompany.methods.addEmployee(
-        item.wallet,
-        item.employeeType,
-        utils.fromAscii(item.name).padEnd(66, '0'),
-        utils.fromAscii(item.role).padEnd(66, '0'),
-        utils.fromAscii(item.email).padEnd(66, '0'),
-        item.preferedTokenPayment.address,
-        item.salaryAmount
-      ).send({from: info.selectedAddress});
+      result = zalarifyCompany.methods.payWithTokens(payment).send({from: info.selectedAddress, gas: config.maxGas});
     } catch (error) {
-      console.log(error);
       this.toast(<div>
         {`Message: ${error.message}`}
       </div>, true);
@@ -78,16 +79,77 @@ class EmployeeFormModal extends React.Component {
     return result;
   }
 
+  getERC20Contract = (address) => {
+    const { contracts, web3 } = this.props;
+    const currentContractData = contracts.find(contract => contract.name === 'ERC20');
+    const contract = currentContractData.abi;
+    const instance = new web3.eth.Contract(
+        contract.abi,
+        address
+    );
+    return instance;
+  }
+
+  onClickApproveERC20Contract = (tokenSelected, tokenRate) => { 
+    try {
+      const { info, config, companyAddress } = this.props;
+      const erc20 = this.getERC20Contract(tokenSelected.address);
+      console.log('On click approve ', tokenRate.maxRate);
+      console.log('On click approve ', erc20.address);
+      console.log('tokenSelected ', tokenSelected);
+
+      const approveResult = erc20
+        .methods
+        .approve(companyAddress, tokenRate.maxRate)
+        .send({from: info.selectedAddress});
+      this.setProcessing();
+
+      approveResult.on('transactionHash', (hash) => {
+        if(config.network === 'unknown') {
+          this.setNotProcessing();
+          approveResult.removeAllListeners();
+        }
+        this.toast(<div>
+          <a href={`${config.explorer.tx}${hash}`} rel="noopener noreferrer" target="_blank">Processing Transaction</a>
+        </div>);
+      })
+      .on('receipt', (receipt) => {
+        console.log(receipt);
+        this.toast(<div>
+          Success <a href={`${config.explorer.tx}${receipt.tx}`} rel="noopener noreferrer" target="_blank">Transaction</a>
+        </div>);
+      })
+      .on('confirmation', (confirmationNumber, receipt) => {
+        if(confirmationNumber < 2) {
+          this.toast(<div>
+            {`Confirmation #${confirmationNumber}`} <a href={`${config.explorer.tx}${receipt.tx}`} rel="noopener noreferrer" target="_blank">View Transaction</a>
+          </div>);
+        } else {
+          if (confirmationNumber === 2) {
+            this.setNotProcessing();
+            approveResult.removeAllListeners();
+          }
+        }
+      })
+      .on('error', (error) => {
+        this.toast(<div>
+          {`Message: ${error.message}`}
+        </div>, true);
+      });
+      
+      return approveResult;
+    } catch (error) {
+      this.toast(<div>
+        {`Message: ${error.message}`}
+      </div>, true);
+    }
+  }
+
   handleSubmit = async (item) => {
     const { config, employeeCreatedCallback } = this.props;
 
-    const result = this.invokeContract(item);
+    const result = this.invokeZalarifyContractPay(item);
     result.on('transactionHash', (hash) => {
-        if(config.network === 'unknown') {
-          this.setNotProcessing();
-          employeeCreatedCallback(item, undefined);
-          result.removeAllListeners();
-        }
         this.toast(<div>
           <a href={`${config.explorer.tx}${hash}`} rel="noopener noreferrer" target="_blank">Processing Transaction</a>
         </div>);
@@ -124,9 +186,9 @@ class EmployeeFormModal extends React.Component {
     return (
       <React.Fragment>
         <Box mb={3}>
-          <Heading.h2>Employee Form - {currentCompany ? currentCompany.name : ''}</Heading.h2>
+          <Heading.h2>Employee Payment Form</Heading.h2>
           <Text my={3} textAlign={"center"}>
-            It allows you to create or edit an employee.
+            It allows you to transfer payroll to your employees.
           </Text>
         </Box> 
         <Flex
@@ -136,13 +198,14 @@ class EmployeeFormModal extends React.Component {
           mt={4}
           mb={4}
         >
-          <EmployeeForm
+          <EmployeePaymentForm
             width={1}
+            info={this.props.info}
             config={this.props.config}
-            companies={this.props.companies}
+            employee={this.props.selectedEmployee}
             handleSubmit={this.handleSubmit}
-            currentCompany={this.props.currentCompany}
             processing={this.state.processing}
+            onClickApproveERC20Contract={this.onClickApproveERC20Contract}
             {...this.props}
           />
         </Flex>
@@ -178,4 +241,4 @@ class EmployeeFormModal extends React.Component {
   }
 }
 
-export default EmployeeFormModal;
+export default EmployeePaymentFormModal;

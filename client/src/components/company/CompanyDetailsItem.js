@@ -1,7 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/styles';
-import { Card, Box, Flex, Button, Image, Heading, Icon } from 'rimble-ui';
-import { Link } from "react-router-dom";
+import { Card, Box, Flex, Button, Image, Heading } from 'rimble-ui';
 
 const styles = theme => ({
     button: {
@@ -30,10 +29,6 @@ class CompanyDetailsItem extends React.Component {
         item: undefined,
         employees: [],
         isSelectedAddressOwner: false,
-    }
-
-    constructor(props) {
-        super(props);
     }
 
     getChars = (name) => {
@@ -69,7 +64,7 @@ class CompanyDetailsItem extends React.Component {
         const { employees } = this.state;
         const info = employees
             .map( employee => employee.salaryAmount)
-            .reduce( (p, c) => p + c);
+            .reduce( (p, c) => p + c, 0);
         return info;
     }
 

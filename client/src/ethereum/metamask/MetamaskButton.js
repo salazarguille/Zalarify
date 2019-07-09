@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/styles';
 import React from 'react';
 
-import Color from 'color';
+// import Color from 'color';
 
 /*
 const Btn = props => (
@@ -12,7 +12,7 @@ const Btn = props => (
 );
 */
 
-const orange = Color('#f6851B');
+// const orange = Color('#f6851B');
 /*
 const MetamaskButton = styled(Btn)`
     &&&,
@@ -43,12 +43,8 @@ const styles = theme => ({
 
 class MetamaskButton extends React.Component {
     state = { }
-    constructor(props) {
-        super(props);
-    }
 
     render() {
-        const { classes } = this.props;
         return (
             <div>
                 {this.props.text || 'Install Metamask!'}

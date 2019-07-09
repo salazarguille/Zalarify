@@ -24,23 +24,36 @@ class App extends Component {
     render() {
         return (
           <Router>
-            <Layout config={this.state.config}>
-              <Route path="/" exact render={ (props) => <p>Hola {process.env.REACT_APP_BACKEND_URL}</p>}/>
-              <Route path="/companies/" render={ (props)=> <CompanyList {...props} items={this.state.companies} config={this.state.config}/>}/>
-              <Route path="/company/:companyAddress" component={ ({match}) => 
-              <WithWeb3
-                config={this.state.config}
-                network={this.state.config.network}
-                handleStatus={false}
-                contracts={this.state.config.contracts}
-                currentContract="IZalarify"
-              >
-                {(props) => (
-                  <CompanyDetails {...match.params}  {...props}/> 
-                )}
-                </WithWeb3>
-              }/>
-            </Layout>
+            <WithWeb3
+              config={this.state.config}
+              network={this.state.config.network}
+              handleStatus={false}
+              contracts={this.state.config.contracts}
+              currentContract="IZalarify"
+            >
+              {(props) => (
+              <Layout config={this.state.config}>
+                <Route
+                  path="/"
+                  exact
+                  render={ () => <p>Hi</p>}
+                />
+                <Route
+                  path="/companies/"
+                  render={ ()=> <CompanyList {...props} items={this.state.companies} config={this.state.config}/>}
+                />
+                <Route
+                  path="/company/:companyAddress"
+                  render={ ({match}) => <CompanyDetails {...match.params}  {...props}/> }
+                />
+                {/* <Route
+                  path='*'
+                  exact={true}
+                  render={ ({match}) => <p>Page not found.</p>}
+                /> */}
+              </Layout>
+              )}
+            </WithWeb3>
           </Router>
         );
     }

@@ -6,9 +6,13 @@ import IZalarifyCompany from '../ethereum/abis/IZalarifyCompany.json';
 import IStablePay from '../ethereum/abis/IStablePay.json';
 import IProviderRegistry from '../ethereum/abis/IProviderRegistry.json';
 
+// ERC20
+import ERC20 from '../ethereum/abis/ERC20.json';
+
 const config = {};
 
 config.ropsten = {
+    maxGas: 7000000,
     allowChangeNetwork: false,
     network: 'ropsten',
     explorer: {
@@ -17,13 +21,12 @@ config.ropsten = {
     },
     urls: {
         backend: 'https://zalarify-api.herokuapp.com/api/v1',
-        // http://localhost:8080/api/v1
     },
     contracts: [
         {
             name: 'IZalarify',
-            abi: IZalarify, // ZalarifyBase
-            address: '0x08B2fF488D807437Fad2DA3Aa7Db81a67aFF33CD'
+            abi: IZalarify,
+            address: '0x8649FB686c38Ece73cF314735732168d234E2cC5'
         },
         {
             name: 'IZalarifyCompany',
@@ -33,7 +36,7 @@ config.ropsten = {
         {
             name: 'IReceiptRegistry',
             abi: IReceiptRegistry,
-            address: '0xD6B5Cd4d327973D6109388DEF81f5776E98733F7'
+            address: '0xD560a87d06523F4ee261161F640c0Bfe6a871294'
         },
         {
             name: 'IStablePay',
@@ -44,13 +47,19 @@ config.ropsten = {
             name: 'IProviderRegistry',
             abi: IProviderRegistry,
             address: '0x9E527e631b4edbef9b4b85e4EfCa7702edC96B1c'
+        },
+        {
+            name: 'ERC20',
+            abi: ERC20,
+            address: undefined
         }
     ]
 };
 
 config.ganache = {
+    maxGas: 6500000,
     allowChangeNetwork: true,
-    network: 'Ganache (localhost)',
+    network: 'unknown',
     explorer: {
         tx: 'https://ropsten.etherscan.io/tx/',
         address: 'https://ropsten.etherscan.io/address/'
@@ -61,8 +70,8 @@ config.ganache = {
     contracts: [
         {
             name: 'IZalarify',
-            abi: IZalarify, // ZalarifyBase
-            address: ''
+            abi: IZalarify,
+            address: '0x5dba06C7663b31bc17187A38B3d8759477BE3A0f'
         },
         {
             name: 'IZalarifyCompany',
@@ -72,17 +81,22 @@ config.ganache = {
         {
             name: 'IReceiptRegistry',
             abi: IReceiptRegistry,
-            address: ''
+            address: '0x85677e1debD4a74868f462A2dea7890dF4cAFb78'
         },
         {
             name: 'IStablePay',
             abi: IStablePay,
-            address: ''
+            address: '0xC7425Bc338226BF4256EA86246FeF1C7e81BDF0E'
         },
         {
             name: 'IProviderRegistry',
             abi: IProviderRegistry,
-            address: ''
+            address: '0x37fb1B54BC36FfFc8FecB71344059cf208876D1C'
+        },
+        {
+            name: 'ERC20',
+            abi: ERC20,
+            address: undefined
         }
     ]
 };

@@ -32,20 +32,23 @@ class EmployeeForm extends React.Component {
     tokens: [],
     tokenSelected: "0",
     employee: {
-      name: undefined,
-      role: undefined,
-      email: undefined,
+      name: '',
+      role: '',
+      email: '',
       preferedTokenPayment: undefined,
       employeeType: 0,
-      salaryAmount: undefined,
-      wallet: undefined,
+      salaryAmount: '',
+      wallet: '',
     },
     processing: false,
   };
 
   componentDidMount = async () => {
     const { employee, config } = this.props;
-    const tokens = await axios.get(`${config.urls.backend}/tokens/DAI`);
+
+    const defaultToken = config.network.toLowerCase() === 'unknown' ? 'KNC' : 'DAI';
+    const tokens = await axios.get(`${config.urls.backend}/tokens/${defaultToken}`);
+    
     if( employee !== undefined) {
       employee.preferedTokenPayment = tokens.data;
       this.setState({
@@ -120,6 +123,7 @@ class EmployeeForm extends React.Component {
           processing: nextProps.processing,
         };
     }
+    return null;
 }
 
   onChangeToken = (event) => {

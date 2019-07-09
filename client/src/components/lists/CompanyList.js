@@ -1,10 +1,10 @@
 import { withStyles } from '@material-ui/styles';
 import axios from "axios";
 import React from 'react';
-import { Flex, Text, Loader } from 'rimble-ui';
+import { Flex, Text, Loader, Button } from 'rimble-ui';
 import CompanyItem from './items/CompanyItem';
-import CompanyForm from '../forms/CompanyForm';
-import WithWeb3 from '../../ethereum/web3/hoc/WithWeb3';
+import CompanyFormModal from '../modals/CompanyFormModal';
+import MessageModal from '../modals/MessageModal';
 
 const styles = theme => ({
     wrapper: {
@@ -54,9 +54,9 @@ const styles = theme => ({
         background: '#f3f3f3'
     },
     spotlights: {
-		display: '-moz-flex',
-		display: '-webkit-flex',
-		display: '-ms-flex',
+		// display: '-moz-flex',
+		// display: '-webkit-flex',
+		// display: '-ms-flex',
 		display: 'flex',
 		'-moz-flex-wrap': 'wrap',
 		'-webkit-flex-wrap': 'wrap',
@@ -105,37 +105,45 @@ const styles = theme => ({
 
         */
 class CompanyList extends React.Component {
+    _isMounted = false;
     state = {
         items: [],
         loading: true,
         errorMessage: undefined,
-    }
-    constructor(props) {
-        super(props);
+        isCompanyFormOpened: false,
+        isActionMessageOpened: false,
+        action: {
+            isSuccess: false,
+            message: undefined,
+        }
     }
 
-    componentDidMount = () => {
+    updateCompanies = async () => {
         const { config } = this.props;
-
-        axios.get(`${config.urls.backend}/companies`)
-        .then( getCompaniesResult => {
-            this.setState({
-                ...this.state,
-                items: getCompaniesResult.data.items,
-                loading: false,
-            });
-        })
-        .catch( reason => {
+        try {
+            const getCompaniesResult = await axios.get(`${config.urls.backend}/companies`)
+            if (this._isMounted) {
+                this.setState({
+                    ...this.state,
+                    items: getCompaniesResult.data.items,
+                    loading: false,
+                });
+            }
+        } catch (reason) {
             console.log(reason);
             this.setState({
                 errorMessage: `Error getting data: ${reason.toString()}`,
             });
-        });
-        
+        }
     }
 
-    onMetamaskAccountUpdate = e => {
-        console.log(e);
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    componentDidMount = () => {
+        this._isMounted = true;
+        this.updateCompanies();
     }
 
     renderCompanies = () => {
@@ -162,8 +170,48 @@ class CompanyList extends React.Component {
         );
     }
 
+    onClickCreateCompany = () => {
+        this.setState({
+            isCompanyFormOpened: true
+        });
+    }
+
+    onCompanyCreatedCallback = (item) => {
+        this.setState({
+            isCompanyFormOpened: false
+        });
+        this.updateCompanies();
+        this.openActionMessage(`Your company was created successfully.`, true);
+    }
+
+    onCloseCompanyForm = () => {
+        this.setState({
+            isCompanyFormOpened: false
+        });
+    }
+
+    onCloseActionMessage = () => {
+        this.setState({
+            isActionMessageOpened: false,
+            action: {
+                isSuccess: false,
+                message:undefined
+            }
+        });
+    }
+
+    openActionMessage = (message, isSuccess) => {
+        this.setState({
+            isActionMessageOpened: true,
+            action: {
+                isSuccess,
+                message
+            }
+        });
+    }
+
     renderContent = (content) => {
-        const { classes } = this.props;
+        const { classes, config, ...others } = this.props;
         return (
             <div className={classes.wrapper}>
                 <section className={`${classes.section} ${classes.style1}`} >
@@ -173,10 +221,34 @@ class CompanyList extends React.Component {
                             <p>They are some companies which already have joined us.</p>
                         </header>    
                     </div>
+                    <Flex flexDirection="row" width={1} p={3}>
+                        <Button height={'20hv'} m={1} onClick={ this.onClickCreateCompany }>
+                            + Company
+                        </Button>
+                    </Flex>
                     <div className={classes.spotlights}>
                         {content}
                     </div>
                 </section>
+                <Flex flexDirection="row" width={1}>
+                    <CompanyFormModal
+                        config={config}
+                        width={2/3}
+                        isOpen={this.state.isCompanyFormOpened}
+                        companies={this.state.companies}
+                        closeModal={this.onCloseCompanyForm}
+                        companyCreatedCallback={this.onCompanyCreatedCallback}
+                        {...others}
+                    />
+                    <MessageModal
+                        width={2/3}
+                        isOpen={this.state.isActionMessageOpened}
+                        closeModal={this.onCloseActionMessage}
+                        message={this.state.action.message}
+                        isSuccess={this.state.action.isSuccess}
+                        {...others}
+                    />
+                </Flex>
             </div>
         );
     }

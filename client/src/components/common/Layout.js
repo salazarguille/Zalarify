@@ -17,7 +17,7 @@ class Layout extends Component {
 
 
     render() {
-        const { config, classes } = this.props;
+        const { config } = this.props;
         return (
                 <div style={{width: '100%', height:'100hv'}}>
                     <Header config={config} clickOnMenu={this.clickOnMenu}/>

@@ -9,20 +9,21 @@ import {
   Box,
 } from "rimble-ui";
 import ModalCard from './ModalCard';
-import EmployeeForm from "../forms/EmployeeForm";
+import CompanyForm from "../forms/CompanyForm";
 
-class EmployeeFormModal extends React.Component {
+class CompanyFormModal extends React.Component {
   state = {
     processing: false,
   };
 
-  getZalarifyCompanyContract = () => {
-    const { contracts, web3, companyAddress } = this.props;
-    const currentContractData = contracts.find(contract => contract.name === 'IZalarifyCompany');
+  getZalarifyContract = () => {
+    const { contracts, web3 } = this.props;
+    const currentContractData = contracts.find(contract => contract.name === 'IZalarify');
     const contract = currentContractData.abi;
+    const contractAddress = currentContractData.address;
     const instance = new web3.eth.Contract(
         contract.abi,
-        companyAddress
+        contractAddress
     );
     return instance;
   }
@@ -58,19 +59,16 @@ class EmployeeFormModal extends React.Component {
     let result;
 
     try {
-      const zalarifyCompany = this.getZalarifyCompanyContract();
+      const zalarify = this.getZalarifyContract();
       this.setProcessing();
-      result = zalarifyCompany.methods.addEmployee(
-        item.wallet,
-        item.employeeType,
+      //createCompany(bytes32 _id, bytes32 _name, bytes32 _website, bytes32 _description) external returns (address companyAddress);
+      result = zalarify.methods.createCompany(
+        utils.fromAscii(item.name).padEnd(66, '0'), // Id
         utils.fromAscii(item.name).padEnd(66, '0'),
-        utils.fromAscii(item.role).padEnd(66, '0'),
-        utils.fromAscii(item.email).padEnd(66, '0'),
-        item.preferedTokenPayment.address,
-        item.salaryAmount
+        utils.fromAscii(item.website).padEnd(66, '0'),
+        utils.fromAscii(item.description).padEnd(66, '0')
       ).send({from: info.selectedAddress});
     } catch (error) {
-      console.log(error);
       this.toast(<div>
         {`Message: ${error.message}`}
       </div>, true);
@@ -79,13 +77,13 @@ class EmployeeFormModal extends React.Component {
   }
 
   handleSubmit = async (item) => {
-    const { config, employeeCreatedCallback } = this.props;
+    const { config, companyCreatedCallback } = this.props;
 
     const result = this.invokeContract(item);
     result.on('transactionHash', (hash) => {
         if(config.network === 'unknown') {
           this.setNotProcessing();
-          employeeCreatedCallback(item, undefined);
+          companyCreatedCallback(item, undefined);
           result.removeAllListeners();
         }
         this.toast(<div>
@@ -106,7 +104,7 @@ class EmployeeFormModal extends React.Component {
         } else {
           if (confirmationNumber === 2) {
             this.setNotProcessing();
-            employeeCreatedCallback(item, receipt);
+            companyCreatedCallback(item, receipt);
             result.removeAllListeners();
           }
         }
@@ -120,13 +118,12 @@ class EmployeeFormModal extends React.Component {
   };
 
   renderContent = () => {
-    const {currentCompany} = this.props;
     return (
       <React.Fragment>
         <Box mb={3}>
-          <Heading.h2>Employee Form - {currentCompany ? currentCompany.name : ''}</Heading.h2>
+          <Heading.h2>Company Form</Heading.h2>
           <Text my={3} textAlign={"center"}>
-            It allows you to create or edit an employee.
+            It allows you to create a company.
           </Text>
         </Box> 
         <Flex
@@ -136,7 +133,7 @@ class EmployeeFormModal extends React.Component {
           mt={4}
           mb={4}
         >
-          <EmployeeForm
+          <CompanyForm
             width={1}
             config={this.props.config}
             companies={this.props.companies}
@@ -178,4 +175,4 @@ class EmployeeFormModal extends React.Component {
   }
 }
 
-export default EmployeeFormModal;
+export default CompanyFormModal;

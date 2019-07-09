@@ -39,9 +39,6 @@ class CompanyItem extends React.Component {
     state = {
         name: undefined,
     }
-    constructor(props) {
-        super(props);
-    }
 
     getChars = (name) => {
         const array = name.split(' ');
@@ -92,10 +89,7 @@ class CompanyItem extends React.Component {
                     <Button.Text className={classes.button} onClick={e => this.onClickVisitWebsite(item.website)}>
                         Visit Website
                     </Button.Text>
-                    {/* <Button.Text p={'0'} height={'auto'}>  */}
-                    {/* onClick={e => this.onClickDetails(e, item)} */}
                     <Link className={classes.link} to={`/company/${item.companyAddress}`}>Company Details</Link>
-                    {/* </Button.Text> */}
                 </Flex>
             </Card>
             );
