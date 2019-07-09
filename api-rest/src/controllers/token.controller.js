@@ -39,6 +39,7 @@ const TokenController = {
      * */
     getExpectedRate: async (
         symbolOrAddress,
+        targetAmount = 1,
         network = ETHEREUM_NETWORK,
         targetSymbolOrAddress = getTokenAddress(DEFAULT_TOKEN, network),
     ) => {
@@ -48,11 +49,16 @@ const TokenController = {
         const [sourceToken, targetToken] = await Promise.all([sourceTokenPromise, targetTokenPromise]);
         const source = sourceToken.address;
         const target = targetToken.address;
-        const amount = 1; // TODO: Make a better approximation of amount to swap for better rates
-        const rate = await getExpectedRates(source, target, amount, network);
+        const rate = await getExpectedRates(source, target, targetAmount, network);
+
         const payload = {
-            expected: rate.expected,
-            slippage: rate.slippage,
+            minRate: rate.minRate,
+            maxRate: rate.maxRate,
+            minRateUnit: rate.minRateUnit,
+            maxRateUnit: rate.maxRateUnit,
+            provider: rate.provider,
+            providerKey: rate.providerKey,
+            targetAmount: rate.targetAmount,
         };
         return payload;
     },

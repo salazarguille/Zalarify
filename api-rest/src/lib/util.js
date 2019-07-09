@@ -5,6 +5,7 @@ import config from '../env';
 import {
     HOMESTEAD,
     ROPSTEN,
+    GANACHE,
     ETHEREUM_TOKEN_ADDR,
     STABLEPAY,
     PROVIDER_REGISTRY,
@@ -80,6 +81,8 @@ export const getContractAddress = (service, network) => {
                     return config.STABLEPAY_MAINNET_ADDRESS;
                 case ROPSTEN:
                     return config.STABLEPAY_ROPSTEN_ADDRESS;
+                case GANACHE:
+                    return config.STABLEPAY_GANACHE_ADDRESS;
                 default:
                     return 'NETWORK_NOT_SUPPORTED';
             }
@@ -89,6 +92,8 @@ export const getContractAddress = (service, network) => {
                     return config.STABLEPAY_STORAGE_MAINNET_ADDRESS;
                 case ROPSTEN:
                     return config.STABLEPAY_STORAGE_ROPSTEN_ADDRESS;
+                case GANACHE:
+                    return config.STABLEPAY_STORAGE_GANACHE_ADDRESS;
                 default:
                     return 'NETWORK_NOT_SUPPORTED';
             }
@@ -98,6 +103,8 @@ export const getContractAddress = (service, network) => {
                     return config.RECEIPT_REGISTRY_MAINNET_ADDRESS;
                 case ROPSTEN:
                     return config.RECEIPT_REGISTRY_ROPSTEN_ADDRESS;
+                case GANACHE:
+                    return config.RECEIPT_REGISTRY_GANACHE_ADDRESS;
                 default:
                     return 'NETWORK_NOT_SUPPORTED';
             }
@@ -107,6 +114,8 @@ export const getContractAddress = (service, network) => {
                     return config.ZALARIFY_MAINNET_ADDRESS;
                 case ROPSTEN:
                     return config.ZALARIFY_ROPSTEN_ADDRESS;
+                case GANACHE:
+                    return config.ZALARIFY_GANACHE_ADDRESS;
                 default:
                     return 'NETWORK_NOT_SUPPORTED';
             }

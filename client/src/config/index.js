@@ -9,6 +9,7 @@ import IProviderRegistry from '../ethereum/abis/IProviderRegistry.json';
 const config = {};
 
 config.ropsten = {
+    allowChangeNetwork: false,
     network: 'ropsten',
     explorer: {
         tx: 'https://ropsten.etherscan.io/tx/',
@@ -47,6 +48,45 @@ config.ropsten = {
     ]
 };
 
+config.ganache = {
+    allowChangeNetwork: true,
+    network: 'Ganache (localhost)',
+    explorer: {
+        tx: 'https://ropsten.etherscan.io/tx/',
+        address: 'https://ropsten.etherscan.io/address/'
+    },
+    urls: {
+        backend: 'http://localhost:8080/api/v1',
+    },
+    contracts: [
+        {
+            name: 'IZalarify',
+            abi: IZalarify, // ZalarifyBase
+            address: ''
+        },
+        {
+            name: 'IZalarifyCompany',
+            abi: IZalarifyCompany,
+            address: undefined
+        },
+        {
+            name: 'IReceiptRegistry',
+            abi: IReceiptRegistry,
+            address: ''
+        },
+        {
+            name: 'IStablePay',
+            abi: IStablePay,
+            address: ''
+        },
+        {
+            name: 'IProviderRegistry',
+            abi: IProviderRegistry,
+            address: ''
+        }
+    ]
+};
+
 export function getContracts (network) {
     const networkConfig = config[network.toLowerCase()];
     if(networkConfig === undefined) {
@@ -64,5 +104,9 @@ export function getConfig (network) {
 };
 
 export function getCurrentConfig () {
-    return getConfig('ropsten');
+    const currentNetwork = process.env.REACT_APP_DEFAULT_NETWORK;
+    if(currentNetwork === undefined) {
+        throw new Error(`Please set REACT_APP_DEFAULT_NETWORK value in your .env file.`);
+    }
+    return getConfig(currentNetwork.toLowerCase());
 };

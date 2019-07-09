@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import BigNumber from 'bignumber.js';
 import Web3 from 'web3';
+import BadRequestError from '../lib/errors/BadRequestError';
 import {
     getContract,
     getCompanyContract,
@@ -26,10 +27,16 @@ export const getAddress = async (id, network) => {
 const { utils } = new Web3();
 
 export const getInfo = async (companyAddress, network) => {
-    const company = await getCompanyContract(companyAddress, network);
-    const companyInfo = await company.getInfo();
+    let company;
+    let companyInfo;
+    try {
+        company = await getCompanyContract(companyAddress, network);
+        companyInfo = await company.getInfo();
+    } catch (error) {
+        throw new BadRequestError(`Company ${companyAddress} not found.`);
+    }
     const companyEmployees = await company.getEmployees();
-    const isEnabled = await company.isEnabled();
+    const isEnabled = await company.isCompanyEnabled();
 
     const mapEmployeeAsyncFunction = async (employee) => {
         const preferedTokenPayment = await getTokenDataByAddress(employee.preferedTokenPayment);
@@ -41,7 +48,7 @@ export const getInfo = async (companyAddress, network) => {
             salaryAmount: parseInt(employee.salaryAmount.toString(), 10),
             employeeType: getType(employee.employeeType),
             enabled: employee.enabled,
-            wallet: utils.hexToString(employee.email),
+            wallet: employee.employee,
         };
     };
     const employees = await Promise.all(companyEmployees.map(employee => mapEmployeeAsyncFunction(employee)));

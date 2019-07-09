@@ -33,6 +33,7 @@ export default ({ config, db }) => {
         '/:symbolOrAddress/rate/',
         respondHttp(TokenController.getExpectedRate, req => [
             req.params.symbolOrAddress,
+            '1',
             req.query.network,
             // to support query arguments as well as params
             req.query.target,
@@ -43,6 +44,7 @@ export default ({ config, db }) => {
         '/:symbolOrAddress/rate/:targetSymbolOrAddress',
         respondHttp(TokenController.getExpectedRate, req => [
             req.params.symbolOrAddress,
+            req.query.targetAmount,
             req.query.network,
             req.params.targetSymbolOrAddress,
         ]),

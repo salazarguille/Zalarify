@@ -10,19 +10,22 @@ import {
     HOMESTEAD,
     ROPSTEN,
     ZALARIFY,
+    GANACHE,
     RECEIPT_REGISTRY,
 } from '../../util/constants';
 
 function initContracts() {
-    // const zalarifyMainnetContract = new ethers.Contract(getContractAddress(ZALARIFY, HOMESTEAD), IZalarify.abi, getProvider(HOMESTEAD));
+    const zalarifyGanacheContract = new ethers.Contract(getContractAddress(ZALARIFY, GANACHE), IZalarify.abi, getProvider(GANACHE));
     const zalarifyRopstenContract = new ethers.Contract(getContractAddress(ZALARIFY, ROPSTEN), IZalarify.abi, getProvider(ROPSTEN));
-    // const receiptRegistryMainnetContract = new ethers.Contract(getContractAddress(RECEIPT_REGISTRY, HOMESTEAD), IReceiptRegistry.abi, getProvider(HOMESTEAD));
+    
+    const receiptRegistryGanacheContract = new ethers.Contract(getContractAddress(RECEIPT_REGISTRY, GANACHE), IReceiptRegistry.abi, getProvider(GANACHE));
     const receiptRegistryRopstenContract = new ethers.Contract(getContractAddress(RECEIPT_REGISTRY, ROPSTEN), IReceiptRegistry.abi, getProvider(ROPSTEN));
     return {
-        // zalarifyMainnetContract,
         zalarifyRopstenContract,
-        // receiptRegistryMainnetContract,
         receiptRegistryRopstenContract,
+
+        zalarifyGanacheContract,
+        receiptRegistryGanacheContract,
     };
 }
 
@@ -30,6 +33,9 @@ export const getContract = async (service, network) => {
     const {
         zalarifyRopstenContract,
         receiptRegistryRopstenContract,
+
+        zalarifyGanacheContract,
+        receiptRegistryGanacheContract,
     } = initContracts();
 
     switch (service.toUpperCase()) {
@@ -39,6 +45,8 @@ export const getContract = async (service, network) => {
                     throw new AppError('Zalarify is not deployed on Mainnet.');
                 case ROPSTEN:
                     return zalarifyRopstenContract;
+                case GANACHE:
+                    return zalarifyGanacheContract;
                 default:
                     return 'NETWORK_NOT_SUPPORTED';
             }
@@ -48,6 +56,8 @@ export const getContract = async (service, network) => {
                     throw new AppError('Zalarify is not deployed on Mainnet.');
                 case ROPSTEN:
                     return receiptRegistryRopstenContract;
+                case GANACHE:
+                    return receiptRegistryGanacheContract;
                 default:
                     return 'NETWORK_NOT_SUPPORTED';
             }
