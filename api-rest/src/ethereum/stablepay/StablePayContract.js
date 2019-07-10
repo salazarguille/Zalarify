@@ -12,12 +12,21 @@ import {
     PROVIDER_REGISTRY,
 } from '../../util/constants';
 
-function initContracts() {
-    const stablepayRopstenContract = new ethers.Contract(getContractAddress(STABLEPAY, ROPSTEN), StablePay.abi, getProvider(ROPSTEN));
-    const stablepayGanacheContract = new ethers.Contract(getContractAddress(STABLEPAY, GANACHE), StablePay.abi, getProvider(GANACHE));
+function initContracts(network) {
+    let storageGanacheContract;
+    let stablepayGanacheContract;
+    let stablepayRopstenContract;
+    let storageRopstenContract;
+    if (network.toUpperCase() === GANACHE) {
+        stablepayGanacheContract = new ethers.Contract(getContractAddress(STABLEPAY, GANACHE), StablePay.abi, getProvider(GANACHE));
+        storageGanacheContract = new ethers.Contract(getContractAddress(PROVIDER_REGISTRY, GANACHE), IProviderRegistry.abi, getProvider(GANACHE));
+    }
 
-    const storageRopstenContract = new ethers.Contract(getContractAddress(PROVIDER_REGISTRY, ROPSTEN), IProviderRegistry.abi, getProvider(ROPSTEN));
-    const storageGanacheContract = new ethers.Contract(getContractAddress(PROVIDER_REGISTRY, GANACHE), IProviderRegistry.abi, getProvider(GANACHE));
+    if (network.toUpperCase() === ROPSTEN) {
+        stablepayRopstenContract = new ethers.Contract(getContractAddress(STABLEPAY, ROPSTEN), StablePay.abi, getProvider(ROPSTEN));
+        storageRopstenContract = new ethers.Contract(getContractAddress(PROVIDER_REGISTRY, ROPSTEN), IProviderRegistry.abi, getProvider(ROPSTEN));
+    }
+    
     return {
         stablepayRopstenContract,
         storageRopstenContract,
@@ -32,7 +41,7 @@ const getContract = async (service, network) => {
         storageRopstenContract,
         stablepayGanacheContract,
         storageGanacheContract,
-    } = initContracts();
+    } = initContracts(network);
 
     switch (service.toUpperCase()) {
         case STABLEPAY:
