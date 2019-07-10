@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable import/prefer-default-export */
 import { ethers } from 'ethers';
 import getProvider from '../ethers';
@@ -14,12 +15,20 @@ import {
     RECEIPT_REGISTRY,
 } from '../../util/constants';
 
-function initContracts() {
-    const zalarifyGanacheContract = new ethers.Contract(getContractAddress(ZALARIFY, GANACHE), IZalarify.abi, getProvider(GANACHE));
-    const zalarifyRopstenContract = new ethers.Contract(getContractAddress(ZALARIFY, ROPSTEN), IZalarify.abi, getProvider(ROPSTEN));
-    
-    const receiptRegistryGanacheContract = new ethers.Contract(getContractAddress(RECEIPT_REGISTRY, GANACHE), IReceiptRegistry.abi, getProvider(GANACHE));
-    const receiptRegistryRopstenContract = new ethers.Contract(getContractAddress(RECEIPT_REGISTRY, ROPSTEN), IReceiptRegistry.abi, getProvider(ROPSTEN));
+function initContracts(network) {
+    let zalarifyRopstenContract;
+    let receiptRegistryRopstenContract;
+
+    let zalarifyGanacheContract;
+    let receiptRegistryGanacheContract;
+    if (network.toUpperCase() === GANACHE) {
+        zalarifyGanacheContract = new ethers.Contract(getContractAddress(ZALARIFY, GANACHE), IZalarify.abi, getProvider(GANACHE));
+        receiptRegistryGanacheContract = new ethers.Contract(getContractAddress(RECEIPT_REGISTRY, GANACHE), IReceiptRegistry.abi, getProvider(GANACHE));
+    }
+    if (network.toUpperCase() === ROPSTEN) {
+        zalarifyRopstenContract = new ethers.Contract(getContractAddress(ZALARIFY, ROPSTEN), IZalarify.abi, getProvider(ROPSTEN));
+        receiptRegistryRopstenContract = new ethers.Contract(getContractAddress(RECEIPT_REGISTRY, ROPSTEN), IReceiptRegistry.abi, getProvider(ROPSTEN));
+    }
     return {
         zalarifyRopstenContract,
         receiptRegistryRopstenContract,
@@ -36,7 +45,7 @@ export const getContract = async (service, network) => {
 
         zalarifyGanacheContract,
         receiptRegistryGanacheContract,
-    } = initContracts();
+    } = initContracts(network);
 
     switch (service.toUpperCase()) {
         case ZALARIFY:
