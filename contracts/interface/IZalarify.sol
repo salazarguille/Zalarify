@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 pragma experimental ABIEncoderV2;
 
 import "../util/SafeMath.sol";
@@ -20,6 +20,9 @@ contract IZalarify {
 
     /** Functions */
 
-    function createCompany(bytes32 _id, bytes32 _name, bytes32 _website, bytes32 _description) public returns (address companyAddress);
+    function createCompany(bytes32 _id, bytes32 _name, bytes32 _website, bytes32 _description) external returns (address companyAddress);
 
+    function getCompanies() public view returns (ZalarifyCommon.Company[] memory);
+
+    function getCompany(bytes32 _id) public view returns (address);
 }

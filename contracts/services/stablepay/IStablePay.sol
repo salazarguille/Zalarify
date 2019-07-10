@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 pragma experimental ABIEncoderV2;
 
 import "./StablePayCommon.sol";

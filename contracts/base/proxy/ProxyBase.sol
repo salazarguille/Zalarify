@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 
 import "../Base.sol";
 import "./DelegateProxy.sol";
@@ -8,8 +8,8 @@ contract ProxyBase is DelegateProxy, Base {
 
     string public targetId;
 
-    constructor(address _storage, string memory _targetId) public Base(_storage) {
-        targetId = _targetId;
+    constructor(address _storageAddress, string memory aTargetId) public Base(_storageAddress) {
+        targetId = aTargetId;
     }
 
     function () external payable {
@@ -22,7 +22,7 @@ contract ProxyBase is DelegateProxy, Base {
         return targetId;
     }
 
-    function getTargetAddress(string memory _targetId) internal view returns (address) {
-        return _storage.getAddress(keccak256(abi.encodePacked(CONTRACT_NAME, _targetId)));
+    function getTargetAddress(string memory aTargetId) internal view returns (address) {
+        return _storage.getAddress(keccak256(abi.encodePacked(CONTRACT_NAME, aTargetId)));
     }
 }

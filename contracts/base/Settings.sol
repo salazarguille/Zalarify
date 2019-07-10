@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 
 import "./Base.sol";
 import "../interface/ISettings.sol";

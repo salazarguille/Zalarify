@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 pragma experimental ABIEncoderV2;
 
 import "../base/Base.sol";
@@ -8,6 +8,7 @@ import "../util/ZalarifyCommon.sol";
 import "../services/erc20/ERC20.sol";
 import "../services/stablepay/StablePayCommon.sol";
 import "../services/stablepay/IStablePay.sol";
+import "../services/stablepay/IProviderRegistry.sol";
 import "../interface/IZalarifyCompany.sol";
 
 contract ZalarifyCompany is Base, IZalarifyCompany {
@@ -57,46 +58,15 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
 
     /** Constructor */
 
-    constructor(address currentOwner, ZalarifyCommon.Company memory _company, address _storageAddress)
+    constructor(ZalarifyCommon.Company memory _company, address _storageAddress)
         public Base(_storageAddress) {
         company = _company;
-        companyOwners[currentOwner] = true;
+        companyOwners[_company.creator] = true;
     }
 
     /** Fallback Method */
 
     /** Functions */
-
-    function createOrder(ZalarifyCommon.Payment memory _payment)
-    internal
-    view
-    returns (StablePayCommon.Order memory){
-        ZalarifyCommon.Employee memory employee = employees[_payment.to];
-        return StablePayCommon.Order({
-            sourceAmount: _payment.sourceAmount,
-            targetAmount: _payment.targetAmount,
-            makerAssetAmount: ZERO,
-            takerAssetAmount: ZERO,
-            makerFee: ZERO,
-            takerFee: ZERO,
-            expirationTimeSeconds: ZERO,
-            salt: ZERO,
-            minRate: _payment.minRate,
-            maxRate: _payment.maxRate,
-            sourceToken: _payment.sourceToken,
-            targetToken: employee.preferedTokenPayment,
-            toAddress: _payment.to,
-            fromAddress: msg.sender,
-            makerAddress: ADDRESS_EMPTY,
-            takerAddress: ADDRESS_EMPTY,
-            feeRecipientAddress: ADDRESS_EMPTY,
-            senderAddress: ADDRESS_EMPTY,
-            signature: "",
-            data: ZALARIFY,
-            makerAssetData: "",
-            takerAssetData: ""
-        });
-    }
 
     function getInfo()
     public
@@ -119,20 +89,12 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return employees[_employee].enabled;
     }
 
-    function isEnabled()
+    function isCompanyEnabled()
     public
     view
     returns (bool){
-        return _storage.getBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, address(this))));
+        return !_storage.getBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, address(this))));
     }
-    /*
-    function getReceipts(address _employee)
-    public
-    view
-    returns (ZalarifyCommon.Receipt[] memory){
-        return receipts[_employee];
-    }
-    */
 
     function getEmployees()
     public
@@ -215,35 +177,12 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return true;
     }
 
-    function updateEmployee(address _employee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount)
-    public
-    isCompanyOwner(msg.sender)
-    isEnabledCompany(address(this))
-    isEmployee(_employee)
-    returns (bool){
-        employees[_employee].employeeType = _employeeType;
-        employees[_employee].role = _role;
-        employees[_employee].email = _email;
-        employees[_employee].preferedTokenPayment = _preferedTokenPayment;
-        employees[_employee].salaryAmount = _salaryAmount;
-
-        emit EmployeeUpdated(
-            address(this),
-            _employee,
-            _role,
-            _email,
-            _preferedTokenPayment,
-            _employeeType,
-            _salaryAmount
-        );
-        return true;
-    }
-
-    function createEmployee(ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount)
+    function createEmployee(address _newEmployee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount)
     internal
     pure
     returns (ZalarifyCommon.Employee memory) {
         return ZalarifyCommon.Employee({
+            employee: _newEmployee,
             name: _name,
             role: _role,
             email: _email,
@@ -263,7 +202,7 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
     returns (bool){
         
         // Create the employee struct instance and register it.
-        employees[_newEmployee] = createEmployee(_employeeType, _name, _role, _email, _preferedTokenPayment, _salaryAmount);
+        employees[_newEmployee] = createEmployee(_newEmployee, _employeeType, _name, _role, _email, _preferedTokenPayment, _salaryAmount);
         employeesList.add(_newEmployee);
 
         // Emit event.
@@ -287,50 +226,47 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return true;
     }
 
-    function addCompanyOwner(address _newOwner)
-    public
-    isCompanyOwner(msg.sender)
-    isEnabledCompany(address(this))
+    function verifySourceTokens(ZalarifyCommon.Payment memory _payment)
+    internal
     returns (bool){
-        companyOwners[_newOwner] = true;
-        emit NewCompanyOwnerAdded(
-            address(this),
-            msg.sender,
-            _newOwner
-        );
-        return true;
-    }
-
-    function removeCompanyOwner(address _owner)
-    public
-    isCompanyOwner(msg.sender)
-    isEnabledCompany(address(this))
-    returns (bool){
-        companyOwners[_owner] = false;
-        emit NewCompanyOwnerRemoved(
-            address(this),
-            msg.sender,
-            _owner
-        );
-        return true;
-    }
-
-    function pay(ZalarifyCommon.Payment memory _payment)
-    public
-    isNotEmployee(_payment.to)
-    returns (bool){
-        require(_payment.sourceAmount > 0, "Source amount > 0.");
-
         address stablePayAddress = getStablePayAddress();
-
+        require(
+            ERC20(_payment.sourceToken).allowance(msg.sender, address(this)) >= _payment.sourceAmount,
+            "Allowance is not >= source amount."
+        );
         require(
             ERC20(_payment.sourceToken).transferFrom(
+                msg.sender,
                 address(this),
-                stablePayAddress,
                 _payment.sourceAmount
             ),
             "Transfer from failed."
         );
+        require(
+            ERC20(_payment.sourceToken).approve(stablePayAddress, _payment.sourceAmount),
+            "Approve tokens to StablePay failed."
+        );
+        return true;
+    }
+
+    function payWithTokens(ZalarifyCommon.Payment memory _payment)
+    public
+    isCompanyOwner(msg.sender)
+    isEmployee(_payment.to)
+    isEmployeeEnabled(_payment.to)
+    returns (bool){
+        require(_payment.provider != bytes32(0x0), "Provider != 0x0.");
+        require(_payment.sourceAmount > 0, "Source amount > 0.");
+        require(_payment.sourceToken != address(0x0), "Source token != 0x0.");
+        require(_payment.targetAmount > 0, "Target amount > 0.");
+        require(_payment.targetToken != address(0x0), "Target token != 0x0.");
+
+        uint initialBalance = ERC20(_payment.sourceToken).balanceOf(address(this));
+
+        verifySourceTokens(_payment);
+
+        address stablePayAddress = getStablePayAddress();
+
         StablePayCommon.Order memory order = createOrder(_payment);
         
         bytes32[] memory providers = new bytes32[](1);
@@ -342,10 +278,72 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         );
         require(transferWithTokensResult, "Transfer payment failed.");
 
+        uint finalBalance = ERC20(_payment.sourceToken).balanceOf(address(this));
+        (, uint diffTokens ) = transferDiffSourceTokensIfApplicable(_payment.sourceToken, msg.sender, initialBalance, finalBalance);
+
+        emitPaymentSentEvent(_payment, diffTokens);
+
         return true;
     }
 
-    
+    function emitPaymentSentEvent(ZalarifyCommon.Payment memory _payment, uint diffTokens)
+    internal
+    returns (bool) {
+        emit PaymentSent(
+            _payment.provider,
+            _payment.sourceToken,
+            _payment.targetToken,
+            _payment.to,
+            _payment.sourceAmount.sub(diffTokens),
+            _payment.targetAmount
+        );
+        return true;
+    }
+
+    function transferDiffSourceTokensIfApplicable(address token, address to, uint initialBalance, uint finalBalance)
+    internal
+    returns (bool, uint)
+    {
+        require(finalBalance >= initialBalance, "Final balance >= initial balance.");
+        uint tokensDiff = finalBalance.sub(initialBalance);
+        if(tokensDiff > 0) {
+            bool transferResult = ERC20(token).transfer(to, tokensDiff);
+            require(transferResult, "Transfer tokens back failed.");
+        }
+        return (true, tokensDiff);
+    }
+
+    function createOrder(ZalarifyCommon.Payment memory _payment)
+    internal
+    view
+    returns (StablePayCommon.Order memory){
+        ZalarifyCommon.Employee memory employee = employees[_payment.to];
+        require(employee.preferedTokenPayment == _payment.targetToken, "Preferred token != target token.");
+        return StablePayCommon.Order({
+            sourceAmount: _payment.sourceAmount,
+            targetAmount: _payment.targetAmount,
+            makerAssetAmount: ZERO,
+            takerAssetAmount: ZERO,
+            makerFee: ZERO,
+            takerFee: ZERO,
+            expirationTimeSeconds: ZERO,
+            salt: ZERO,
+            minRate: _payment.minRate,
+            maxRate: _payment.maxRate,
+            sourceToken: _payment.sourceToken,
+            targetToken: employee.preferedTokenPayment,
+            toAddress: _payment.to,
+            fromAddress: address(this),
+            makerAddress: ADDRESS_EMPTY,
+            takerAddress: ADDRESS_EMPTY,
+            feeRecipientAddress: ADDRESS_EMPTY,
+            senderAddress: ADDRESS_EMPTY,
+            signature: "",
+            data: ZALARIFY_BYTES,
+            makerAssetData: "",
+            takerAssetData: ""
+        });
+    }    
 
     
 }

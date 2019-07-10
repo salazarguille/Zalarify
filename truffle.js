@@ -33,7 +33,7 @@ module.exports = {
 	},
 	compilers: {
 		solc: {
-			version: "0.5.9",
+			version: "0.5.3",
 			optimizer: {
 				enabled: true,
 				runs: 200
@@ -46,6 +46,9 @@ module.exports = {
 	plugins: [
 		'truffle-plugin-verify'
 	],
+	verify: {
+		preamble: "Author: Guillermo Salazar <guillesalazar@gmail.com>.\nVersion: 1.0.1"
+	},
 	networks: {
 		geth: {
 			host: 'localhost',

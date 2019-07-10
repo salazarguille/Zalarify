@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 pragma experimental ABIEncoderV2;
 
 import "../base/Base.sol";
@@ -51,8 +51,8 @@ contract ZalarifyBase is Base, IZalarify {
             company = ZalarifyCommon.Company({
                 id: _id,
                 name: _name,
-                website: _website,
                 description: _description,
+                website: _website,
                 creator: _creator,
                 createdAt: now
             });
@@ -67,6 +67,13 @@ contract ZalarifyBase is Base, IZalarify {
         return true;
     }
 
+    function getCompany(bytes32 _id)
+        public
+        view
+        returns (address) {
+        return companies[_id];
+    }
+
     function createCompany(bytes32 _id, bytes32 _name, bytes32 _website, bytes32 _description)
         public
         isValidBytes32(_id)
@@ -79,7 +86,7 @@ contract ZalarifyBase is Base, IZalarify {
         ZalarifyCommon.Company memory company = createCompanyStruct(_id, _name, _website, _description, msg.sender);
 
         // Create company contract instance using the company stuct instance.
-        IZalarifyCompany zalarifyCompany = getZalarifyCompanyFactory().createZalarifyCompany(company.creator, company);
+        IZalarifyCompany zalarifyCompany = getZalarifyCompanyFactory().createZalarifyCompany(company);
 
         // Register the new company.
         registerCompany(_id, zalarifyCompany);
@@ -105,7 +112,4 @@ contract ZalarifyBase is Base, IZalarify {
         }
         return result;
     }
-
-
-
 }

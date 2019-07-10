@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 
 import "../Base.sol";
 import "./DelegateProxy.sol";
@@ -12,13 +12,13 @@ contract IsContract {
     * This is only intended to be used as a sanity check that an address is actually a contract,
     * RATHER THAN an address not being a contract.
     */
-    function isContract(address _target) internal view returns (bool) {
-        if (_target == address(0)) {
+    function isContract(address targetAddress) internal view returns (bool) {
+        if (targetAddress == address(0)) {
             return false;
         }
 
         uint256 size;
-        assembly { size := extcodesize(_target) }
+        assembly { size := extcodesize(targetAddress) }
         return size > 0;
     }
 }

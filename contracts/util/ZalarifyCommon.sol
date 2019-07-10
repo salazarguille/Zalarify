@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 
 contract ZalarifyCommon {
 
@@ -23,6 +23,7 @@ contract ZalarifyCommon {
     }
 
     struct Employee {
+        address employee;
         bytes32 name;
         bytes32 role;
         bytes32 email;
@@ -36,6 +37,7 @@ contract ZalarifyCommon {
     struct Payment {
         address to;
         address sourceToken;
+        address targetToken;
         uint targetAmount;
         uint sourceAmount;
         uint minRate;

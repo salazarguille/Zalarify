@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 
 import "./IsContract.sol";
 import "../../interface/IERCProxy.sol";
@@ -12,15 +12,15 @@ contract DelegateProxy is IERCProxy, IsContract {
 
     /**
     * @dev Performs a delegatecall and returns whatever the delegatecall returned (entire context execution will return!)
-    * @param _dst Destination address to perform the delegatecall
-    * @param _calldata Calldata for the delegatecall
+    * @param destination Destination address to perform the delegatecall
+    * @param callData Calldata for the delegatecall
     */
-    function delegatedFwd(address _dst, bytes memory _calldata) internal {
-        require(isContract(_dst), "Destination address is not a contract.");
+    function delegatedFwd(address destination, bytes memory callData) internal {
+        require(isContract(destination), "Destination address is not a contract.");
         uint256 fwdGasLimit = FWD_GAS_LIMIT;
 
         assembly {
-            let result := delegatecall(sub(gas, fwdGasLimit), _dst, add(_calldata, 0x20), mload(_calldata), 0, 0)
+            let result := delegatecall(sub(gas, fwdGasLimit), destination, add(callData, 0x20), mload(callData), 0, 0)
             let size := returndatasize
             let ptr := mload(0x40)
             returndatacopy(ptr, 0, size)

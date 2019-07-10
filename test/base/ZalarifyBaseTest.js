@@ -3,10 +3,11 @@ const _ = require('lodash');
 
 const Zalarify = artifacts.require("./Zalarify.sol");
 const IZalarify = artifacts.require("./interface/IZalarify.sol");
+const ZalarifyCompany = artifacts.require("./base/ZalarifyCompany.sol");
 const ZalarifyBaseMock = artifacts.require("./mock/base/ZalarifyBaseMock.sol");
 const Storage = artifacts.require("./base/Storage.sol");
 
-const { toBytes32, title: t} = require('../util/consts');
+const { toBytes32, title: t, NULL_ADDRESS} = require('../util/consts');
 const { zalarify } = require('../util/events');
 
 contract('ZalarifyBaseTest', function (accounts) {
@@ -82,6 +83,37 @@ contract('ZalarifyBaseTest', function (accounts) {
             assert.equal(result.website, websiteBytes32);
             assert.equal(result.description, descriptionBytes32);
             assert.equal(result.creator, address);
+        });
+    });
+
+    withData({
+        _1_basic: [account1, 'MyCompanyId', "My Company LCC", "https://mycompany.com", "Description"]
+    }, function(address, id, name, website, description) {
+        it(t('anUser', 'registerCompany', 'Should be able to register a company.', false), async function() {
+            //Setup
+            const storage = await Storage.deployed();
+            const instance = await ZalarifyBaseMock.new(storage.address);
+            const idBytes32 = toBytes32(id);
+            const nameBytes32 = toBytes32(name);
+            const websiteBytes32 = toBytes32(website);
+            const descriptionBytes32 = toBytes32(description);
+            const companyStruct = [
+                idBytes32,
+                nameBytes32,
+                descriptionBytes32,
+                websiteBytes32,
+                address,
+                Date.now()
+            ];
+            const company = await ZalarifyCompany.new(companyStruct, storage.address);
+
+            //Invocation
+            const result = await instance._registerCompany(idBytes32, company.address);
+
+            // Assertions
+            assert(result);
+            const companiesResult = await instance.companies(idBytes32);
+            assert(companiesResult);
         });
     });
 });

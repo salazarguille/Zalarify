@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 pragma experimental ABIEncoderV2;
 
 import "../../base/ZalarifyBase.sol";
@@ -29,5 +29,14 @@ contract ZalarifyBaseMock is ZalarifyBase {
                 _description,
                 _creator
             );
+    }
+
+    function _registerCompany(bytes32 _id, IZalarifyCompany _zalarifyCompany)
+        public 
+        returns (bool){
+        return registerCompany(
+            _id,
+            _zalarifyCompany
+        );
     }
 }

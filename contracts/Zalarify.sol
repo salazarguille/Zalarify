@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 
 import "./base/proxy/ProxyBase.sol";
 
@@ -14,8 +14,8 @@ contract Zalarify is ProxyBase {
     /** Modifiers */
 
     /** Constructor */
-    constructor(address _storage)
-      ProxyBase(_storage, ZALARIFY)
+    constructor(address storageAddress)
+      ProxyBase(storageAddress, ZALARIFY)
       public {
     }
 

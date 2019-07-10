@@ -1,38 +1,18 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 pragma experimental ABIEncoderV2;
 
+import "../services/stablepay/IProviderRegistry.sol";
+import "../services/stablepay/StablePayCommon.sol";
 import "../util/ZalarifyCommon.sol";
 
 contract IZalarifyCompany {
 
     /** Events */
 
-    event NewCompanyOwnerRemoved(
-        address indexed thisContract,
-        address currentCompanyOwner,
-        address removedCompanyOwner
-    );
-
-    event NewCompanyOwnerAdded(
-        address indexed thisContract,
-        address currentCompanyOwner,
-        address newCompanyOwner
-    );
-
     event NewEmployeeAdded(
         address indexed thisContract,
         address newEmployee,
         bytes32 name,
-        bytes32 role,
-        bytes32 email,
-        address preferedTokenPayment,
-        ZalarifyCommon.EmployeeType employeeType,
-        uint salaryAmount
-    );
-
-    event EmployeeUpdated(
-        address indexed thisContract,
-        address employee,
         bytes32 role,
         bytes32 email,
         address preferedTokenPayment,
@@ -64,37 +44,42 @@ contract IZalarifyCompany {
         address owner
     );
 
+    event PaymentSent(
+        bytes32 indexed providerKey,
+        address sourceToken,
+        address targetToken,
+        address to,
+        uint fromAmount,
+        uint toAmount
+    );
+
     /** Functions */
 
     /** Company functions */
 
-    function getInfo() public view returns (ZalarifyCommon.Company memory);
+    function getInfo() external view returns (ZalarifyCommon.Company memory);
 
-    function id() public view returns (bytes32);
+    function id() external view returns (bytes32);
 
-    function addCompanyOwner(address _newOwner) public returns (bool);
+    function isCompanyEnabled() external view returns (bool);
 
-    function removeCompanyOwner(address _owner) public returns (bool);
+    function disable(bytes32 _reason) external returns (bool);
 
-    function isEnabled() public view returns (bool);
-
-    function disable(bytes32 _reason) public returns (bool);
-
-    function enable() public returns (bool);
+    function enable() external returns (bool);
 
     /** Employee functions */
 
-    function isEnabled(address _employee) public view returns (bool);
+    function isEnabled(address _employee) external view returns (bool);
 
-    function getEmployees() public view returns (ZalarifyCommon.Employee[] memory);
+    // function getEmployee(address employee) external view returns (ZalarifyCommon.Employee memory);
 
-    function disableEmployee(address _employee, bytes32 _reason) public returns (bool);
+    function getEmployees() external view returns (ZalarifyCommon.Employee[] memory);
 
-    function enableEmployee(address _employee) public returns (bool);
+    function disableEmployee(address _employee, bytes32 _reason) external returns (bool);
 
-    function addEmployee(address _newEmployee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount) public returns (bool);
+    function enableEmployee(address _employee) external returns (bool);
 
-    function updateEmployee(address _employee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount) public returns (bool);
+    function addEmployee(address _newEmployee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount) external returns (bool);
 
-    function pay(ZalarifyCommon.Payment memory _payment) public returns (bool);
+    function payWithTokens(ZalarifyCommon.Payment memory _payment) public returns (bool);
 }

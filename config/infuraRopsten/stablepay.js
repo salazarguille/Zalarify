@@ -1,0 +1,9 @@
+module.exports = {
+	contracts: {
+		StablePay: '0x5932C7cEAbdf0Cbe8ABeb620F788FCF2B6D41578',
+		StablePayStorage: '0x648CeeD85C01761b5E9ffA0cc1629D82b9d6D61E',
+	},
+	providers: {
+		Kyber: '0x4b796265724e6574776f726b5f76310000000000000000000000000000000000'
+	}
+};

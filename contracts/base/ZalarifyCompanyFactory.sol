@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 pragma experimental ABIEncoderV2;
 
 import "../base/Base.sol";
@@ -25,11 +25,10 @@ contract ZalarifyCompanyFactory is Base, IZalarifyCompanyFactory {
 
     /** Functions */
 
-    function createZalarifyCompany(address _creator, ZalarifyCommon.Company memory _company)
+    function createZalarifyCompany(ZalarifyCommon.Company memory _company)
         public 
         returns (IZalarifyCompany){
         ZalarifyCompany newCompanyAddress = new ZalarifyCompany(
-            _creator,
             _company,
             Base.getStorageAddress()
         );

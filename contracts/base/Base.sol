@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 
 import "../interface/IStorage.sol";
 import "../interface/IVault.sol";
@@ -12,7 +12,7 @@ import "../util/ZalarifyCommon.sol";
 contract Base {
     /** Constants */
 
-    bytes constant internal ZALARIFY = "Zalarify";
+    bytes constant internal ZALARIFY_BYTES = "Zalarify";
     uint256 constant internal ZERO = 0;
     address constant internal ADDRESS_EMPTY = address(0x0);
     uint256 constant internal AVOID_DECIMALS = 100000000000000;
@@ -39,7 +39,7 @@ contract Base {
     /**
     * @dev We use a single lock for the whole contract.
     */
-    bool private rentrancy_lock = false;
+    bool private rentrancyLock = false;
 
     /**
         @dev The main storage contract where primary persistant storage is maintained    
@@ -68,10 +68,10 @@ contract Base {
     * wrapper marked as `nonReentrant`.
     */
     modifier nonReentrant() {
-        require(!rentrancy_lock, "rentrancy_lock");
-        rentrancy_lock = true;
+        require(!rentrancyLock, "Invalid rentrancy lock state.");
+        rentrancyLock = true;
         _;
-        rentrancy_lock = false;
+        rentrancyLock = false;
     }
 
     /**
@@ -105,8 +105,8 @@ contract Base {
     /**
     * @dev Reverts if the address doesn't have this role
     */
-    modifier onlyRole(string memory _role) {
-        roleCheck(_role, msg.sender);
+    modifier onlyRole(string memory aRole) {
+        roleCheck(aRole, msg.sender);
         _;
     }
 
@@ -118,13 +118,13 @@ contract Base {
         _;
     }
 
-    modifier isDisabledCompany(address _company) {
-        require(_storage.getBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, _company))) == true, "Company is disabled.");
+    modifier isDisabledCompany(address aCompany) {
+        require(_storage.getBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, aCompany))) == true, "Company is disabled.");
         _;
     }
 
-    modifier isEnabledCompany(address _company) {
-        require(_storage.getBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, _company))) == false, "Company is enabled.");
+    modifier isEnabledCompany(address aCompany) {
+        require(_storage.getBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, aCompany))) == false, "Company is enabled.");
         _;
     }
 
@@ -144,9 +144,9 @@ contract Base {
     /**
         @dev Set the main Storage address
      */
-    constructor(address _storageAddress) public {
+    constructor(address storageAddress) public {
         // Update the contract address
-        _storage = IStorage(_storageAddress);
+        _storage = IStorage(storageAddress);
     }
 
     /**
@@ -195,14 +195,14 @@ contract Base {
     * @dev Check if an address has this role
     * @return bool
     */
-    function roleHas(string memory _role, address _address) internal view returns (bool) {
-        return _storage.getBool(keccak256(abi.encodePacked(ACCESS_ROLE, _role, _address)));
+    function roleHas(string memory aRole, address anAddress) internal view returns (bool) {
+        return _storage.getBool(keccak256(abi.encodePacked(ACCESS_ROLE, aRole, anAddress)));
     }
 
     /**
     * @dev Check if an address has this role, reverts if it doesn't
     */
-    function roleCheck(string memory _role, address _address) internal view {
-        require(roleHas(_role, _address) == true, "Invalid role");
+    function roleCheck(string memory aRole, address anAddress) internal view {
+        require(roleHas(aRole, anAddress) == true, "Invalid role");
     }
 }

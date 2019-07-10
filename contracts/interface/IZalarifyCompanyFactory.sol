@@ -1,4 +1,4 @@
-pragma solidity 0.5.9;
+pragma solidity 0.5.3;
 pragma experimental ABIEncoderV2;
 
 import "../util/ZalarifyCommon.sol";
@@ -10,7 +10,7 @@ contract IZalarifyCompanyFactory {
 
     /** Functions */
 
-    function createZalarifyCompany(address creator, ZalarifyCommon.Company memory company)
+    function createZalarifyCompany(ZalarifyCommon.Company memory company)
     public
     returns (IZalarifyCompany);
 }

@@ -8,7 +8,6 @@ const STABLE_PAY_NAME = 'StablePay';
 
 /** Platform configuration values. */
 const platformFee = appConfig.getPlatformFee().get();
-const stablePayAddress = appConfig.getStablePayAddress().get();
 
 // Mock Smart Contracts
 const ProxyBaseMock = artifacts.require("./mock/ProxyBaseMock.sol");
@@ -30,7 +29,7 @@ const ZalarifyBase = artifacts.require("./base/ZalarifyBase.sol");
 const ZalarifyCompanyFactory = artifacts.require("./base/ZalarifyCompanyFactory.sol");
 const ZalarifyCommon = artifacts.require("./ZalarifyCommon.sol");
 
-const allowedNetworks = ['ganache ', 'test', 'coverage'];
+const allowedNetworks = ['ganache', 'test', 'coverage'];
 
 module.exports = function(deployer, network, accounts) {
   console.log(`Deploying smart contracts to '${network}'.`)
@@ -41,12 +40,17 @@ module.exports = function(deployer, network, accounts) {
     return;
   }
 
-  const envConf = require('../config')(network);
+  const envConf = require('../config')(network === 'infuraRopsten-fork' ? 'infuraRopsten' : network);
   const maxGasForDeploying = envConf.maxGas;
+  const stablepayContracts = envConf.stablepay.contracts;
+  if(stablepayContracts === undefined || stablepayContracts.StablePay === undefined) {
+    throw new Error(`StablePay is undefined for network ${network}/stablepay.js.`);
+  }
   if(maxGasForDeploying === undefined) {
     throw new Error(`The 'maxGas' value for deploying is not defined in file config/${network}/index.js file.`);
   }
   
+  const stablePayAddress = stablepayContracts.StablePay;
   const owner = accounts[0];
 
   deployer.deploy(SafeMath).then(async (txInfo) => {
@@ -59,7 +63,7 @@ module.exports = function(deployer, network, accounts) {
     ], {gas: maxGasForDeploying});
 
     await deployerApp.deploy(ReceiptRegistry, Storage.address);
-    await deployerApp.deploy(ZalarifyCompanyFactory, Storage.address);
+    await deployerApp.deploy(ZalarifyCompanyFactory, Storage.address, {gas: maxGasForDeploying});
     await deployerApp.deploy(Settings, Storage.address, {gas: maxGasForDeploying});
     await deployerApp.deploy(Upgrade, Storage.address, {gas: maxGasForDeploying});
     await deployerApp.deploy(Role, Storage.address, {gas: maxGasForDeploying});
