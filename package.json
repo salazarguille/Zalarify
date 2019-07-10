@@ -1,12 +1,16 @@
 {
-  "name": "Zalarify",
+  "name": "zalarify-monorepo",
   "version": "1.0.0",
   "description": "This is the official repository of the Zalarify platform.",
   "main": "truffle.js",
   "scripts": {
     "test": "truffle test",
     "deploy-ganache": "truffle migrate --network ganache",
-    "test-ganache": "truffle test --network ganache"
+    "test-ganache": "truffle test --network ganache",
+    "verify-contracts": "truffle run verify Role Settings Storage Upgrade Vault ZalarifyBase ZalarifyCompanyFactory --network infuraRopsten",
+    "initdata-ropsten": "truffle exec ./scripts/createCompanies.js --network infuraRopsten",
+    "migrate-ropsten": "npm run test && truffle migrate --reset --all --network infuraRopsten",
+    "ganache": "ganache-cli --db ./db --accounts 10 --mnemonic 'gesture rather obey video awake genuine patient base soon parrot upset lounge' --networkId 5777 --debug"
   },
   "repository": {
     "type": "git",
@@ -32,17 +36,16 @@
     "bignumber.js": "8.0.1",
     "bluebird": "3.5.1",
     "ethereumjs-util": "5.1.5",
-    "ethereumjs-testrpc-sc": "6.1.6",
     "ethers": "4.0.20",
     "jsonfile": "4.0.0",
     "lodash": "4.17.5",
     "run-s": "^0.0.0",
     "truffle": "^5.0.18",
     "truffle-core": "5.0.18",
-    "truffle-plugin-verify": "^0.2.1",
     "truffle-legacy-system": "^1.0.7",
-    "web3-provider-engine": "^15.0.0",
+    "truffle-plugin-verify": "^0.3.1",
     "web3": "1.0.0-beta.55",
+    "web3-provider-engine": "^15.0.0",
     "web3-utils": "1.0.0-beta.55",
     "zeppelin-solidity": "1.7.0"
   },
@@ -64,9 +67,7 @@
     "solidity-coverage": "leapdao/solidity-coverage",
     "solidity-docgen": "^0.1.1",
     "solium": "1.1.2",
-    "truffle": "5.0.2",
     "truffle-assertions": "^0.8.0",
-    "truffle-config": "1.1.2",
     "truffle-hdwallet-provider": "^1.0.2"
   }
 }

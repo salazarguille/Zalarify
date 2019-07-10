@@ -26,7 +26,7 @@ config.ropsten = {
         {
             name: 'IZalarify',
             abi: IZalarify,
-            address: '0x8649FB686c38Ece73cF314735732168d234E2cC5'
+            address: '0x5Cf178be207bF1778fD97AB6157C44E8fA893563'
         },
         {
             name: 'IZalarifyCompany',
@@ -36,7 +36,7 @@ config.ropsten = {
         {
             name: 'IReceiptRegistry',
             abi: IReceiptRegistry,
-            address: '0xD560a87d06523F4ee261161F640c0Bfe6a871294'
+            address: '0x001250566C84F5c878532e9D3610035512f6fdCD'
         },
         {
             name: 'IStablePay',
