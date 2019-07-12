@@ -77,3 +77,5 @@ export const getContract = async (service, network) => {
 
 // eslint-disable-next-line max-len
 export const getCompanyContract = async (address, network) => new ethers.Contract(address, IZalarifyCompany.abi, getProvider(network));
+
+export const getReceiptRegistryContract = async network => getContract(RECEIPT_REGISTRY, network);

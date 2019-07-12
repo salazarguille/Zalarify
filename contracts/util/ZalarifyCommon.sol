@@ -19,7 +19,8 @@ contract ZalarifyCommon {
 
     struct Receipt {
         uint createdAt;
-        bytes32 hash;
+        string path;
+        string ipfsHash;
     }
 
     struct Employee {

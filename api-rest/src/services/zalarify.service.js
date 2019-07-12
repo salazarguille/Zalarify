@@ -5,6 +5,7 @@ import BadRequestError from '../lib/errors/BadRequestError';
 import {
     getContract,
     getCompanyContract,
+    getReceiptRegistryContract,
 } from '../ethereum/zalarify/ZalarifyContract';
 import {
     ZALARIFY,
@@ -90,4 +91,39 @@ export const getCompanies = async (network) => {
         count: result.length,
         items: result,
     };
+};
+
+export const getEmployee = async (companyAddress, employeeAddress, network) => {
+    let employee;
+    try {
+        const receipt = await getReceiptRegistryContract(network);
+        const company = await getCompanyContract(companyAddress, network);
+        const employees = await company.getEmployees();
+        console.log(employees);
+        employee = employees.find(anEmployee => anEmployee.employee === employeeAddress);
+        if (employee === undefined) {
+            throw new Error(`Employee ${employeeAddress} not found.`);
+        }
+        const preferredTokenPayment = await getTokenDataByAddress(employee.preferedTokenPayment);
+        const employeeReceipts = await receipt.getReceipts(companyAddress, employeeAddress);
+        const receipts = employeeReceipts.map(aReceipt => ({
+            ipfsUrl: `https://ipfs.io/ipfs/${aReceipt.ipfsHash}`,
+            ipfsHash: aReceipt.ipfsHash,
+            createdAt: BigNumber(aReceipt.createdAt.toString()).times(1000),
+            path: aReceipt.path,
+        }));
+        return {
+            receipts,
+            preferredTokenPayment,
+            wallet: employee.employee,
+            name: utils.hexToString(employee.name),
+            role: utils.hexToString(employee.role),
+            email: utils.hexToString(employee.email),
+            salaryAmount: parseInt(employee.salaryAmount.toString(), 10),
+            employeeType: getType(employee.employeeType),
+            enabled: employee.enabled,
+        };
+    } catch (error) {
+        throw new BadRequestError(`Company ${companyAddress} or employee ${employeeAddress} not found.`);
+    }
 };

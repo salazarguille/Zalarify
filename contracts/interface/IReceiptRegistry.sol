@@ -11,14 +11,15 @@ contract IReceiptRegistry {
         address indexed thisContract,
         address company,
         address employee,
-        bytes32 receiptHash
+        string receiptHash,
+        string path
     );
 
     /** Functions */
 
     /** Company functions */
     
-    function createReceipt(address _company, address _employee, bytes32 _receiptHash) 
+    function createReceipt(address _company, address _employee, string memory _path, string memory _receiptHash) 
         public
         returns (bool);
 

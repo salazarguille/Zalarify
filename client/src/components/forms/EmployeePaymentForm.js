@@ -1,4 +1,6 @@
 import { withStyles } from '@material-ui/styles';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import React from "react";
 import axios from "axios";
 import {
@@ -9,6 +11,7 @@ import {
   Checkbox
 } from "rimble-ui";
 import BigNumber from 'bignumber.js';
+import { listenOn } from "../utils/txs";
 
 const styles = theme => ({
   inputSelect: {
@@ -31,9 +34,11 @@ const styles = theme => ({
 
 class EmployeePaymentForm extends React.Component {
   state = {
-    validated: false,
+    validation: {
+      isValid: false,
+      message: undefined,
+    },
     tokens: [],
-    tokenSelected: "0",
     employee: {
       name: '',
       role: '',
@@ -51,9 +56,11 @@ class EmployeePaymentForm extends React.Component {
       targetAmount: 0,
     },
     tokenSelected: undefined,
+    tokenBalance: 0,
     processing: false,
     isLoadingRate: true,
     isTokenApprove: false,
+    isEnoughBalance: false,
   };
 
   componentDidMount = async () => {
@@ -66,37 +73,81 @@ class EmployeePaymentForm extends React.Component {
       tokenSelected,
     });
     await this.updateTokenRate(tokenSelected);
-    const isTokenApprove = await this.isApproveTokens(tokenSelected);
-    this.setState({
-      isTokenApprove
-    });
+    await this.updateTokensApprove(tokenSelected);
   };
+
+  toast = (component, isError = false) => {
+    if (isError) {
+      this.setNotProcessing();
+      toast.error(component, {
+        hideProgressBar: false,
+      });
+    } else {
+      toast.info(component, {
+        hideProgressBar: false,
+      });
+    }
+  };
+
+  setProcessing = () => {
+    this.setState({
+      processing: true,
+    });
+  }
+
+  setNotProcessing = async () => {
+    const { tokenSelected } = this.state;
+    this.clearValidationError();
+    await this.updateTokenRate(tokenSelected);
+    await this.updateTokensApprove(tokenSelected);
+    this.setState({
+      processing: false,
+    });
+  }
+
+  getERC20Contract = (address) => {
+    const { contracts, web3 } = this.props;
+    const currentContractData = contracts.find(contract => contract.name === 'ERC20');
+    const contract = currentContractData.abi;
+    const instance = new web3.eth.Contract(
+        contract.abi,
+        address
+    );
+    return instance;
+  }
 
   onClickApprove = e => {
     e.preventDefault();
-    const { tokenSelected, tokenRate, isTokenApprove } = this.state;
-    console.log('On approve ', isTokenApprove);
+    const { tokenSelected, tokenRate } = this.state;
 
-    if( this.props.onClickApproveERC20Contract !== undefined && !isTokenApprove) {
+    const { info, config, companyAddress } = this.props;
+    const erc20 = this.getERC20Contract(tokenSelected.address);
+    console.log('On click approve ', tokenRate.maxRate);
+    console.log('On click approve ', erc20.address);
+    console.log('tokenSelected ', tokenSelected);
+    try {
+      this.setProcessing();
+      
+      const approveResult = erc20
+        .methods
+        .approve(companyAddress, tokenRate.maxRate)
+        .send({from: info.selectedAddress});
 
-      const approvePromise = this.props.onClickApproveERC20Contract(tokenSelected, tokenRate);
-      if(approvePromise !== undefined) {
-        approvePromise.then( async result => {
-          const tokenSelected = this.state.tokenSelected;
-          const isTokenApprove = await this.isApproveTokens(tokenSelected);
-          this.setState({
-            isTokenApprove,
-          });
-        });
-      }
+      listenOn(approveResult, this, config);
+
+    } catch (error) {
+      this.toast(<div>
+        {`Message: ${error.message}`}
+      </div>, true);
     }
+
   };
 
   handleSubmit = e => {
     e.preventDefault();
     const { wallet, preferedTokenPayment } = this.state.employee;
     const { minRate, maxRate, targetAmount, providerKey} = this.state.tokenRate;
-    console.log('handleSubmit ', preferedTokenPayment);
+    const { companyAddress } = this.props;
 
     if(this.props.handleSubmit !== undefined) {
       const { tokenSelected } = this.state;
@@ -122,7 +173,13 @@ class EmployeePaymentForm extends React.Component {
       ];
       console.log(payment);
       console.log('On click payWithTokens ', maxRate);
-      this.props.handleSubmit(payment);
+      this.props.handleSubmit({
+        payment,
+        sourceToken: this.state.tokenSelected,
+        tokenRate: this.state.tokenRate,
+        employee: this.state.employee,
+        companyAddress,
+      });
     }
   };
 
@@ -135,7 +192,6 @@ class EmployeePaymentForm extends React.Component {
   };
 
   static getDerivedStateFromProps(nextProps, nextContext) {
-    console.log('Derivative Form  ', nextProps);
     if( nextProps.processing && nextProps.employee) {
         return {
           processing: nextProps.processing,
@@ -151,8 +207,6 @@ class EmployeePaymentForm extends React.Component {
     this.setState({
       isLoadingRate: true,
     });
-    console.log(`updateTokenRate Token Selected:  `, tokenSelected);
-    console.log(`updateTokenRate Employee preferedTokenPayment:  `, preferedTokenPayment);
     const rateResult = await axios.get(`${config.urls.backend}/tokens/${tokenSelected.address}/rate/${preferedTokenPayment.address}?targetAmount=${salaryAmount}`);
     this.setState({
       tokenRate: rateResult.data,
@@ -171,48 +225,129 @@ class EmployeePaymentForm extends React.Component {
     return instance;
   }
 
-  isApproveTokens = async (newTokenSelected) =>{
+  updateTokensApprove = async (newTokenSelected) =>{
     const { info, companyAddress } = this.props;
     const { tokenRate } = this.state;
     const erc20 = this.getERC20Contract(newTokenSelected.address);
     const tokenAllowance = await erc20.methods.allowance(info.selectedAddress, companyAddress).call({from: info.selectedAddress});
+    const tokenBalance = await erc20.methods.balanceOf(info.selectedAddress).call({from: info.selectedAddress});
     
+    const tokenBalanceResult = BigNumber(tokenBalance.toString()).gte(tokenRate.maxRate);
     const tokenAllowanceResult = BigNumber(tokenAllowance.toString()).gte(tokenRate.maxRate);
-    console.log('Allowance');
-    console.log(`Current Allowance: ${tokenAllowance.toString()}`);
-    console.log(`Current amount:    ${tokenRate.maxRate}`);
-    console.log(`Is Allowed?:       ${tokenAllowanceResult}`);
-    return tokenAllowanceResult;
+    // console.log('Allowance');
+    // console.log(`Current Allowance: ${tokenAllowance.toString()}`);
+    // console.log(`Current Balance:   ${tokenBalance.toString()}`);
+    // console.log(`Current Balance:   ${BigNumber(tokenBalance.toString()).toFixed(2)}`);
+    // console.log(`Current amount:    ${tokenRate.maxRate}`);
+    // console.log(`Is Allowed?:       ${tokenAllowanceResult}`);
+    // console.log(`Enough Balance?:   ${tokenBalanceResult}`);
+
+    this.setState({
+      tokenBalance: tokenBalance.toString(),
+      isTokenApprove: tokenAllowanceResult,
+      isEnoughBalance: tokenBalanceResult,
+    });
+
+    if (!tokenBalanceResult) {
+      this.setValidationError(`Not enough ${newTokenSelected.symbol} token balance.`);
+      return;
+    }
+    
+    if (!tokenAllowanceResult) {
+      this.setValidationError(`Please, approve ${newTokenSelected.symbol} tokens transfer.`);
+    }
   }
 
   onChangeToken = async (event) => {
+    this.clearValidationError();
     const newTokenSelected = this.state.tokens.find(item => item.address.toString() === event.target.value.toString());
     await this.updateTokenRate(newTokenSelected);
-    const isTokenApprove = await this.isApproveTokens(newTokenSelected);
+    await this.updateTokensApprove(newTokenSelected);
     this.setState({
       tokenSelected: newTokenSelected,
-      isTokenApprove,
     });
   };
 
+  setValidationError = (errorMessage) => {
+    this.setState({
+      validation: {
+        isValid: false,
+        message: errorMessage,
+      }
+    });
+  }
+
+  clearValidationError = () => {
+    this.setState({
+      validation: {
+        isValid: true,
+        message: undefined,
+      }
+    });
+  }
+
+  renderValidation = () => {
+    const { validation } = this.state;
+    return validation.isValid ? '' : 
+      <Text
+        width={1}
+        bold={true}
+        color={'red'}
+        m="1"
+        textAlign="center"
+        borders={'1px'}
+        borderColor="red"
+        borderRadius="15px"
+        fontSize={3}
+        visible={false}>
+        {validation.message}
+      </Text>;
+  }
+
+  renderBalanceRate = () => {
+    const { employee, tokenRate, tokenSelected, isLoadingRate, isTokenApprove } = this.state;
+    if (isLoadingRate) {
+      return 'Loading rate...'
+    } else {
+      const maxRateUnitFixed = BigNumber(tokenRate.maxRateUnit.toString()).toFixed(2);
+      let rate = <>{maxRateUnitFixed} {tokenSelected.symbol} ~= {employee.salaryAmount} {employee.preferedTokenPayment.symbol}</>;
+      if(isTokenApprove) {
+        rate = <>
+                {rate}
+                <br/>
+                <Text
+                  bold={true}
+                  fontSize={2}
+                  >Approved tokens
+                </Text>
+              </>;
+      } else {
+        rate = <>
+                {rate}
+                <br/>
+                <Checkbox
+                  label="Approve Tokens"
+                  defaultChecked={false}
+                  disabled={this.state.processing || isLoadingRate || isTokenApprove}
+                  onClick={ e => this.onClickApprove(e)}
+                />
+              </>;
+      }
+      return rate;
+    }
+  }
+
   render() {
     const { classes } = this.props;
-    const { employee, tokenRate, tokenSelected, isLoadingRate, isTokenApprove } = this.state;
-    console.log('On render, isTokenApprove  ', isTokenApprove);
-    const renderProcessing = this.props.processing ? <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
+    const { employee } = this.state;
+    const renderProcessing = this.state.processing ? <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
     Transaction is processing...
     </Text> : '';
-    const renderRate = isLoadingRate ? 'Loading rate...' : <>Max Rate: {tokenRate.maxRateUnit} {tokenSelected.symbol} ~= {employee.salaryAmount} {employee.preferedTokenPayment.symbol}</>;
+    const renderRate = this.renderBalanceRate();
 
-    const renderApproveTokens = isLoadingRate || isTokenApprove ? '' : <Checkbox
-              label="Approve tokens"
-              //required={true}
-              defaultChecked={isTokenApprove}
-              disabled={this.props.processing || this.state.isLoadingRate }//|| this.state.isTokenApprove
-              onClick={ e => this.onClickApprove(e)}
-            />;
     return (
       <Form width={'100vw'} p={15} onSubmit={this.handleSubmit}>
+        {this.renderValidation()}
         <Flex width={1} flexDirection="column">
           <Text
             bold={true}
@@ -240,7 +375,7 @@ class EmployeePaymentForm extends React.Component {
             {employee.preferedTokenPayment ? `${employee.preferedTokenPayment.name} (${employee.preferedTokenPayment.symbol})` : '--'}
           </Text>
         </Flex>
-        <Form.Field validated={this.state.validated} label="ERC20 Token" width={1}>
+        <Form.Field label="ERC20 Token" width={1}>
           <select
             required
             className={classes.inputSelect}
@@ -257,11 +392,21 @@ class EmployeePaymentForm extends React.Component {
             {renderRate}
           </Text>
         </Flex>
-        {renderApproveTokens}
         {renderProcessing}
-        <Button disabled={this.props.processing || this.state.isLoadingRate || !this.state.isTokenApprove } type="submit" style={{width:'100%'}}>
-          Create
+        <Button disabled={this.state.processing || this.state.isLoadingRate || !this.state.isTokenApprove } type="submit" style={{width:'100%'}}>
+          Pay Salary
         </Button>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={10000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
       </Form>
     );
   }

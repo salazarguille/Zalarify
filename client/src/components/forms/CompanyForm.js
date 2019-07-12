@@ -66,7 +66,6 @@ class CompanyForm extends React.Component {
   };
 
   static getDerivedStateFromProps(nextProps, nextContext) {
-    console.log('Derivative Form  ', nextProps);
     if( nextProps.processing ) {
         return {
           processing: nextProps.processing,

@@ -13,6 +13,7 @@ const config = {};
 
 config.ropsten = {
     maxGas: 7000000,
+    confirmations: 2,
     allowChangeNetwork: false,
     network: 'ropsten',
     explorer: {
@@ -58,6 +59,7 @@ config.ropsten = {
 
 config.ganache = {
     maxGas: 6500000,
+    confirmations: 1,
     allowChangeNetwork: true,
     network: 'unknown',
     explorer: {
@@ -71,7 +73,7 @@ config.ganache = {
         {
             name: 'IZalarify',
             abi: IZalarify,
-            address: '0x5dba06C7663b31bc17187A38B3d8759477BE3A0f'
+            address: '0x4382961D2A74026FAB31dC80ac68a8779e02428d'
         },
         {
             name: 'IZalarifyCompany',
@@ -81,7 +83,7 @@ config.ganache = {
         {
             name: 'IReceiptRegistry',
             abi: IReceiptRegistry,
-            address: '0x85677e1debD4a74868f462A2dea7890dF4cAFb78'
+            address: '0x4CaAA8121D84715f086836594f81F723DF46eb09'
         },
         {
             name: 'IStablePay',

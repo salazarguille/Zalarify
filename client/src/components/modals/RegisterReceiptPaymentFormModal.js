@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -9,21 +10,21 @@ import {
   Box,
 } from "rimble-ui";
 import ModalCard from './ModalCard';
-import EmployeePaymentForm from "../forms/EmployeePaymentForm";
+import RegisterReceiptPaymentForm from "../forms/RegisterReceiptPaymentForm";
 import { listenOn } from "../utils/txs";
 
-class EmployeePaymentFormModal extends React.Component {
+class RegisterReceiptPaymentFormModal extends React.Component {
   state = {
     processing: false,
   };
 
-  getZalarifyCompanyContract = () => {
-    const { contracts, web3, companyAddress } = this.props;
-    const currentContractData = contracts.find(contract => contract.name === 'IZalarifyCompany');
-    const contract = currentContractData.abi;
+  getReceiptRegistryContract = () => {
+    const { contracts, web3 } = this.props;
+    const receiptRegistryData = contracts.find(contract => contract.name === 'IReceiptRegistry');
+    const contract = receiptRegistryData.abi;
     const instance = new web3.eth.Contract(
-        contract.abi,
-        companyAddress
+      contract.abi,
+      receiptRegistryData.address
     );
     return instance;
   }
@@ -41,10 +42,10 @@ class EmployeePaymentFormModal extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, nextContext) {
-    if( nextProps.processing && nextProps.employee) {
+    if( nextProps.processing || nextProps.paymentData) {
         return {
           processing: nextProps.processing,
-          employee: nextProps.employee,
+          paymentData: nextProps.paymentData,
         };
     }
     return null;
@@ -63,40 +64,50 @@ class EmployeePaymentFormModal extends React.Component {
     }
   }
 
-  invokeZalarifyContractPayWithTokens = (data) => {
-    const { payment } = data;
-    const { info, config } = this.props;
-    let result;
-
+  handleSubmit = async () => {
     try {
-      const zalarifyCompany = this.getZalarifyCompanyContract();
       this.setProcessing();
-      result = zalarifyCompany.methods.payWithTokens(payment).send({from: info.selectedAddress, gas: config.maxGas});
+      
+      const { config, companyAddress, info, registerReceiptPaymentCallback } = this.props;
+      const { paymentData } = this.state;
+      const { employee } = paymentData;
+      const receiptData = {
+        employee,
+        tokenRate: paymentData.tokenRate,
+        sourceToken: paymentData.sourceToken,
+        companyAddress,
+      };
+      const response = await axios.post(`${config.urls.backend}/receipts`, receiptData);
+      const data = response.data;
+  
+      const receiptRegistryContract = this.getReceiptRegistryContract();
+  
+      const createReceiptResult = receiptRegistryContract
+        .methods
+        .createReceipt(
+          companyAddress,
+          employee.wallet,
+          data.path,
+          data.hash
+        )
+        .send({from: info.selectedAddress});
+      listenOn(createReceiptResult, this, config, () => {
+        registerReceiptPaymentCallback(data);
+      });
     } catch (error) {
       this.toast(<div>
         {`Message: ${error.message}`}
       </div>, true);
     }
-    return result;
-  }
-
-  handleSubmit = async (data) => {
-    const { config, paymentSentCallback } = this.props;
-
-    const result = this.invokeZalarifyContractPayWithTokens(data);
-
-    listenOn(result, this, config, () => {
-      paymentSentCallback(data);
-    });
   };
 
   renderContent = () => {
     return (
       <React.Fragment>
         <Box mb={3}>
-          <Heading.h2>Employee Payment Form</Heading.h2>
+          <Heading.h2>Register Receipt Payment</Heading.h2>
           <Text my={3} textAlign={"center"}>
-            It allows you to transfer payroll to your employees.
+            It allows you to register receipt payment for your employees after transferring their payrolls.
           </Text>
         </Box> 
         <Flex
@@ -106,11 +117,11 @@ class EmployeePaymentFormModal extends React.Component {
           mt={4}
           mb={4}
         >
-          <EmployeePaymentForm
+          <RegisterReceiptPaymentForm
             width={1}
             info={this.props.info}
             config={this.props.config}
-            employee={this.props.selectedEmployee}
+            paymentData={this.state.paymentData}
             handleSubmit={this.handleSubmit}
             processing={this.state.processing}
             {...this.props}
@@ -148,4 +159,4 @@ class EmployeePaymentFormModal extends React.Component {
   }
 }
 
-export default EmployeePaymentFormModal;
+export default RegisterReceiptPaymentFormModal;

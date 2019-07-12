@@ -1,6 +1,7 @@
 const withData = require('leche').withData;
 
 const ReceiptRegistry = artifacts.require("./base/ReceiptRegistry.sol");
+const ZalarifyCompany = artifacts.require("./base/ZalarifyCompany.sol");
 const Storage = artifacts.require("./base/Storage.sol");
 
 const {
@@ -19,26 +20,43 @@ contract('ReceiptRegistryTest', function (accounts) {
     });
 
     withData({
-        _1_basic: [0, 1, 'MyHash1', undefined, false],
-        _2_receiptHashEmpty: [0, 1, '', 'Bytes32 must not be 0x0.', true],
-        _3_companyEmpty: [NULL_ADDRESS, 1, 'MyHash3', 'Address must not be 0x0.', true],
-        _4_employeeEmpty: [1, NULL_ADDRESS, 'MyHash4', 'Address must not be 0x0.', true]
-    }, function(companyAddressIndex, employeeAddressIndex, receiptHash, expectedMessage, mustFail) {
+        _1_basic: [0, 1, 'MyPath1', 'MyHash1', undefined, false],
+        _2_pathEmpty: [0, 1, '', 'MyHash1', 'String must not be empty.', true],
+        _3_receiptHashEmpty: [0, 1, 'MyPath2', '', 'String must not be empty.', true],
+        _4_employeeEmpty: [1, NULL_ADDRESS, 'MyPath4', 'MyHash4', 'Address must not be 0x0.', true]
+    }, function(companyAddressIndex, employeeAddressIndex, receiptPath, receiptHash, expectedMessage, mustFail) {
         it(t('anUser', 'createReceipt', 'Should be able to create a receipt.', mustFail), async function() {
             //Setup
-            const companyAddress = companyAddressIndex !== NULL_ADDRESS ? accounts[companyAddressIndex] : NULL_ADDRESS;
+            const companyOwnerAddress = companyAddressIndex !== NULL_ADDRESS ? accounts[companyAddressIndex] : NULL_ADDRESS;
+            const storage = await Storage.deployed();
+            const companyStruct = [
+                toBytes32('companyId'),
+                toBytes32('companyName'),
+                toBytes32('companyDescription'),
+                toBytes32('website'),
+                companyOwnerAddress,
+                Date.now()
+            ];
+            const zalarifyCompany = await ZalarifyCompany.new(companyStruct, storage.address);
             const employeeAddress = employeeAddressIndex !== NULL_ADDRESS ? accounts[employeeAddressIndex] : NULL_ADDRESS;
-            const receiptHashBytes32 = toBytes32(receiptHash);
 
             try {
                 //Invocation
-                const result = await instance.createReceipt(companyAddress, employeeAddress, receiptHashBytes32);
+                const result = await instance.createReceipt(
+                    zalarifyCompany.address,
+                    employeeAddress,
+                    receiptPath,
+                    receiptHash,
+                    {
+                        from: companyOwnerAddress
+                    }
+                );
 
                 // Assertions
                 assert(!mustFail, 'It should have failed because data is invalid.');
                 receiptRegistry
                     .newReceiptCreated(result)
-                    .emitted(instance.address, companyAddress, employeeAddress, receiptHashBytes32);
+                    .emitted(instance.address, zalarifyCompany.address, employeeAddress, receiptPath, receiptHash);
             } catch (error) {
                 // Assertions
                 assert(mustFail);
@@ -51,18 +69,29 @@ contract('ReceiptRegistryTest', function (accounts) {
     withData({
         _1_receipts2: [0, 1, 2, true],
         _2_receipts0: [0, 1, 0, false]
-    }, function(companyAddressIndex, employeeAddressIndex, countReceipts, hasReceiptsExpected) {
+    }, function(companyOwnerAddressIndex, employeeAddressIndex, countReceipts, hasReceiptsExpected) {
         it(t('anUser', 'hasReceipts', 'Should be able to test if company/employee has receipts.', false), async function() {
             //Setup
-            const companyAddress = accounts[companyAddressIndex];
+            const companyOwnerAddress = accounts[companyOwnerAddressIndex];
             const employeeAddress = accounts[employeeAddressIndex];
+            const storage = await Storage.deployed();
+            const companyStruct = [
+                toBytes32('companyId'),
+                toBytes32('companyName'),
+                toBytes32('companyDescription'),
+                toBytes32('website'),
+                companyOwnerAddress,
+                Date.now()
+            ];
+            const zalarifyCompany = await ZalarifyCompany.new(companyStruct, storage.address);
             for(let counter = 0; counter < countReceipts; counter++) {
-                const receiptHashBytes32 = toBytes32(`${counter}_${companyAddress}${employeeAddress}`);
-                await instance.createReceipt(companyAddress, employeeAddress, receiptHashBytes32);
+                const pathBytes32 = toBytes32(`${counter}_${zalarifyCompany.address}${employeeAddress}`);
+                const receiptHashBytes32 = toBytes32(`${counter}_${zalarifyCompany.address}${employeeAddress}`);
+                await instance.createReceipt(zalarifyCompany.address, employeeAddress, pathBytes32, receiptHashBytes32);
             }
 
             //Invocation
-            const result = await instance.hasReceipts(companyAddress, employeeAddress);
+            const result = await instance.hasReceipts(zalarifyCompany.address, employeeAddress);
 
             // Assertions
             assert.equal(result, hasReceiptsExpected);
@@ -72,24 +101,35 @@ contract('ReceiptRegistryTest', function (accounts) {
     withData({
         _1_receipts2: [0, 1, 2, true],
         _2_receipts0: [0, 2, 0, false]
-    }, function(companyAddressIndex, employeeAddressIndex, countReceipts, hasReceiptsExpected) {
+    }, function(companyOwnerAddressIndex, employeeAddressIndex, countReceipts, hasReceiptsExpected) {
         it(t('anUser', 'getReceipts', 'Should be able to get the company/employee receipts.', false), async function() {
             //Setup
-            const companyAddress = accounts[companyAddressIndex];
+            const companyOwnerAddress = accounts[companyOwnerAddressIndex];
             const employeeAddress = accounts[employeeAddressIndex];
+            const storage = await Storage.deployed();
+            const companyStruct = [
+                toBytes32('companyId'),
+                toBytes32('companyName'),
+                toBytes32('companyDescription'),
+                toBytes32('website'),
+                companyOwnerAddress,
+                Date.now()
+            ];
+            const zalarifyCompany = await ZalarifyCompany.new(companyStruct, storage.address);
             for(let counter = 0; counter < countReceipts; counter++) {
-                const receiptHashBytes32 = toBytes32(`${counter}_${companyAddress}${employeeAddress}`);
-                await instance.createReceipt(companyAddress, employeeAddress, receiptHashBytes32);
+                const pathBytes32 = toBytes32(`${counter}_${zalarifyCompany.address}${employeeAddress}`);
+                const receiptHashBytes32 = toBytes32(`${counter}_${zalarifyCompany.address}${employeeAddress}`);
+                await instance.createReceipt(zalarifyCompany.address, employeeAddress, pathBytes32, receiptHashBytes32);
             }
 
             //Invocation
-            const result = await instance.getReceipts(companyAddress, employeeAddress);
+            const result = await instance.getReceipts(zalarifyCompany.address, employeeAddress);
 
             // Assertions
             assert.equal(result.length, countReceipts);
             result.forEach(receipt => {
                 assert(receipt.createdAt);
-                assert(receipt.hash);
+                assert(receipt.ipfsHash);
             });
         });
     });

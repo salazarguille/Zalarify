@@ -28,7 +28,6 @@ app.use(
     }),
 );
 
-// connect to db
 const startServer = (model) => {
     // internal middleware
     app.use(middleware({ config, model }));

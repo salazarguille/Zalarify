@@ -1,5 +1,5 @@
 module.exports = {
     contracts: {
-        Zalarify: '0x5dba06C7663b31bc17187A38B3d8759477BE3A0f'
+        Zalarify: '0x4382961D2A74026FAB31dC80ac68a8779e02428d'
     }
 };

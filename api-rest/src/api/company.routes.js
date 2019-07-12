@@ -18,5 +18,13 @@ export default ({ config, db }) => {
             req.query.network,
         ]),
     );
+    orders.get(
+        '/:companyAddress/employees/:employeeAddress',
+        respondHttp(CompanyController.getEmployee, req => [
+            req.params.companyAddress,
+            req.params.employeeAddress,
+            req.query.network,
+        ]),
+    );
     return orders;
 };

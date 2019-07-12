@@ -77,10 +77,11 @@ module.exports = {
             const name = 'NewReceiptCreated';
             return {
                 name: name,
-                emitted: (thisContract, company, employee, receiptHash) => emitted(tx, name, ev => {
+                emitted: (thisContract, company, employee, receiptPath, receiptHash) => emitted(tx, name, ev => {
                     assert.equal(ev.thisContract, thisContract);
                     assert.equal(ev.company.toString(), company.toString());
                     assert.equal(ev.employee.toString(), employee.toString());
+                    assert.equal(ev.path.toString(), receiptPath.toString());
                     assert.equal(ev.receiptHash.toString(), receiptHash.toString());
                 }),
                 notEmitted: (assertFunction = () => {} ) => notEmitted(tx, name, assertFunction)

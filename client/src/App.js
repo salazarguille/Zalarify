@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { withStyles } from '@material-ui/styles';
 import Layout from './components/common/Layout';
 import CompanyList from './components/lists/CompanyList';
+import EmployeeDetails from './components/employee/EmployeeDetails';
 import CompanyDetails from './components/company/CompanyDetails';
 import WithWeb3 from './ethereum/web3/hoc/WithWeb3';
 
@@ -43,7 +44,13 @@ class App extends Component {
                   render={ ()=> <CompanyList {...props} items={this.state.companies} config={this.state.config}/>}
                 />
                 <Route
+                  path="/company/:companyAddress/employee/:employeeAddress"
+                  exact
+                  render={ ({match}) => <EmployeeDetails {...match.params}  {...props}/> }
+                />
+                <Route
                   path="/company/:companyAddress"
+                  exact
                   render={ ({match}) => <CompanyDetails {...match.params}  {...props}/> }
                 />
                 {/* <Route

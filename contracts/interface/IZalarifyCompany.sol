@@ -71,8 +71,6 @@ contract IZalarifyCompany {
 
     function isEnabled(address _employee) external view returns (bool);
 
-    // function getEmployee(address employee) external view returns (ZalarifyCommon.Employee memory);
-
     function getEmployees() external view returns (ZalarifyCommon.Employee[] memory);
 
     function disableEmployee(address _employee, bytes32 _reason) external returns (bool);

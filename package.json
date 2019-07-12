@@ -6,7 +6,6 @@
   "scripts": {
     "test": "truffle test",
     "deploy-ganache": "truffle migrate --network ganache",
-    "test-ganache": "truffle test --network ganache",
     "verify-contracts": "truffle run verify Role Settings Storage Upgrade Vault ZalarifyBase ZalarifyCompanyFactory --network infuraRopsten",
     "initdata-ropsten": "truffle exec ./scripts/createCompanies.js --network infuraRopsten",
     "migrate-ropsten": "npm run test && truffle migrate --reset --all --network infuraRopsten",

@@ -22,7 +22,12 @@
         {
           "indexed": false,
           "name": "receiptHash",
-          "type": "bytes32"
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "name": "path",
+          "type": "string"
         }
       ],
       "name": "NewReceiptCreated",
@@ -40,8 +45,12 @@
           "type": "address"
         },
         {
+          "name": "_path",
+          "type": "string"
+        },
+        {
           "name": "_receiptHash",
-          "type": "bytes32"
+          "type": "string"
         }
       ],
       "name": "createReceipt",
@@ -76,8 +85,12 @@
               "type": "uint256"
             },
             {
-              "name": "hash",
-              "type": "bytes32"
+              "name": "path",
+              "type": "string"
+            },
+            {
+              "name": "ipfsHash",
+              "type": "string"
             }
           ],
           "name": "",
@@ -117,20 +130,20 @@
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity 0.5.3;\npragma experimental ABIEncoderV2;\n\nimport \"../util/ZalarifyCommon.sol\";\n\ncontract IReceiptRegistry {\n\n    /** Events */\n\n    event NewReceiptCreated(\n        address indexed thisContract,\n        address company,\n        address employee,\n        bytes32 receiptHash\n    );\n\n    /** Functions */\n\n    /** Company functions */\n    \n    function createReceipt(address _company, address _employee, bytes32 _receiptHash) \n        public\n        returns (bool);\n\n    function getReceipts(address _company, address _employee)\n        public\n        view\n        returns (ZalarifyCommon.Receipt[] memory);\n\n    function hasReceipts(address _company, address _employee)\n        public\n        view\n        returns (bool);\n}",
+  "source": "pragma solidity 0.5.3;\npragma experimental ABIEncoderV2;\n\nimport \"../util/ZalarifyCommon.sol\";\n\ncontract IReceiptRegistry {\n\n    /** Events */\n\n    event NewReceiptCreated(\n        address indexed thisContract,\n        address company,\n        address employee,\n        string receiptHash,\n        string path\n    );\n\n    /** Functions */\n\n    /** Company functions */\n    \n    function createReceipt(address _company, address _employee, string memory _path, string memory _receiptHash) \n        public\n        returns (bool);\n\n    function getReceipts(address _company, address _employee)\n        public\n        view\n        returns (ZalarifyCommon.Receipt[] memory);\n\n    function hasReceipts(address _company, address _employee)\n        public\n        view\n        returns (bool);\n}",
   "sourcePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
   "ast": {
     "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
     "exportedSymbols": {
       "IReceiptRegistry": [
-        3159
+        3228
       ]
     },
-    "id": 3160,
+    "id": 3229,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3116,
+        "id": 3181,
         "literals": [
           "solidity",
           "0.5",
@@ -140,7 +153,7 @@
         "src": "0:22:17"
       },
       {
-        "id": 3117,
+        "id": 3182,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -151,10 +164,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
         "file": "../util/ZalarifyCommon.sol",
-        "id": 3118,
+        "id": 3183,
         "nodeType": "ImportDirective",
-        "scope": 3160,
-        "sourceUnit": 5175,
+        "scope": 3229,
+        "sourceUnit": 5246,
         "src": "58:36:17",
         "symbolAliases": [],
         "unitAlias": ""
@@ -165,9 +178,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 3159,
+        "id": 3228,
         "linearizedBaseContracts": [
-          3159
+          3228
         ],
         "name": "IReceiptRegistry",
         "nodeType": "ContractDefinition",
@@ -175,20 +188,20 @@
           {
             "anonymous": false,
             "documentation": "Events ",
-            "id": 3128,
+            "id": 3195,
             "name": "NewReceiptCreated",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3127,
+              "id": 3194,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3120,
+                  "id": 3185,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3128,
+                  "scope": 3195,
                   "src": "181:28:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -197,7 +210,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3119,
+                    "id": 3184,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "181:7:17",
@@ -212,11 +225,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3122,
+                  "id": 3187,
                   "indexed": false,
                   "name": "company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3128,
+                  "scope": 3195,
                   "src": "219:15:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -225,7 +238,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3121,
+                    "id": 3186,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "219:7:17",
@@ -240,11 +253,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3124,
+                  "id": 3189,
                   "indexed": false,
                   "name": "employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3128,
+                  "scope": 3195,
                   "src": "244:16:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -253,7 +266,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3123,
+                    "id": 3188,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "244:7:17",
@@ -268,56 +281,83 @@
                 },
                 {
                   "constant": false,
-                  "id": 3126,
+                  "id": 3191,
                   "indexed": false,
                   "name": "receiptHash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3128,
-                  "src": "270:19:17",
+                  "scope": 3195,
+                  "src": "270:18:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_bytes32",
-                    "typeString": "bytes32"
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3125,
-                    "name": "bytes32",
+                    "id": 3190,
+                    "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "270:7:17",
+                    "src": "270:6:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3193,
+                  "indexed": false,
+                  "name": "path",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3195,
+                  "src": "298:11:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3192,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "298:6:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
                     }
                   },
                   "value": null,
                   "visibility": "internal"
                 }
               ],
-              "src": "171:124:17"
+              "src": "171:144:17"
             },
-            "src": "148:148:17"
+            "src": "148:168:17"
           },
           {
             "body": null,
             "documentation": "Company functions ",
-            "id": 3139,
+            "id": 3208,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createReceipt",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3135,
+              "id": 3204,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3130,
+                  "id": 3197,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3139,
-                  "src": "381:16:17",
+                  "scope": 3208,
+                  "src": "401:16:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -325,10 +365,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3129,
+                    "id": 3196,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "381:7:17",
+                    "src": "401:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -340,11 +380,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3132,
+                  "id": 3199,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3139,
-                  "src": "399:17:17",
+                  "scope": 3208,
+                  "src": "419:17:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -352,10 +392,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3131,
+                    "id": 3198,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "399:7:17",
+                    "src": "419:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -367,44 +407,70 @@
                 },
                 {
                   "constant": false,
-                  "id": 3134,
-                  "name": "_receiptHash",
+                  "id": 3201,
+                  "name": "_path",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3139,
-                  "src": "418:20:17",
+                  "scope": 3208,
+                  "src": "438:19:17",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_bytes32",
-                    "typeString": "bytes32"
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3133,
-                    "name": "bytes32",
+                    "id": 3200,
+                    "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "418:7:17",
+                    "src": "438:6:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3203,
+                  "name": "_receiptHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3208,
+                  "src": "459:26:17",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3202,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "459:6:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
                     }
                   },
                   "value": null,
                   "visibility": "internal"
                 }
               ],
-              "src": "380:59:17"
+              "src": "400:86:17"
             },
             "returnParameters": {
-              "id": 3138,
+              "id": 3207,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3137,
+                  "id": 3206,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3139,
-                  "src": "473:4:17",
+                  "scope": 3208,
+                  "src": "520:4:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -412,10 +478,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3136,
+                    "id": 3205,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "473:4:17",
+                    "src": "520:4:17",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -425,10 +491,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "472:6:17"
+              "src": "519:6:17"
             },
-            "scope": 3159,
-            "src": "358:121:17",
+            "scope": 3228,
+            "src": "378:148:17",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -436,23 +502,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 3149,
+            "id": 3218,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getReceipts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3144,
+              "id": 3213,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3141,
+                  "id": 3210,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3149,
-                  "src": "506:16:17",
+                  "scope": 3218,
+                  "src": "553:16:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -460,10 +526,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3140,
+                    "id": 3209,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "506:7:17",
+                    "src": "553:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -475,11 +541,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3143,
+                  "id": 3212,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3149,
-                  "src": "524:17:17",
+                  "scope": 3218,
+                  "src": "571:17:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -487,10 +553,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3142,
+                    "id": 3211,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "524:7:17",
+                    "src": "571:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -501,44 +567,44 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "505:37:17"
+              "src": "552:37:17"
             },
             "returnParameters": {
-              "id": 3148,
+              "id": 3217,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3147,
+                  "id": 3216,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3149,
-                  "src": "588:31:17",
+                  "scope": 3218,
+                  "src": "635:31:17",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Receipt_$5137_memory_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Receipt_$5208_memory_$dyn_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Receipt[]"
                   },
                   "typeName": {
                     "baseType": {
                       "contractScope": null,
-                      "id": 3145,
+                      "id": 3214,
                       "name": "ZalarifyCommon.Receipt",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 5137,
-                      "src": "588:22:17",
+                      "referencedDeclaration": 5208,
+                      "src": "635:22:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Receipt_$5137_storage_ptr",
+                        "typeIdentifier": "t_struct$_Receipt_$5208_storage_ptr",
                         "typeString": "struct ZalarifyCommon.Receipt"
                       }
                     },
-                    "id": 3146,
+                    "id": 3215,
                     "length": null,
                     "nodeType": "ArrayTypeName",
-                    "src": "588:24:17",
+                    "src": "635:24:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Receipt_$5137_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Receipt_$5208_storage_$dyn_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Receipt[]"
                     }
                   },
@@ -546,10 +612,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "587:33:17"
+              "src": "634:33:17"
             },
-            "scope": 3159,
-            "src": "485:136:17",
+            "scope": 3228,
+            "src": "532:136:17",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -557,23 +623,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 3158,
+            "id": 3227,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "hasReceipts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3154,
+              "id": 3223,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3151,
+                  "id": 3220,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3158,
-                  "src": "648:16:17",
+                  "scope": 3227,
+                  "src": "695:16:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -581,10 +647,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3150,
+                    "id": 3219,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "648:7:17",
+                    "src": "695:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -596,11 +662,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3153,
+                  "id": 3222,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3158,
-                  "src": "666:17:17",
+                  "scope": 3227,
+                  "src": "713:17:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -608,10 +674,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3152,
+                    "id": 3221,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "666:7:17",
+                    "src": "713:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -622,19 +688,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "647:37:17"
+              "src": "694:37:17"
             },
             "returnParameters": {
-              "id": 3157,
+              "id": 3226,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3156,
+                  "id": 3225,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3158,
-                  "src": "730:4:17",
+                  "scope": 3227,
+                  "src": "777:4:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -642,10 +708,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3155,
+                    "id": 3224,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "730:4:17",
+                    "src": "777:4:17",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -655,33 +721,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "729:6:17"
+              "src": "776:6:17"
             },
-            "scope": 3159,
-            "src": "627:109:17",
+            "scope": 3228,
+            "src": "674:109:17",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 3160,
-        "src": "96:642:17"
+        "scope": 3229,
+        "src": "96:689:17"
       }
     ],
-    "src": "0:738:17"
+    "src": "0:785:17"
   },
   "legacyAST": {
     "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
     "exportedSymbols": {
       "IReceiptRegistry": [
-        3159
+        3228
       ]
     },
-    "id": 3160,
+    "id": 3229,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3116,
+        "id": 3181,
         "literals": [
           "solidity",
           "0.5",
@@ -691,7 +757,7 @@
         "src": "0:22:17"
       },
       {
-        "id": 3117,
+        "id": 3182,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -702,10 +768,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
         "file": "../util/ZalarifyCommon.sol",
-        "id": 3118,
+        "id": 3183,
         "nodeType": "ImportDirective",
-        "scope": 3160,
-        "sourceUnit": 5175,
+        "scope": 3229,
+        "sourceUnit": 5246,
         "src": "58:36:17",
         "symbolAliases": [],
         "unitAlias": ""
@@ -716,9 +782,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 3159,
+        "id": 3228,
         "linearizedBaseContracts": [
-          3159
+          3228
         ],
         "name": "IReceiptRegistry",
         "nodeType": "ContractDefinition",
@@ -726,20 +792,20 @@
           {
             "anonymous": false,
             "documentation": "Events ",
-            "id": 3128,
+            "id": 3195,
             "name": "NewReceiptCreated",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3127,
+              "id": 3194,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3120,
+                  "id": 3185,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3128,
+                  "scope": 3195,
                   "src": "181:28:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -748,7 +814,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3119,
+                    "id": 3184,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "181:7:17",
@@ -763,11 +829,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3122,
+                  "id": 3187,
                   "indexed": false,
                   "name": "company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3128,
+                  "scope": 3195,
                   "src": "219:15:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -776,7 +842,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3121,
+                    "id": 3186,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "219:7:17",
@@ -791,11 +857,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3124,
+                  "id": 3189,
                   "indexed": false,
                   "name": "employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3128,
+                  "scope": 3195,
                   "src": "244:16:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -804,7 +870,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3123,
+                    "id": 3188,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "244:7:17",
@@ -819,56 +885,83 @@
                 },
                 {
                   "constant": false,
-                  "id": 3126,
+                  "id": 3191,
                   "indexed": false,
                   "name": "receiptHash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3128,
-                  "src": "270:19:17",
+                  "scope": 3195,
+                  "src": "270:18:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_bytes32",
-                    "typeString": "bytes32"
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3125,
-                    "name": "bytes32",
+                    "id": 3190,
+                    "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "270:7:17",
+                    "src": "270:6:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3193,
+                  "indexed": false,
+                  "name": "path",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3195,
+                  "src": "298:11:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3192,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "298:6:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
                     }
                   },
                   "value": null,
                   "visibility": "internal"
                 }
               ],
-              "src": "171:124:17"
+              "src": "171:144:17"
             },
-            "src": "148:148:17"
+            "src": "148:168:17"
           },
           {
             "body": null,
             "documentation": "Company functions ",
-            "id": 3139,
+            "id": 3208,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createReceipt",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3135,
+              "id": 3204,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3130,
+                  "id": 3197,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3139,
-                  "src": "381:16:17",
+                  "scope": 3208,
+                  "src": "401:16:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -876,10 +969,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3129,
+                    "id": 3196,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "381:7:17",
+                    "src": "401:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -891,11 +984,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3132,
+                  "id": 3199,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3139,
-                  "src": "399:17:17",
+                  "scope": 3208,
+                  "src": "419:17:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -903,10 +996,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3131,
+                    "id": 3198,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "399:7:17",
+                    "src": "419:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -918,44 +1011,70 @@
                 },
                 {
                   "constant": false,
-                  "id": 3134,
-                  "name": "_receiptHash",
+                  "id": 3201,
+                  "name": "_path",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3139,
-                  "src": "418:20:17",
+                  "scope": 3208,
+                  "src": "438:19:17",
                   "stateVariable": false,
-                  "storageLocation": "default",
+                  "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_bytes32",
-                    "typeString": "bytes32"
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3133,
-                    "name": "bytes32",
+                    "id": 3200,
+                    "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "418:7:17",
+                    "src": "438:6:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3203,
+                  "name": "_receiptHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3208,
+                  "src": "459:26:17",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3202,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "459:6:17",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
                     }
                   },
                   "value": null,
                   "visibility": "internal"
                 }
               ],
-              "src": "380:59:17"
+              "src": "400:86:17"
             },
             "returnParameters": {
-              "id": 3138,
+              "id": 3207,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3137,
+                  "id": 3206,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3139,
-                  "src": "473:4:17",
+                  "scope": 3208,
+                  "src": "520:4:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -963,10 +1082,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3136,
+                    "id": 3205,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "473:4:17",
+                    "src": "520:4:17",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -976,10 +1095,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "472:6:17"
+              "src": "519:6:17"
             },
-            "scope": 3159,
-            "src": "358:121:17",
+            "scope": 3228,
+            "src": "378:148:17",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -987,23 +1106,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 3149,
+            "id": 3218,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getReceipts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3144,
+              "id": 3213,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3141,
+                  "id": 3210,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3149,
-                  "src": "506:16:17",
+                  "scope": 3218,
+                  "src": "553:16:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1011,10 +1130,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3140,
+                    "id": 3209,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "506:7:17",
+                    "src": "553:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1026,11 +1145,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3143,
+                  "id": 3212,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3149,
-                  "src": "524:17:17",
+                  "scope": 3218,
+                  "src": "571:17:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1038,10 +1157,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3142,
+                    "id": 3211,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "524:7:17",
+                    "src": "571:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1052,44 +1171,44 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "505:37:17"
+              "src": "552:37:17"
             },
             "returnParameters": {
-              "id": 3148,
+              "id": 3217,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3147,
+                  "id": 3216,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3149,
-                  "src": "588:31:17",
+                  "scope": 3218,
+                  "src": "635:31:17",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Receipt_$5137_memory_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Receipt_$5208_memory_$dyn_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Receipt[]"
                   },
                   "typeName": {
                     "baseType": {
                       "contractScope": null,
-                      "id": 3145,
+                      "id": 3214,
                       "name": "ZalarifyCommon.Receipt",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 5137,
-                      "src": "588:22:17",
+                      "referencedDeclaration": 5208,
+                      "src": "635:22:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Receipt_$5137_storage_ptr",
+                        "typeIdentifier": "t_struct$_Receipt_$5208_storage_ptr",
                         "typeString": "struct ZalarifyCommon.Receipt"
                       }
                     },
-                    "id": 3146,
+                    "id": 3215,
                     "length": null,
                     "nodeType": "ArrayTypeName",
-                    "src": "588:24:17",
+                    "src": "635:24:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Receipt_$5137_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Receipt_$5208_storage_$dyn_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Receipt[]"
                     }
                   },
@@ -1097,10 +1216,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "587:33:17"
+              "src": "634:33:17"
             },
-            "scope": 3159,
-            "src": "485:136:17",
+            "scope": 3228,
+            "src": "532:136:17",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1108,23 +1227,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 3158,
+            "id": 3227,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "hasReceipts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3154,
+              "id": 3223,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3151,
+                  "id": 3220,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3158,
-                  "src": "648:16:17",
+                  "scope": 3227,
+                  "src": "695:16:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1132,10 +1251,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3150,
+                    "id": 3219,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "648:7:17",
+                    "src": "695:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1147,11 +1266,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3153,
+                  "id": 3222,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3158,
-                  "src": "666:17:17",
+                  "scope": 3227,
+                  "src": "713:17:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1159,10 +1278,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3152,
+                    "id": 3221,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "666:7:17",
+                    "src": "713:7:17",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1173,19 +1292,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "647:37:17"
+              "src": "694:37:17"
             },
             "returnParameters": {
-              "id": 3157,
+              "id": 3226,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3156,
+                  "id": 3225,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3158,
-                  "src": "730:4:17",
+                  "scope": 3227,
+                  "src": "777:4:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1193,10 +1312,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3155,
+                    "id": 3224,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "730:4:17",
+                    "src": "777:4:17",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1206,20 +1325,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "729:6:17"
+              "src": "776:6:17"
             },
-            "scope": 3159,
-            "src": "627:109:17",
+            "scope": 3228,
+            "src": "674:109:17",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 3160,
-        "src": "96:642:17"
+        "scope": 3229,
+        "src": "96:689:17"
       }
     ],
-    "src": "0:738:17"
+    "src": "0:785:17"
   },
   "compiler": {
     "name": "solc",
@@ -1227,13 +1346,19 @@
   },
   "networks": {},
   "schemaVersion": "3.0.9",
-  "updatedAt": "2019-07-09T21:20:32.554Z",
+  "updatedAt": "2019-07-10T17:29:35.162Z",
   "devdoc": {
     "methods": {}
   },
   "userdoc": {
     "methods": {
       "createReceipt(address,address,bytes32)": {
+        "notice": "Company functions "
+      },
+      "createReceipt(address,address,bytes,bytes32)": {
+        "notice": "Company functions "
+      },
+      "createReceipt(address,address,string,string)": {
         "notice": "Company functions "
       }
     }

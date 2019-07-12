@@ -1,10 +1,13 @@
 import { withStyles } from '@material-ui/styles';
 import axios from "axios";
 import React from 'react';
-import { Text, Flex, Table, Button, Loader, Icon } from 'rimble-ui';
+import { Text, Tooltip, Flex, Table, Button, Loader, Icon } from 'rimble-ui';
+import { NavLink } from "react-router-dom";
 import CompanyDetailsItem from './CompanyDetailsItem';
 import EmployeeFormModal from '../modals/EmployeeFormModal';
 import EmployeePaymentFormModal from '../modals/EmployeePaymentFormModal';
+import RegisterReceiptPaymentFormModal from '../modals/RegisterReceiptPaymentFormModal';
+import MessageModal from '../modals/MessageModal';
 import { randomHex } from 'web3-utils';
 
 const styles = theme => ({
@@ -65,18 +68,23 @@ const styles = theme => ({
 		marginBottom: '2rem'
     },
 });
-/*
 
-        */
 class CompanyDetails extends React.Component {
     state = {
         company: undefined,
         employees: [],
         isEmployeeFormOpened: false,
         isEmployeePaymentFormOpened: false,
+        isRegisterReceiptPaymentFormOpened: false,
+        isActionMessageOpened: false,
         loading: true,
         errorMessage: undefined,
         selectedEmployee: undefined,
+        paymentData: undefined,
+        action: {
+            isSuccess: false,
+            message: undefined,
+        }
     }
 
     updateCompany() {
@@ -84,7 +92,6 @@ class CompanyDetails extends React.Component {
 
         axios.get(`${config.urls.backend}/companies/${companyAddress}`)
         .then( getCompanyResult => {
-            console.log(getCompanyResult.data);
             this.setState({
                 ...this.state,
                 company: getCompanyResult.data.info,
@@ -92,7 +99,6 @@ class CompanyDetails extends React.Component {
                 loading: false,
             });
         }).catch(reason => {
-            //console.log(reason.response);
             const errorMessage = reason.response && reason.response.data && reason.response.data.message ? reason.response.data.message : reason.toString();
             this.setState({
                 errorMessage,
@@ -124,6 +130,20 @@ class CompanyDetails extends React.Component {
         });
     }
 
+    onCloseRegisterReceiptPaymentModal = () => {
+        this.setState({
+            isRegisterReceiptPaymentFormOpened: false,
+            paymentData: undefined,
+        });
+    }
+
+    openRegisterReceiptPaymentModal = (paymentData) => {
+        this.setState({
+            isRegisterReceiptPaymentFormOpened: true,
+            paymentData,
+        });
+    }
+
     onClickCreateEmployee = e => {
         this.setState({
             isEmployeeFormOpened: true,
@@ -135,8 +155,19 @@ class CompanyDetails extends React.Component {
         this.updateCompany();
     }
 
+    onPaymentSentCallback = (paymentData) => {
+        console.log('paymentData');
+        console.log(paymentData);
+        this.onCloseEmployeePaymentModal();
+        this.openRegisterReceiptPaymentModal(paymentData);
+    }
+
+    onRegisterReceiptPaymentCallback = (data) => {
+        this.onCloseRegisterReceiptPaymentModal();
+        this.openActionMessage(`The receipt was uploaded to IPFS with ID ${data.hash}. You will see the receipts in the employee profile.`, true)
+    }
+
     onClickPayment(employee) {
-        console.log(employee);
         this.setState({
             isEmployeePaymentFormOpened: true,
             selectedEmployee: employee,
@@ -150,23 +181,54 @@ class CompanyDetails extends React.Component {
         win.focus();   
     }
 
+    onCloseActionMessage = () => {
+        this.setState({
+            isActionMessageOpened: false,
+            action: {
+                isSuccess: false,
+                message:undefined
+            }
+        });
+    }
+
+    openActionMessage = (message, isSuccess) => {
+        this.setState({
+            isActionMessageOpened: true,
+            action: {
+                isSuccess,
+                message
+            }
+        });
+    }
+
     renderEmployees = () => {
-        const { info } = this.props;
+        const { info, companyAddress } = this.props;
         const { company } = this.state;
         const isOwner = company ? company.creator.toUpperCase() === info.selectedAddress.toUpperCase() : false;
 
         const employeesRender = this.state.employees.map( employee => {
             const actionsForOwner = isOwner ? 
-                    <><Icon color="blue" name="Payment" size="24px" onClick={ e => this.onClickPayment(employee)}/></>
+                    <>
+                        <Tooltip message="Transfer Payroll to Employee, and generate receipt in IPFS.">
+                            <Icon color="blue" name="Payment" size="24px" onClick={ e => this.onClickPayment(employee)}/>
+                        </Tooltip>
+                    </>
                     : '';
             return <tr key={`${employee.wallet}_${employee.email}_${employee.name}_${employee.role}_${randomHex(5)}`}>
-                <td>{employee.wallet} / {employee.email}</td>
+                <td>{employee.name} / {employee.email}</td>
                 <td>{employee.role} ({employee.employeeType})</td>
                 <td>{employee.salaryAmount} {employee.preferedTokenPayment.symbol}</td>
                 <td>
                     <Flex flexDirection="row" width={1}>
-                    {actionsForOwner}
-                    <Icon color="blue" name="LocalSee" size="24px" onClick={ e => this.onClickSeeWallet(employee)}/>
+                        {actionsForOwner}
+                        <Tooltip message="View employee wallet in the Etherscan website.">
+                            <Icon color="blue" name="LocalSee" size="24px" onClick={ e => this.onClickSeeWallet(employee)}/>
+                        </Tooltip>
+                        <Tooltip message="View employee profile in Zalarify.">
+                            <NavLink to={`/company/${companyAddress}/employee/${employee.wallet}`}>
+                                <Icon color="blue" name="PeopleOutline" size="24px" />
+                            </NavLink>
+                        </Tooltip>
                     </Flex>
                 </td>
             </tr>;
@@ -208,12 +270,16 @@ class CompanyDetails extends React.Component {
                             </Flex>
                             <Flex flexDirection="column" width={3/4} p={2}>
                                 <Flex flexDirection="row" width={1} p={3}>
-                                    <Button.Outline height={'20hv'} m={1} as="a" href="/companies" >
-                                        Companies
-                                    </Button.Outline>
-                                    <Button disabled={!isOwner} height={'20hv'} m={1} onClick={ this.onClickCreateEmployee }>
-                                        + Employee
-                                    </Button>
+                                    <Tooltip message="View companies list.">
+                                        <Button.Outline height={'20hv'} m={1} as="a" href="/companies" >
+                                            Companies
+                                        </Button.Outline>
+                                    </Tooltip>
+                                    <Tooltip message="Create a new employee in the company (only company owner).">
+                                        <Button disabled={!isOwner} height={'20hv'} m={1} onClick={ this.onClickCreateEmployee }>
+                                            + Employee
+                                        </Button>
+                                    </Tooltip>
                                 </Flex>
                                 <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
                                     List of employees who work on {this.state.company.name} company.
@@ -251,7 +317,25 @@ class CompanyDetails extends React.Component {
                                 isOpen={this.state.isEmployeePaymentFormOpened}
                                 closeModal={this.onCloseEmployeePaymentModal}
                                 employee={this.state.selectedEmployee}
-                                //employeeCreatedCallback={this.onEmployeeCCallback}
+                                paymentSentCallback={this.onPaymentSentCallback}
+                                {...others}
+                            />
+                            <RegisterReceiptPaymentFormModal
+                                config={config}
+                                info={info}
+                                width={2/3}
+                                isOpen={this.state.isRegisterReceiptPaymentFormOpened}
+                                closeModal={this.onCloseRegisterReceiptPaymentModal}
+                                paymentData={this.state.paymentData}
+                                registerReceiptPaymentCallback={this.onRegisterReceiptPaymentCallback}
+                                {...others}
+                            />
+                            <MessageModal
+                                width={2/3}
+                                isOpen={this.state.isActionMessageOpened}
+                                closeModal={this.onCloseActionMessage}
+                                message={this.state.action.message}
+                                isSuccess={this.state.action.isSuccess}
                                 {...others}
                             />
                         </Flex>

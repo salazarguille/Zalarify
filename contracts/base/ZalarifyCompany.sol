@@ -23,7 +23,6 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
 
     mapping ( address => bool) public companyOwners;
     mapping ( address => ZalarifyCommon.Employee) public employees;
-    //mapping ( address => ZalarifyCommon.Receipt[]) public receipts;
 
     address[] public employeesList;
 

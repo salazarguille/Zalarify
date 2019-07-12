@@ -26,6 +26,7 @@
         "ethereumjs-util": "5.1.5",
         "ethers": "^4.0.23",
         "express": "^4.16.4",
+        "ipfs": "^0.36.4",
         "knex": "^0.17.3",
         "lodash": "^4.17.11",
         "morgan": "^1.8.0",
