@@ -41,9 +41,7 @@ contract ReceiptRegistry is Base, IReceiptRegistry {
 
     /** Constructor */
 
-    constructor(address _storageAddress) Base(_storageAddress) public {
-        version = 1;
-    }
+    constructor(address _storageAddress) Base(_storageAddress) public {}
 
     /** Functions */
 

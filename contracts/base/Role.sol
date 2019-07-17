@@ -4,6 +4,9 @@ import "./Base.sol";
 
 contract Role is Base {
 
+    /** Constants */
+    string constant internal ROLE_NAME = "Role";
+
     /** Events */
 
     event RoleAdded(
@@ -33,10 +36,7 @@ contract Role is Base {
   
     /** Constructor */
 
-    constructor(address _storageAddress)  public Base(_storageAddress) {
-        // Set the version
-        version = 1;
-    }
+    constructor(address _storageAddress)  public Base(_storageAddress) {}
 
      /**
     * @dev Allows the current owner to transfer control of the contract to a newOwner.

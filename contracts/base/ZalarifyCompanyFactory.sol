@@ -15,6 +15,11 @@ contract ZalarifyCompanyFactory is Base, IZalarifyCompanyFactory {
 
     /** Modifiers */
 
+    modifier isZalarify(address anAddress) {
+        require(getZalarifyAddress() == anAddress, "Sender is not Zalarify.");
+        _;
+    }
+
     /** Constructor */
 
     constructor(address _storageAddress)
@@ -27,6 +32,7 @@ contract ZalarifyCompanyFactory is Base, IZalarifyCompanyFactory {
 
     function createZalarifyCompany(ZalarifyCommon.Company memory _company)
         public 
+        isZalarify(msg.sender)
         returns (IZalarifyCompany){
         ZalarifyCompany newCompanyAddress = new ZalarifyCompany(
             _company,

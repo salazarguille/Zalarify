@@ -54,7 +54,8 @@ contract ZalarifyBase is Base, IZalarify {
                 description: _description,
                 website: _website,
                 creator: _creator,
-                createdAt: now
+                createdAt: now,
+                paused: false
             });
     }
 

@@ -3,11 +3,9 @@ const appConfig = require('../src/config');
 const DeployerApp = require('../src/deployer/DeployerApp');
 
 /** Platform configuration keys for smart contracts. */
-const PLATFORM_FEE_KEY = 'config.platform.fee';
 const STABLE_PAY_NAME = 'StablePay';
 
 /** Platform configuration values. */
-const platformFee = appConfig.getPlatformFee().get();
 
 // Mock Smart Contracts
 const ProxyBaseMock = artifacts.require("./mock/ProxyBaseMock.sol");
@@ -108,9 +106,6 @@ module.exports = function(deployer, network, accounts) {
     /****************************************
      Setting platform configuration values.
      ****************************************/
-    const settingsInstance = await Settings.deployed();
-    await settingsInstance.setPlatformFee(platformFee, {from: owner});
-    deployerApp.addData(PLATFORM_FEE_KEY, platformFee);
     deployerApp.addData(STABLE_PAY_NAME, stablePayAddress);
 
     /** Writing smart contract data into JSON file. */

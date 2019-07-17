@@ -1,3 +1,4 @@
+const ITransferMock = artifacts.require("./interface/ITransferMock.sol");
 const Upgrade = artifacts.require("./base/Upgrade.sol");
 const Storage = artifacts.require("./base/Storage.sol");
 const Vault = artifacts.require("./base/Vault.sol");
@@ -86,21 +87,43 @@ contract('UpgradeTest', function (accounts) {
             fail('It should have failed because a player cannot upgrade contracts.');
         } catch (error) {
             assert(error);
-            assert(error.message.includes("revert"));
+            assert.equal(error.reason, 'Msg sender does not have permission.');
         }
     });
 
-    
     it(t('anOwner', 'upgradeContract', 'Should not be able to upgrade contract address with an invalid contract name.', true), async function () {
         const contractName = 'invalidName';
         const newContractInstance = await Vault.new(Storage.address);
 
         try {
-            await instance.upgradeContract(contractName, newContractInstance.address, {from: player});
+            await instance.upgradeContract(contractName, newContractInstance.address, {from: owner});
             fail('It should have failed because a contract name is invalid.');
         } catch (error) {
             assert(error);
-            assert(error.message.includes("revert"));
+            assert.equal(error.reason, 'Old contract address must not be 0x0.');
         }
+    });
+
+    it(t('anOwner', 'upgradeContract', 'Should be able to upgrade contract with ether.', false), async function () {
+        // Setup
+        const contractName = 'Vault';
+        const oldVaultAddress = await _storage.getAddress(web3.utils.soliditySha3('contract.name', contractName));
+        const transferMock = await ITransferMock.at(oldVaultAddress);
+        const amountWei = await web3.utils.toWei('1', 'ether');
+        await transferMock.transferEther({from: owner, value: amountWei});
+        const vaultBalance = await web3.eth.getBalance(oldVaultAddress);
+        const newContractInstance = await Vault.new(Storage.address);
+        
+        // Invocation
+        const result = await instance.upgradeContract(contractName, newContractInstance.address, {from: owner});
+
+        // Assertions
+        assert(result);
+        upgrade
+            .pendingBalance(result)
+            .emitted(instance.address, oldVaultAddress, newContractInstance.address, contractName, vaultBalance);
+        upgrade
+            .contractUpgraded(result)
+            .emitted(instance.address, oldVaultAddress, newContractInstance.address, contractName);
     });
 });

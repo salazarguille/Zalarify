@@ -12,22 +12,16 @@ import "../util/ZalarifyCommon.sol";
 contract Base {
     /** Constants */
 
-    bytes constant internal ZALARIFY_BYTES = "Zalarify";
-    uint256 constant internal ZERO = 0;
-    address constant internal ADDRESS_EMPTY = address(0x0);
-    uint256 constant internal AVOID_DECIMALS = 100000000000000;
+    uint8 constant internal VERSION_ONE = 1;
+    // uint256 constant internal AVOID_DECIMALS = 100000000000000;
     string constant internal STATE_PAUSED = "state.paused";
     string constant internal STATE_DISABLED_COMPANY = "state.disabled.company";
-    string constant internal PLATFORM_FEE = "config.platform.fee";
 
     string constant internal STABLE_PAY_NAME = "StablePay";
     string constant internal ZALARIFY_COMPANY_FACTORY_NAME = "ZalarifyCompanyFactory";
     string constant internal SETTINGS_NAME = "Settings";
     string constant internal VAULT_NAME = "Vault";
-    string constant internal ROLE_NAME = "Role";
     string constant internal CONTRACT_NAME = "contract.name";
-    string constant internal CONTRACT_ADDRESS = "contract.address";
-
     string constant internal OWNER = "owner";
     string constant internal ADMIN = "admin";
     string constant internal ACCESS_ROLE = "access.role";
@@ -123,13 +117,8 @@ contract Base {
         _;
     }
 
-    modifier isEnabledCompany(address aCompany) {
-        require(_storage.getBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, aCompany))) == false, "Company is enabled.");
-        _;
-    }
-
     function () external payable {
-        require(msg.value > 0, "Msg value > 0");
+        require(msg.value > 0, "Msg value > 0.");
         bool depositResult = IVault(getVault()).deposit.value(msg.value)();
         require(depositResult, "The deposit was not successful.");
         emit DepositReceived(
@@ -147,6 +136,7 @@ contract Base {
     constructor(address storageAddress) public {
         // Update the contract address
         _storage = IStorage(storageAddress);
+        version = VERSION_ONE;
     }
 
     /**
@@ -180,6 +170,13 @@ contract Base {
         view
         returns (address) {
         return _storage.getAddress(keccak256(abi.encodePacked(CONTRACT_NAME, STABLE_PAY_NAME)));
+    }
+
+    function getZalarifyAddress()
+        internal
+        view
+        returns (address) {
+        return _storage.getAddress(keccak256(abi.encodePacked(CONTRACT_NAME, "Zalarify")));
     }
 
     function getStorageAddress()

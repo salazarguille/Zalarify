@@ -1,5 +1,6 @@
 // @dev see details on https://www.npmjs.com/package/truffle-assertions
 const truffleAssert = require('truffle-assertions');
+const { toBytes32 } = require('./consts');
 
 const emitted = (tx, eventName, assertFunction) => {
     truffleAssert.eventEmitted(tx, eventName, event => {
@@ -62,7 +63,7 @@ module.exports = {
             return {
                 name: name,
                 emitted: (contractAddress, oldContractAddress, newContractAddress, contractName, balance) => emitted(tx, name, ev => {
-                    assert.equal(ev.thisContract, contractAddress);
+                    assert.equal(ev.contractAddress, contractAddress);
                     assert.equal(ev.oldContractAddress, oldContractAddress);
                     assert.equal(ev.newContractAddress, newContractAddress);
                     assert.equal(ev.contractName, contractName);
@@ -89,18 +90,6 @@ module.exports = {
         },
     },
     settings: {
-        platformFeeUpdated: tx => {
-            const name = 'PlatformFeeUpdated';
-            return {
-                name: name,
-                emitted: (thisContract, oldPlatformFee, newPlatformFee) => emitted(tx, name, ev => {
-                    assert.equal(ev.thisContract, thisContract);
-                    assert.equal(ev.oldPlatformFee.toString(), oldPlatformFee.toString());
-                    assert.equal(ev.newPlatformFee.toString(), newPlatformFee.toString());
-                }),
-                notEmitted: (assertFunction = () => {} ) => notEmitted(tx, name, assertFunction)
-            };
-        },
         platformPaused: tx => {
             const name = 'PlatformPaused';
             return {
@@ -183,6 +172,31 @@ module.exports = {
                     assert.equal(ev.who, who);
                     assert.equal(ev.to, to);
                     assert.equal(ev.amount.toString(), amount.toString());
+                }),
+                notEmitted: (assertFunction = () => {} ) => notEmitted(tx, name, assertFunction)
+            };
+        }
+    },
+    company: {
+        pausedCompany: tx => {
+            const name = 'PausedCompany';
+            return {
+                name: name,
+                emitted: (thisContract, owner, reason) => emitted(tx, name, ev => {
+                    assert.equal(ev.thisContract, thisContract);
+                    assert.equal(ev.owner, owner);
+                    assert.equal(ev.reason.toString(), toBytes32(reason));
+                }),
+                notEmitted: (assertFunction = () => {} ) => notEmitted(tx, name, assertFunction)
+            };
+        },
+        unpausedCompany: tx => {
+            const name = 'UnpausedCompany';
+            return {
+                name: name,
+                emitted: (thisContract, owner) => emitted(tx, name, ev => {
+                    assert.equal(ev.thisContract, thisContract);
+                    assert.equal(ev.owner, owner);
                 }),
                 notEmitted: (assertFunction = () => {} ) => notEmitted(tx, name, assertFunction)
             };

@@ -9,39 +9,17 @@ contract Settings is Base, ISettings {
 
     constructor(address _storageAddress)
     public
-    Base(_storageAddress) {
-        version = 1;
-    }
+    Base(_storageAddress) {}
 
     /** Modifiers */
 
     /** Functions */
 
-    function getPlatformFee()
-    external
-    view
-    returns (uint16){
-        return _storage.getUint16(keccak256(abi.encodePacked(PLATFORM_FEE)));
-    }
-
-    function setPlatformFee(uint16 _fee)
-    external
-    onlySuperUser
-    returns (bool) {
-        uint16 oldPlatformFee = _storage.getUint16(keccak256(abi.encodePacked(PLATFORM_FEE)));
-        _storage.setUint16(keccak256(abi.encodePacked(PLATFORM_FEE)), _fee);
-        emit PlatformFeeUpdated(
-            address(this),
-            oldPlatformFee,
-            _fee
-        );
-        return true;
-    }
-
     function pausePlatform(string calldata reason)
     external
     onlySuperUser
     returns (bool) {
+        require(!_isPlatformPaused(), "Zalarify is already paused.");
         _storage.setBool(keccak256(abi.encodePacked(STATE_PAUSED)), true);
 
         emit PlatformPaused(
@@ -54,6 +32,7 @@ contract Settings is Base, ISettings {
     external
     onlySuperUser
     returns (bool) {
+        require(_isPlatformPaused(), "Zalarify is not paused.");
         _storage.setBool(keccak256(abi.encodePacked(STATE_PAUSED)), false);
 
         emit PlatformUnpaused(
@@ -62,8 +41,12 @@ contract Settings is Base, ISettings {
         );
     }
 
-    function isPlatformPaused() external view returns (bool) {
+    function _isPlatformPaused() internal view returns (bool) {
         return _storage.getBool(keccak256(abi.encodePacked(STATE_PAUSED)));
+    }
+
+    function isPlatformPaused() external view returns (bool) {
+        return _isPlatformPaused();
     }
 
 }

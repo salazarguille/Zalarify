@@ -5,6 +5,7 @@ import "./DelegateProxy.sol";
 import "../../interface/IStorage.sol";
 
 contract IsContract {
+
     /*
     * NOTE: this should NEVER be used for authentication
     * (see pitfalls: https://github.com/fergarrui/ethereum-security/tree/master/contracts/extcodesize).

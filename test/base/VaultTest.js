@@ -1,7 +1,6 @@
-const Upgrade = artifacts.require("./base/Upgrade.sol");
-const Storage = artifacts.require("./base/Storage.sol");
+
 const Vault = artifacts.require("./base/Vault.sol");
-const Role = artifacts.require("./base/Role.sol");
+const ITransferMock = artifacts.require("./interface/ITransferMock.sol");
 
 const withData = require('leche').withData;
 const BigNumber = require('bignumber.js');
@@ -62,6 +61,33 @@ contract('VaultTest', function (accounts) {
                 fail(false, "It should have failed because the value is invalid.");
             } catch (error) {
                 // Assertions
+                assert(error);
+                assert.equal(error.reason, messageExpected);
+            }
+        });
+    });
+
+    withData({
+        _1_1ether: [accounts[0], "1", "Msg value > 0."]
+    }, function(address, amount, messageExpected, mustFail) {
+        it(t('anOwner', 'fallback', 'Should be able to transfer ether using fallback ether.', false), async function() {
+            // Setup
+            const amountWei = await web3.utils.toWei(amount, 'ether');
+            const vaultInitialBalance = await web3.eth.getBalance(instance.address);
+            const transferMock = await ITransferMock.at(instance.address);
+
+            // Invocation
+            try {
+                const result = await transferMock.transferEther({from: address, value: amountWei});
+
+                // Assertions
+                assert(!mustFail, 'It should have failed because data is invalid.');
+                assert(result);
+                const vaultFinalBalance = await web3.eth.getBalance(instance.address);
+                assert.equal(amountWei, BigNumber(vaultFinalBalance.toString()).minus(BigNumber(vaultInitialBalance.toString())));
+            } catch (error) {
+                // Assertions
+                assert(mustFail);
                 assert(error);
                 assert.equal(error.reason, messageExpected);
             }

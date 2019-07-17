@@ -25,4 +25,17 @@ contract ProxyBase is DelegateProxy, Base {
     function getTargetAddress(string memory aTargetId) internal view returns (address) {
         return _storage.getAddress(keccak256(abi.encodePacked(CONTRACT_NAME, aTargetId)));
     }
+
+    function transferEthers(address payable toAddress, uint256 amount)
+      external
+      onlySuperUser()
+      nonReentrant()
+      returns (bool)
+      {
+      require(address(this).balance >= amount, "Contract has not enough balance.");
+      
+      toAddress.transfer(amount);
+
+      return true;
+    }
 }

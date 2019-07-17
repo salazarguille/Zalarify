@@ -7,7 +7,8 @@ const Storage = artifacts.require("./base/Storage.sol");
 const {
     toBytes32,
     title: t,
-    NULL_ADDRESS
+    NULL_ADDRESS,
+    createCompanyStruct,
 } = require('../util/consts');
 const { receiptRegistry } = require('../util/events');
 
@@ -29,14 +30,13 @@ contract('ReceiptRegistryTest', function (accounts) {
             //Setup
             const companyOwnerAddress = companyAddressIndex !== NULL_ADDRESS ? accounts[companyAddressIndex] : NULL_ADDRESS;
             const storage = await Storage.deployed();
-            const companyStruct = [
-                toBytes32('companyId'),
-                toBytes32('companyName'),
-                toBytes32('companyDescription'),
-                toBytes32('website'),
+            const companyStruct = createCompanyStruct(
+                'companyId',
+                'companyName',
+                'companyDescription',
+                'website',
                 companyOwnerAddress,
-                Date.now()
-            ];
+            );
             const zalarifyCompany = await ZalarifyCompany.new(companyStruct, storage.address);
             const employeeAddress = employeeAddressIndex !== NULL_ADDRESS ? accounts[employeeAddressIndex] : NULL_ADDRESS;
 
@@ -75,14 +75,13 @@ contract('ReceiptRegistryTest', function (accounts) {
             const companyOwnerAddress = accounts[companyOwnerAddressIndex];
             const employeeAddress = accounts[employeeAddressIndex];
             const storage = await Storage.deployed();
-            const companyStruct = [
-                toBytes32('companyId'),
-                toBytes32('companyName'),
-                toBytes32('companyDescription'),
-                toBytes32('website'),
+            const companyStruct = createCompanyStruct(
+                'companyId',
+                'companyName',
+                'companyDescription',
+                'website',
                 companyOwnerAddress,
-                Date.now()
-            ];
+            );
             const zalarifyCompany = await ZalarifyCompany.new(companyStruct, storage.address);
             for(let counter = 0; counter < countReceipts; counter++) {
                 const pathBytes32 = toBytes32(`${counter}_${zalarifyCompany.address}${employeeAddress}`);
@@ -107,14 +106,13 @@ contract('ReceiptRegistryTest', function (accounts) {
             const companyOwnerAddress = accounts[companyOwnerAddressIndex];
             const employeeAddress = accounts[employeeAddressIndex];
             const storage = await Storage.deployed();
-            const companyStruct = [
-                toBytes32('companyId'),
-                toBytes32('companyName'),
-                toBytes32('companyDescription'),
-                toBytes32('website'),
+            const companyStruct = createCompanyStruct(
+                'companyId',
+                'companyName',
+                'companyDescription',
+                'website',
                 companyOwnerAddress,
-                Date.now()
-            ];
+            );
             const zalarifyCompany = await ZalarifyCompany.new(companyStruct, storage.address);
             for(let counter = 0; counter < countReceipts; counter++) {
                 const pathBytes32 = toBytes32(`${counter}_${zalarifyCompany.address}${employeeAddress}`);

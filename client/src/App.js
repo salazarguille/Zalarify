@@ -43,6 +43,7 @@ class App extends Component {
                   path="/companies/"
                   render={ ()=> <CompanyList {...props} items={this.state.companies} config={this.state.config}/>}
                 />
+
                 <Route
                   path="/company/:companyAddress/employee/:employeeAddress"
                   exact
@@ -53,11 +54,6 @@ class App extends Component {
                   exact
                   render={ ({match}) => <CompanyDetails {...match.params}  {...props}/> }
                 />
-                {/* <Route
-                  path='*'
-                  exact={true}
-                  render={ ({match}) => <p>Page not found.</p>}
-                /> */}
               </Layout>
               )}
             </WithWeb3>

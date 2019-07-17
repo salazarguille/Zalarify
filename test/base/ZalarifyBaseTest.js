@@ -1,5 +1,4 @@
 const withData = require('leche').withData;
-const _ = require('lodash');
 
 const Zalarify = artifacts.require("./Zalarify.sol");
 const IZalarify = artifacts.require("./interface/IZalarify.sol");
@@ -7,7 +6,7 @@ const ZalarifyCompany = artifacts.require("./base/ZalarifyCompany.sol");
 const ZalarifyBaseMock = artifacts.require("./mock/base/ZalarifyBaseMock.sol");
 const Storage = artifacts.require("./base/Storage.sol");
 
-const { toBytes32, title: t, NULL_ADDRESS} = require('../util/consts');
+const { toBytes32, title: t, createCompanyStruct, NULL_ADDRESS} = require('../util/consts');
 const { zalarify } = require('../util/events');
 
 contract('ZalarifyBaseTest', function (accounts) {
@@ -94,17 +93,13 @@ contract('ZalarifyBaseTest', function (accounts) {
             const storage = await Storage.deployed();
             const instance = await ZalarifyBaseMock.new(storage.address);
             const idBytes32 = toBytes32(id);
-            const nameBytes32 = toBytes32(name);
-            const websiteBytes32 = toBytes32(website);
-            const descriptionBytes32 = toBytes32(description);
-            const companyStruct = [
-                idBytes32,
-                nameBytes32,
-                descriptionBytes32,
-                websiteBytes32,
-                address,
-                Date.now()
-            ];
+            const companyStruct = createCompanyStruct(
+                id,
+                name,
+                description,
+                website,
+                address
+            );
             const company = await ZalarifyCompany.new(companyStruct, storage.address);
 
             //Invocation

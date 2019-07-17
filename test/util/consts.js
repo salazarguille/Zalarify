@@ -18,6 +18,10 @@ const GANACHE_NETWORK_ID = 50;
 const KOVAN_NETWORK_ID = 42;
 const ROPSTEN_NETWORK_ID = 3;
 
+const toBytes32 = function (text) {
+    return util.bufferToHex(util.setLengthRight(text, 32));
+};
+
 module.exports = {
     ONE_SECOND_MS,
     ONE_MINUTE_MS,
@@ -37,10 +41,19 @@ module.exports = {
     toBytes: function (text) {
         return util.bufferToHex(text);
     },
-    toBytes32: function (text) {
-        return util.bufferToHex(util.setLengthRight(text, 32));
-    },
+    toBytes32,
     toString: function (bytes) {
         return util.toBuffer(bytes).toString();
+    },
+    createCompanyStruct: (id, name, description, website, owner) => {
+        return [
+            toBytes32(id),
+            toBytes32(name),
+            toBytes32(description),
+            toBytes32(website),
+            owner,
+            Date.now(),
+            false,
+        ];
     },
 }

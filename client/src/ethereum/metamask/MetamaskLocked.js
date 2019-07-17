@@ -1,7 +1,6 @@
 import { withStyles } from '@material-ui/styles';
 import React from 'react';
 import Color from 'color';
-import { Button } from "rimble-ui";
 
 const orange = Color('#f6851B');
 
@@ -50,12 +49,8 @@ const styles = theme => ({
     },
 });
 
-class AccountUnavailable extends React.Component {
+class MetamaskLocked extends React.Component {
     state = {}
-
-    onClickRefresh = e => {
-        e.preventDefault();
-    }
 
     render() {
         const { classes, network } = this.props;
@@ -64,16 +59,8 @@ class AccountUnavailable extends React.Component {
             <div className={classes.wrapper}>
                 <div className={classes.inner}>
 					<header className={classes.header}>
-						<h1>Install Metamask Extension</h1>
-                        <p>
-                            In order to use Zalarify platform, you need to install and sign in into Metamask extension.
-                            Please, after installing the Metamask extension, refresh this page.
-                        </p>
-                        <Button as="a" href="https://metamask.io/" target="\_blank" title="Install Metamask">Install Metamask</Button>
-                        <p></p>
-                        <Button.Outline as="a" href={window.location.href} title="Refresh">Refresh</Button.Outline>
-                        <br/>
-                        <br/>
+						<h1>Your Metamask Extension is Locked</h1>
+                    <p>Please, signin into your Metamask account to interact to Zalarify.</p>
                     </header>
                 </div>
             </div>
@@ -81,4 +68,4 @@ class AccountUnavailable extends React.Component {
     }
 }
 
-export default withStyles(styles)(AccountUnavailable);
+export default withStyles(styles)(MetamaskLocked);

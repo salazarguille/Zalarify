@@ -38,4 +38,25 @@ contract('RoleTest', accounts => {
             }
         });
     });
+
+    withData({
+        _1_player_removePlayer_asAdmin: ['player', 'admin', player1, owner, undefined, false],
+        _1_player_removePlayer_asAdmin: ['player', 'user', player1, player2, "Msg sender does not have permission.", true]
+    }, function(roleText, roleName, accessTo, accessFrom, messageExpected, mustFail) {
+        it(t(roleText, 'adminRoleRemove', `Should (or not) able to remove a new role.`, mustFail), async function() {
+            // Setup
+            await instance.adminRoleAdd(roleName, accessTo ,{from: owner});
+
+            //Invocation
+            try {
+                const result = await instance.adminRoleRemove(roleName, accessTo ,{from: accessFrom});
+                assert.ok(!mustFail, "It should not have failed.");
+                role.roleRemoved(result).emitted(accessTo, roleName);
+            } catch(error) {
+                assert(mustFail, "It should have failed.");
+                assert(error);
+                assert.equal(error.reason, messageExpected);
+            }
+        });
+    });
 });

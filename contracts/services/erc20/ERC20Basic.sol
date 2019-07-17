@@ -8,8 +8,8 @@ pragma solidity 0.5.3;
  */
 contract ERC20Basic {
   function decimals() external view returns(uint digits);
-  function totalSupply() public view returns (uint256);
-  function balanceOf(address who) public view returns (uint256);
-  function transfer(address to, uint256 value) public returns (bool);
+  function totalSupply() external view returns (uint256);
+  function balanceOf(address who) external view returns (uint256);
+  function transfer(address to, uint256 value) external returns (bool);
   event Transfer(address indexed from, address indexed to, uint256 value);
 }

@@ -1,35 +1,25 @@
 pragma solidity 0.5.3;
 
 import "./Base.sol";
+import "../interface/IUpgrade.sol";
 
-contract Upgrade is Base {
+contract Upgrade is Base, IUpgrade {
+
+    /** Constants */
+    string constant internal CONTRACT_ADDRESS = "contract.address";
 
     /** Events */
 
-    event ContractUpgraded (
-        address indexed contractAddress,
-        address indexed oldContractAddress,
-        address indexed newContractAddress,
-        string contractName
-    );
-
-    event PendingBalance (
-        address indexed contractAddress,
-        address indexed oldContractAddress,
-        address indexed newContractAddress,
-        string contractName,
-        uint balance
-    );
-
     /** Constructor */
 
-    constructor(address _storageAddress) Base(_storageAddress) public {
-        version = 1;
-    }
+    constructor(address _storageAddress) Base(_storageAddress) public {}
 
     /** Functions */
 
-    function upgradeContract(string calldata _name, address _upgradedContractAddress)  external onlySuperUser {
+    function upgradeContract(string calldata _name, address _upgradedContractAddress)
+    external
+    onlySuperUser
+    returns (bool){
         address oldContractAddress = _storage.getAddress(keccak256(abi.encodePacked(CONTRACT_NAME, _name)));
         
         require(oldContractAddress != address(0x0), "Old contract address must not be 0x0.");
@@ -51,5 +41,6 @@ contract Upgrade is Base {
         _storage.deleteAddress(keccak256(abi.encodePacked(CONTRACT_ADDRESS, oldContractAddress)));
 
         emit ContractUpgraded(address(this), oldContractAddress, _upgradedContractAddress, _name);
+        return true;
     }
 }

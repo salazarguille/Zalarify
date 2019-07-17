@@ -16,6 +16,9 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
     using AddressArrayLib for address[];
 
     /** Constants */
+    bytes constant internal ZALARIFY_BYTES = "Zalarify";
+    uint256 constant internal ZERO = 0;
+    address constant internal ADDRESS_EMPTY = address(0x0);
 
     /** Properties */
 
@@ -40,18 +43,18 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         _;
     }
 
-    modifier isEmployeeEnabled(address _address) {
-        require(employees[_address].enabled == true, "Address is not enabled as an employee.");
-        _;
-    }
-
     modifier isNotEmployee(address _address) {
-        require(employees[_address].exist == false, "Address is not an employee.");
+        require(employees[_address].exist == false, "Address is already an employee.");
         _;
     }
 
-    modifier isEmployeeNotEnabled(address _address) {
-        require(employees[_address].enabled == false, "Address is already enabled as an employee.");
+    modifier _isCompanyPaused(address aCompany) {
+        require(company.paused == true, "Company is not paused.");
+        _;
+    }
+
+    modifier isCompanyNotPaused(address aCompany) {
+        require(company.paused == false, "Company is paused.");
         _;
     }
 
@@ -81,18 +84,11 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return company.id;
     }
 
-    function isEnabled(address _employee)
+    function isCompanyPaused()
     public
     view
     returns (bool){
-        return employees[_employee].enabled;
-    }
-
-    function isCompanyEnabled()
-    public
-    view
-    returns (bool){
-        return !_storage.getBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, address(this))));
+        return company.paused;
     }
 
     function getEmployees()
@@ -108,14 +104,14 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return _employees;
     }
 
-    function disable(bytes32 _reason)
+    function pause(bytes32 _reason)
     public
     isCompanyOwner(msg.sender)
-    isEnabledCompany(address(this))
+    isCompanyNotPaused(address(this))
     returns (bool){
-        setStateDisabledCompany(true);
+        company.paused = true;
 
-        emit DisabledCompany(
+        emit PausedCompany(
             address(this),
             msg.sender,
             _reason
@@ -123,55 +119,16 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return true;
     }
 
-    function setStateDisabledCompany(bool _value) internal {
-        _storage.setBool(keccak256(abi.encodePacked(STATE_DISABLED_COMPANY, address(this))), _value);
-    }
-
-    function enable()
+    function unpause()
     public
     isCompanyOwner(msg.sender)
-    isDisabledCompany(address(this))
+    _isCompanyPaused(address(this))
     returns (bool){
-        setStateDisabledCompany(false);
+        company.paused = false;
 
-        emit EnabledCompany(
+        emit UnpausedCompany(
             address(this),
             msg.sender
-        );
-        return true;
-    }
-
-    function disableEmployee(address _employee, bytes32 _reason)
-    public
-    isCompanyOwner(msg.sender)
-    isEnabledCompany(address(this))
-    isEmployee(_employee)
-    isEmployeeEnabled(_employee)
-    returns (bool){
-        employees[_employee].enabled = false;
-
-        emit DisableEmployee(
-            address(this),
-            msg.sender,
-            _employee,
-            _reason
-        );
-        return true;
-    }
-
-    function enableEmployee(address _employee)
-    public
-    isCompanyOwner(msg.sender)
-    isEnabledCompany(address(this))
-    isEmployee(_employee)
-    isEmployeeNotEnabled(_employee)
-    returns (bool){
-        employees[_employee].enabled = true;
-
-        emit EnabledEmployee(
-            address(this),
-            msg.sender,
-            _employee
         );
         return true;
     }
@@ -188,7 +145,6 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
             preferedTokenPayment: _preferedTokenPayment,
             employeeType: _employeeType,
             salaryAmount: _salaryAmount,
-            enabled: true,
             exist: true
         });
     }
@@ -196,7 +152,7 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
     function addEmployee(address _newEmployee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount)
     public
     isCompanyOwner(msg.sender)
-    isEnabledCompany(address(this))
+    isCompanyNotPaused(address(this))
     isNotEmployee(_newEmployee)
     returns (bool){
         
@@ -252,7 +208,6 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
     public
     isCompanyOwner(msg.sender)
     isEmployee(_payment.to)
-    isEmployeeEnabled(_payment.to)
     returns (bool){
         require(_payment.provider != bytes32(0x0), "Provider != 0x0.");
         require(_payment.sourceAmount > 0, "Source amount > 0.");

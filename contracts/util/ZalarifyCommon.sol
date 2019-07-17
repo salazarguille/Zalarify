@@ -15,6 +15,7 @@ contract ZalarifyCommon {
         bytes32 website;
         address creator;
         uint createdAt;
+        bool paused;
     }
 
     struct Receipt {
@@ -31,7 +32,6 @@ contract ZalarifyCommon {
         address preferedTokenPayment;
         EmployeeType employeeType;
         uint salaryAmount;
-        bool enabled;
         bool exist;
     }
 

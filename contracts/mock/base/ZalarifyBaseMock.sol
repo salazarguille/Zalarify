@@ -12,9 +12,7 @@ contract ZalarifyBaseMock is ZalarifyBase {
     /** Constructor */
 
     constructor(address _storageAddress)
-        public ZalarifyBase(_storageAddress) {
-        version = 1;
-    }
+        public ZalarifyBase(_storageAddress) {}
 
     /** Functions */
 

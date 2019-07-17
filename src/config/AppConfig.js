@@ -5,10 +5,8 @@ const DEFAULT_GAS_WEI = 4600000;
 const DEFAULT_ADDRESS_COUNT = 10;
 const DEFAULT_ADDRESS_INDEX = 0;
 const DEFAULT_GAS_GWEI_PRICE = '20';
-const DEFAULT_PRINT_DEPLOY_COST = false;
 
 const PRINT_DEPLOY_COST_KEY = "PRINT_DEPLOY_COST";
-const PLATFORM_FEE_KEY = 'PLATFORM_FEE';
 const ADDRESS_COUNT_KEY = 'ADDRESS_COUNT_KEY';
 const DEFAULT_ADDRESS_INDEX_KEY = 'DEFAULT_ADDRESS_INDEX_KEY';
 const MNEMONIC_KEY = 'MNEMONIC_KEY';
@@ -26,7 +24,6 @@ class AppConfig {
 }
 
 AppConfig.prototype.initializeConf = function() {
-    this.createItem(PLATFORM_FEE_KEY, undefined, 'This is the platform fee.');
     this.createItem(DEFAULT_ADDRESS_INDEX_KEY, DEFAULT_ADDRESS_INDEX, 'This is the address index to be used as default.');
     this.createItem(ADDRESS_COUNT_KEY, DEFAULT_ADDRESS_COUNT, 'Addresses needed to deploy smart contracts.');
     this.createItem(MNEMONIC_KEY, undefined, 'Mnemonic to generate addresses.');
@@ -65,10 +62,6 @@ AppConfig.prototype.getDefaultAddressIndex = function() {
     return this.conf.get(DEFAULT_ADDRESS_INDEX_KEY);
 }
 
-AppConfig.prototype.getPlatformFee = function() {
-    return this.conf.get(PLATFORM_FEE_KEY);
-}
-
 AppConfig.prototype.getPrintDeployCost = function() {
     return this.conf.get(PRINT_DEPLOY_COST_KEY);
 }
@@ -88,9 +81,6 @@ AppConfig.prototype.validate = function() {
     }
     if (!this.getMnemonic().hasValue()) {
         throw new Error('The mnemonic key (MNEMONIC_KEY) is empty. It must be defined in .env file.');
-    }
-    if(!this.getPlatformFee().hasValue()) {
-        throw new Error(`The platform fee key (PLATFORM_FEE) is empty. It must be defined in .env file.`);
     }
 }
 

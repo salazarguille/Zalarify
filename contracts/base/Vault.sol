@@ -20,7 +20,14 @@ contract Vault is Base, IVault {
 
     /** Fallback Method */
 
-    // TODO Override Base's Fallback Function.
+    function () external payable {
+        require(msg.value > 0, "Msg value > 0.");
+        emit DepositReceived(
+            address(this),
+            msg.sender,
+            msg.value
+        );
+    }
 
     /** Functions */
 
@@ -30,6 +37,7 @@ contract Vault is Base, IVault {
       returns (bool){
         require(msg.value > 0, "Msg value > 0.");
         emit DepositReceived(address(this), msg.sender, msg.value);
+        return true;
     }
 
     function hasBalanceInErc(address _contractAddress, address _anAddress, uint256 _amount)

@@ -20,26 +20,13 @@ contract IZalarifyCompany {
         uint salaryAmount
     );
 
-    event DisableEmployee(
-        address indexed thisContract,
-        address owner,
-        address employee,
-        bytes32 reason
-    );
-
-    event EnabledEmployee(
-        address indexed thisContract,
-        address owner,
-        address employee
-    );
-
-    event DisabledCompany(
+    event PausedCompany(
         address indexed thisContract,
         address owner,
         bytes32 reason
     );
 
-    event EnabledCompany(
+    event UnpausedCompany(
         address indexed thisContract,
         address owner
     );
@@ -61,21 +48,15 @@ contract IZalarifyCompany {
 
     function id() external view returns (bytes32);
 
-    function isCompanyEnabled() external view returns (bool);
+    function isCompanyPaused() external view returns (bool);
 
-    function disable(bytes32 _reason) external returns (bool);
+    function pause(bytes32 _reason) external returns (bool);
 
-    function enable() external returns (bool);
+    function unpause() external returns (bool);
 
     /** Employee functions */
 
-    function isEnabled(address _employee) external view returns (bool);
-
     function getEmployees() external view returns (ZalarifyCommon.Employee[] memory);
-
-    function disableEmployee(address _employee, bytes32 _reason) external returns (bool);
-
-    function enableEmployee(address _employee) external returns (bool);
 
     function addEmployee(address _newEmployee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount) external returns (bool);
 
