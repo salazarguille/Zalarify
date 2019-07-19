@@ -8,7 +8,7 @@ import {
   Form,
   Text,
   Flex,
-  Checkbox
+  Checkbox,
 } from "rimble-ui";
 import BigNumber from 'bignumber.js';
 import { listenOn } from "../utils/txs";
@@ -338,13 +338,18 @@ class EmployeePaymentForm extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, info, company } = this.props;
     const { employee } = this.state;
     const renderProcessing = this.state.processing ? <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
     Transaction is processing...
     </Text> : '';
     const renderRate = this.renderBalanceRate();
+    const preferredTokenName = employee.preferedTokenPayment ? `${employee.preferedTokenPayment.name} (${employee.preferedTokenPayment.symbol})` : '--';
 
+    const isOwner = info.selectedAddress.toUpperCase() === company.creator.toUpperCase();
+    const ownerMessage = !isOwner ? <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic color="#ff0000">
+                                      The current account {info.selectedAddress} is not a company owner. Sorry, you can't transfer payrolls to employees.
+                                    </Text> : '';
     return (
       <Form width={'100vw'} p={15} onSubmit={this.handleSubmit}>
         {this.renderValidation()}
@@ -372,7 +377,7 @@ class EmployeePaymentForm extends React.Component {
           <Text
           >
             {`${employee.salaryAmount} ` || '-- '}
-            {employee.preferedTokenPayment ? `${employee.preferedTokenPayment.name} (${employee.preferedTokenPayment.symbol})` : '--'}
+            {preferredTokenName}
           </Text>
         </Flex>
         <Form.Field label="ERC20 Token" width={1}>
@@ -383,6 +388,9 @@ class EmployeePaymentForm extends React.Component {
           >
             {this.renderSelectOptions()}
           </select>
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            The ERC20 token you would like to use to transfer the payroll to the employee. The employee will receive {preferredTokenName}.
+          </Text>
         </Form.Field>
         <Flex width={1} flexDirection="column">
           <Text
@@ -391,9 +399,13 @@ class EmployeePaymentForm extends React.Component {
           <Text>
             {renderRate}
           </Text>
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            The payment must be made in two steps. First allow to Zalarify to use the tokens you selected, and finally make the payment.
+          </Text>
         </Flex>
         {renderProcessing}
-        <Button disabled={this.state.processing || this.state.isLoadingRate || !this.state.isTokenApprove } type="submit" style={{width:'100%'}}>
+        {ownerMessage}
+        <Button disabled={this.state.processing || this.state.isLoadingRate || !this.state.isTokenApprove || !isOwner} type="submit" style={{width:'100%'}}>
           Pay Salary
         </Button>
         <ToastContainer

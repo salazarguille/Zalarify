@@ -4,7 +4,8 @@ import {
   Button,
   Form,
   Text,
-  Textarea
+  Textarea,
+  Flex,
 } from "rimble-ui";
 
 const styles = theme => ({
@@ -75,32 +76,51 @@ class CompanyForm extends React.Component {
   }
 
   render() {
+    const { info } = this.props;
     const renderProcessing = this.props.processing ? <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
     Transaction is processing...
   </Text> : '';
     return (
       <Form width={'100vw'} p={15} onSubmit={this.handleSubmit}>
-        <Form.Field validated={this.state.validated} label="Name" width={1}>
+        <Flex width={1} mx="0" my="0" flexDirection="column">
+          <Text width={1} textAlign="left" fontSize="18px" bold fontFamily={'"Source Sans Pro",sans-serif'}>
+            Creator Wallet
+          </Text>
+          <Text width={1} textAlign="left" fontSize="16px" italic>
+            {info.selectedAddress}
+          </Text>
+        </Flex>
+        <Form.Field validated={this.state.validated} label="Name" width={1} mx="0" my="0">
           <Form.Input
             type="text"
             required
+            maxLength="32"
+            minLength="1"
             style={{width:'100%'}}
             placeholder="My Company LLC"
             onChange={ e => this.handleValidation(e,'name')}
             value={this.state.company.name}
           />
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            The company name. The length must be between 1 - 32 characters.
+          </Text>
         </Form.Field>
-        <Form.Field validated={this.state.validated} label="Website" width={1}>
+        <Form.Field validated={this.state.validated} label="Website" width={1} mx="0" my="0">
           <Form.Input
             type="url"
             required
+            maxLength="32"
+            minLength="1"
             style={{width:'100%'}}
             placeholder="https://www.mycompany.com"
             onChange={e => this.handleValidation(e, 'website')}
             value={this.state.company.website}
           />
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            The website of your company. It must include the prefix 'https://''. The length must be between 1 - 32 characters.
+          </Text>
         </Form.Field>
-        <Form.Field validated={this.state.validated} label="Description (Max 32 chars.)" width={1}>
+        <Form.Field validated={this.state.validated} label="Description" width={1} mx="0" my="0">
           <Textarea
             type="text"
             required
@@ -111,6 +131,9 @@ class CompanyForm extends React.Component {
             onChange={e => this.handleValidation(e, 'description')}
             value={this.state.company.description}
           />
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            A brief description of your company. The length must be between 1 - 32 characters.
+          </Text>
         </Form.Field>
         {renderProcessing}
         <Button disabled={this.props.processing} type="submit" style={{width:'100%'}}>

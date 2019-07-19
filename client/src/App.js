@@ -5,6 +5,8 @@ import Layout from './components/common/Layout';
 import CompanyList from './components/lists/CompanyList';
 import EmployeeDetails from './components/employee/EmployeeDetails';
 import CompanyDetails from './components/company/CompanyDetails';
+import Home from './components/home/Home';
+import Integration from './components/home/Integration';
 import WithWeb3 from './ethereum/web3/hoc/WithWeb3';
 
 import { getCurrentConfig } from './config';
@@ -37,13 +39,16 @@ class App extends Component {
                 <Route
                   path="/"
                   exact
-                  render={ () => <p>Hi</p>}
+                  render={ () => <Home {...props} config={this.state.config}/>}
+                />
+                <Route
+                  path="/integration"
+                  render={ () => <Integration {...props} config={this.state.config}/>}
                 />
                 <Route
                   path="/companies/"
                   render={ ()=> <CompanyList {...props} items={this.state.companies} config={this.state.config}/>}
                 />
-
                 <Route
                   path="/company/:companyAddress/employee/:employeeAddress"
                   exact

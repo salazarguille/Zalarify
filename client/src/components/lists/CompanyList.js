@@ -1,14 +1,14 @@
 import { withStyles } from '@material-ui/styles';
 import axios from "axios";
 import React from 'react';
-import { Flex, Text, Loader, Button } from 'rimble-ui';
+import { Flex, Text, Loader, Button, Tooltip } from 'rimble-ui';
 import CompanyItem from './items/CompanyItem';
 import CompanyFormModal from '../modals/CompanyFormModal';
 import MessageModal from '../modals/MessageModal';
 
 const styles = theme => ({
     wrapper: {
-	    padding: '6rem 0 4rem 0',
+	    padding: '2rem 0 4rem 0',
     },
     inner: {
         margin: '0 auto',
@@ -222,9 +222,11 @@ class CompanyList extends React.Component {
                         </header>    
                     </div>
                     <Flex flexDirection="row" width={1} p={3}>
-                        <Button height={'20hv'} m={1} onClick={ this.onClickCreateCompany }>
-                            + Company
-                        </Button>
+                        <Tooltip message="It allows you to create a new company. As an owner, you will able to transfer payrolls, and register payments.">
+                            <Button height={'20hv'} m={1} onClick={ this.onClickCreateCompany }>
+                                + Company
+                            </Button>
+                        </Tooltip>
                     </Flex>
                     <div className={classes.spotlights}>
                         {content}

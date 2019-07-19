@@ -41,10 +41,11 @@ class EmployeePaymentFormModal extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, nextContext) {
-    if( nextProps.processing && nextProps.employee) {
+    if( nextProps.processing && nextProps.employee && nextProps.company) {
         return {
           processing: nextProps.processing,
           employee: nextProps.employee,
+          company: nextProps.company,
         };
     }
     return null;
@@ -111,6 +112,7 @@ class EmployeePaymentFormModal extends React.Component {
             info={this.props.info}
             config={this.props.config}
             employee={this.props.selectedEmployee}
+            company={this.props.company}
             handleSubmit={this.handleSubmit}
             processing={this.state.processing}
             {...this.props}

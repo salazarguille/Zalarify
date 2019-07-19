@@ -125,6 +125,9 @@ class CompanyFormModal extends React.Component {
           <Text my={3} textAlign={"center"}>
             It allows you to create a company.
           </Text>
+          <Text textAlign="center" fontSize="12px" italic color="#ff0000">
+            * Please, verify all the input values. The new company will not able to be modified in this platform version.
+          </Text>
         </Box> 
         <Flex
           flexWrap={"wrap"}

@@ -125,8 +125,11 @@ class EmployeeFormModal extends React.Component {
       <React.Fragment>
         <Box mb={3}>
           <Heading.h2>Employee Form - {currentCompany ? currentCompany.name : ''}</Heading.h2>
-          <Text my={3} textAlign={"center"}>
-            It allows you to create or edit an employee.
+          <Text my={3} textAlign={"center"} fontSize="17px">
+            It allows you to create a new employee.
+          </Text>
+          <Text textAlign="center" fontSize="14px" italic color="#ff0000">
+            * Please, verify all the input values. The new employee will not able to be modified in this platform version.
           </Text>
         </Box> 
         <Flex

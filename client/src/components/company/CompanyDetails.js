@@ -12,7 +12,7 @@ import { randomHex } from 'web3-utils';
 
 const styles = theme => ({
     wrapper: {
-	    padding: '6rem 0 4rem 0',
+	    padding: '2rem 0 4rem 0',
     },
     inner: {
         margin: '0 auto',
@@ -314,6 +314,7 @@ class CompanyDetails extends React.Component {
                                 config={config}
                                 info={info}
                                 width={2/3}
+                                company={this.state.company}
                                 isOpen={this.state.isEmployeePaymentFormOpened}
                                 closeModal={this.onCloseEmployeePaymentModal}
                                 employee={this.state.selectedEmployee}

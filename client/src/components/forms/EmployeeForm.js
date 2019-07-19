@@ -4,7 +4,7 @@ import axios from "axios";
 import {
   Button,
   Form,
-  Text
+  Text,
 } from "rimble-ui";
 
 const styles = theme => ({
@@ -153,7 +153,7 @@ class EmployeeForm extends React.Component {
   </Text> : '';
     return (
       <Form width={'100vw'} p={15} onSubmit={this.handleSubmit}>
-        <Form.Field validated={this.state.validated} label="Name" width={1}>
+        <Form.Field validated={this.state.validated} label="Name" width={1} mx="0" my="0">
           <Form.Input
             type="text"
             required
@@ -162,8 +162,11 @@ class EmployeeForm extends React.Component {
             onChange={ e => this.handleValidation(e,'name')}
             value={this.state.employee.name}
           />
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            The full name of new employee.
+          </Text>
         </Form.Field>
-        <Form.Field validated={this.state.validated} label="Employee Type" width={1}>
+        <Form.Field validated={this.state.validated} label="Employee Type" width={1} mx="0" my="0">
           <select
             required
             className={classes.inputSelect}
@@ -172,8 +175,11 @@ class EmployeeForm extends React.Component {
             <option value={0} key={0}>Employee</option>
             <option value={1} key={1}>Freelancer</option>
           </select>
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            The relationship type between the company and the new employee.
+          </Text>
         </Form.Field>
-        <Form.Field validated={this.state.validated} label="Role" width={1}>
+        <Form.Field validated={this.state.validated} label="Role" width={1} mx="0" my="0">
           <Form.Input
             type="text"
             required
@@ -182,8 +188,11 @@ class EmployeeForm extends React.Component {
             onChange={e => this.handleValidation(e, 'role')}
             value={this.state.employee.role}
           />
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            The role name for the new employee.
+          </Text>
         </Form.Field>
-        <Form.Field validated={this.state.validated} label="Email" width={'100%'}>
+        <Form.Field validated={this.state.validated} label="Email" width={'100%'} mx="0" my="0">
           <Form.Input
             type="email"
             required
@@ -192,8 +201,11 @@ class EmployeeForm extends React.Component {
             onChange={e => this.handleValidation(e, 'email')}
             value={this.state.employee.email}
           />
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            The email to send notifications to the new employee.
+          </Text>
         </Form.Field>
-        <Form.Field validated={this.state.validated} label="Wallet" width={1}>
+        <Form.Field validated={this.state.validated} label="Employee Wallet" width={1} mx="0" my="0">
           <Form.Input
             type="text"
             required
@@ -202,8 +214,11 @@ class EmployeeForm extends React.Component {
             onChange={e => this.handleAddressValidation(e, 'wallet')}
             value={this.state.employee.wallet}
           />
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            Ethereum wallet where the new employee will receive the payments.
+          </Text>
         </Form.Field>
-        <Form.Field validated={this.state.validated} label="ERC20 Token" width={1}>
+        <Form.Field validated={this.state.validated} label="Preferred Payment Token" width={1} mx="0" my="0">
           <select
             required
             className={classes.inputSelect}
@@ -211,17 +226,29 @@ class EmployeeForm extends React.Component {
           >
             {this.renderSelectOptions()}
           </select>
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+            The preferred payment token for the new employee. Employee will receive the payroll in this token.
+          </Text>
         </Form.Field>
-        <Form.Field validated={this.state.validated} label={`Salary Amount (${this.state.employee.preferedTokenPayment ? this.state.employee.preferedTokenPayment.symbol : '' })`} width={1}>
-          <Form.Input
-            type="number"
-            required
-            style={{width:'100%'}}
-            placeholder={`10 (${this.state.employee.preferedTokenPayment ? this.state.employee.preferedTokenPayment.symbol : ''})`}
-            onChange={e => this.handleValidation(e, 'salaryAmount')}
-            value={this.state.employee.salaryAmount}
-          />
-        </Form.Field>
+          <Form.Field
+            validated={this.state.validated}
+            label={`Salary Amount (${this.state.employee.preferedTokenPayment ? this.state.employee.preferedTokenPayment.symbol : '' })`}
+            width={1}
+            mx="0" my="0">
+              <Form.Input
+                type="number"
+                required={true}
+                min="15"
+                max="100"
+                style={{width:'100%'}}
+                placeholder={`15 - 100 (${this.state.employee.preferedTokenPayment ? this.state.employee.preferedTokenPayment.symbol : ''})`}
+                onChange={e => this.handleValidation(e, 'salaryAmount')}
+                value={this.state.employee.salaryAmount}
+              />
+              <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
+              The salary amount for the new employee in the selected token. The value must be between 15 and 100.
+              </Text>
+          </Form.Field>
         {renderProcessing}
         <Button disabled={this.props.processing} type="submit" style={{width:'100%'}}>
           Create

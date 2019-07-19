@@ -5,7 +5,7 @@ import { Text, Flex, Table, Button, EthAddress, PublicAddress, QR, Tooltip, Load
 
 const styles = theme => ({
     wrapper: {
-	    padding: '6rem 0 4rem 0',
+	    padding: '2rem 0 4rem 0',
     },
     inner: {
         margin: '0 auto',
