@@ -61,7 +61,6 @@ class CompanyFormModal extends React.Component {
     try {
       const zalarify = this.getZalarifyContract();
       this.setProcessing();
-      //createCompany(bytes32 _id, bytes32 _name, bytes32 _website, bytes32 _description) external returns (address companyAddress);
       result = zalarify.methods.createCompany(
         utils.fromAscii(item.name).padEnd(66, '0'), // Id
         utils.fromAscii(item.name).padEnd(66, '0'),

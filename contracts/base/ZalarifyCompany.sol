@@ -11,6 +11,11 @@ import "../services/stablepay/IStablePay.sol";
 import "../services/stablepay/IProviderRegistry.sol";
 import "../interface/IZalarifyCompany.sol";
 
+/**
+    @notice This represents a register company in the platform.
+    @dev It is used by the owner to register employees and transfer payrolls.
+    @author Guillermo Salazar
+ */
 contract ZalarifyCompany is Base, IZalarifyCompany {
     using SafeMath for uint256;
     using AddressArrayLib for address[];
@@ -22,6 +27,9 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
 
     /** Properties */
 
+    /**
+        @notice The current company information.
+     */
     ZalarifyCommon.Company public company;
 
     mapping ( address => bool) public companyOwners;
@@ -33,26 +41,51 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
 
     /** Modifiers */
 
+    /**
+        @notice It checks whether an address is a company owner.
+        @dev It throws a require error, if the address is not a company owner.
+        @param _address addres to be validated
+     */
     modifier isCompanyOwner(address _address) {
         require(companyOwners[_address] == true, "Sender is not a company owner.");
         _;
     }
 
+    /**
+        @notice It checks whether an address is an employee.
+        @dev It throws a require error, if the address is not an employee.
+        @param _address addres to be validated
+     */
     modifier isEmployee(address _address) {
         require(employees[_address].exist == true, "Address is not an employee.");
         _;
     }
 
+    /**
+        @notice It checks whether an address is a company owner.
+        @dev It throws a require error, if the address is an employee.
+        @param _address addres to be validated
+     */
     modifier isNotEmployee(address _address) {
         require(employees[_address].exist == false, "Address is already an employee.");
         _;
     }
 
+    /**
+        @notice It checks whether this company is paused or not.
+        @dev It throws a require error, if the company is paused.
+        @param aCompany addres to be validated
+     */
     modifier _isCompanyPaused(address aCompany) {
         require(company.paused == true, "Company is not paused.");
         _;
     }
 
+    /**
+        @notice It checks whether this comapny is paused or not.
+        @dev It throws a require error, if the company is not paused.
+        @param aCompany addres to be validated
+     */
     modifier isCompanyNotPaused(address aCompany) {
         require(company.paused == false, "Company is paused.");
         _;
@@ -60,6 +93,12 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
 
     /** Constructor */
 
+    /**
+        @notice It creates a new ZalarifyCompany instance associated to a company data and an Eternal Storage implementation.
+        @param _company struct with the company information.    
+        @param _storageAddress the Eternal Storage implementation.
+        @dev The Eternal Storage implementation must implement the IStorage interface.
+     */
     constructor(ZalarifyCommon.Company memory _company, address _storageAddress)
         public Base(_storageAddress) {
         company = _company;
@@ -70,6 +109,10 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
 
     /** Functions */
 
+    /**
+        @notice It gets the company information.
+        @return a company struct with the company information.
+     */
     function getInfo()
     public
     view
@@ -77,6 +120,10 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return company;
     }
 
+    /**
+        @notice It gets the company id.
+        @return the company id.
+     */
     function id()
     public
     view
@@ -84,6 +131,10 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return company.id;
     }
 
+    /**
+        @notice It returns whether this company is paused or not.
+        @return true if the company is paused. Otherwise it returns false.
+     */
     function isCompanyPaused()
     public
     view
@@ -91,6 +142,10 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return company.paused;
     }
 
+    /**
+        @notice It gets all the employees registered in the company.
+        @return a list of employees.
+     */
     function getEmployees()
     public
     view
@@ -104,6 +159,12 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return _employees;
     }
 
+    /**
+        @notice It pauses this company due to a specific reason.
+        @dev It must be executed by the company owner.
+        @param _reason why the company is being paused.
+        @return true if the company is paused. Otherwise it returns false.
+     */
     function pause(bytes32 _reason)
     public
     isCompanyOwner(msg.sender)
@@ -119,6 +180,11 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return true;
     }
 
+    /**
+        @notice It unpauses this company.
+        @dev It must be executed by the company owner.
+        @return true if the company is unpaused. Otherwise it returns false.
+     */
     function unpause()
     public
     isCompanyOwner(msg.sender)
@@ -133,6 +199,17 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return true;
     }
 
+    /**
+        @notice It creates a company struct associated to employee information.
+        @param _newEmployee the addres of the new employee.
+        @param _employeeType the type of employee in the company.
+        @param _name full name of the employee.
+        @param _role role associated to the employee.
+        @param _email email associated to the employee.
+        @param _preferedTokenPayment preferred token payment associated to the employee.
+        @param _salaryAmount salary amount of the employee.
+        @return a new Employee struct with the information populated.
+     */
     function createEmployee(address _newEmployee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount)
     internal
     pure
@@ -149,6 +226,17 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         });
     }
 
+    /**
+        @notice It add a new employee to this company.
+        @param _newEmployee the addres of the new employee.
+        @param _employeeType the type of employee in the company.
+        @param _name full name of the employee.
+        @param _role role associated to the employee.
+        @param _email email associated to the employee.
+        @param _preferedTokenPayment preferred token payment associated to the employee.
+        @param _salaryAmount salary amount of the employee.
+        @return true if the employee is added in this company. Otherwise it returns false.
+     */
     function addEmployee(address _newEmployee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount)
     public
     isCompanyOwner(msg.sender)
@@ -165,6 +253,17 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return true;
     }
 
+    /**
+        @notice Emit the NewEmployeeAdded event.
+        @param _newEmployee the addres of the new employee.
+        @param _employeeType the type of employee in the company.
+        @param _name full name of the employee.
+        @param _role role associated to the employee.
+        @param _email email associated to the employee.
+        @param _preferedTokenPayment preferred token payment associated to the employee.
+        @param _salaryAmount salary amount of the employee.
+        @return true if the event is emitted. Otherwise it returns false.
+     */
     function emitNewEmployeeAdded(address _newEmployee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount)
     internal
     returns (bool){
@@ -181,6 +280,11 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return true;
     }
 
+    /**
+        @notice It verifies whether this contract is allowed to transfer a specific amount of tokens in an ERC20 token.
+        @param _payment struct with the payment information.
+        @return true if the verification is success. Otherwise it returns false.
+     */
     function verifySourceTokens(ZalarifyCommon.Payment memory _payment)
     internal
     returns (bool){
@@ -204,6 +308,12 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return true;
     }
 
+    /**
+        @notice It transfer the payroll to a specific employee.
+        @dev It calls StablePay smart contract. So it needs to create an Order struct.
+        @param _payment contains all the payment and employee information.
+        @return true if the payment is transfered. Otherwise it returns false.
+     */
     function payWithTokens(ZalarifyCommon.Payment memory _payment)
     public
     isCompanyOwner(msg.sender)
@@ -240,6 +350,12 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return true;
     }
 
+    /**
+        @notice It emits the PaymentSent event.
+        @param _payment information about the payment.
+        @param diffTokens amount of tokens.
+        @return true if the event is emitted. Otherwise it returns false.
+     */
     function emitPaymentSentEvent(ZalarifyCommon.Payment memory _payment, uint diffTokens)
     internal
     returns (bool) {
@@ -254,6 +370,16 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return true;
     }
 
+    /**
+        @notice It transfers the diff source tokens to a specific address.
+        @dev The transfer is done if the difference between initial and final balances is greater than zero.
+        @param token ERC20 address to use for the transfer.
+        @param to address which will receive the tokens.
+        @param initialBalance initial balance to calculate the difference.
+        @param finalBalance final balance to calculate the difference.
+        @return true if the transfer is success. Otherwise it returns false.
+        @return the amount of tokens transfered.
+     */
     function transferDiffSourceTokensIfApplicable(address token, address to, uint initialBalance, uint finalBalance)
     internal
     returns (bool, uint)
@@ -267,6 +393,10 @@ contract ZalarifyCompany is Base, IZalarifyCompany {
         return (true, tokensDiff);
     }
 
+    /**
+        @notice It creates an Order struct to call StablePay with a payment strcut information.
+        @return a new Order struct instance.
+     */
     function createOrder(ZalarifyCommon.Payment memory _payment)
     internal
     view

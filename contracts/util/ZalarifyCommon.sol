@@ -1,13 +1,24 @@
 pragma solidity 0.5.3;
 
+/**
+    @notice This contains all the common enumeration and struct definitions for the Zalarify platform.
+    @author Guillermo Salazar.
+ */
 contract ZalarifyCommon {
 
     /** Enums */
+
+    /**
+        @notice It defines an employee type.
+     */
     enum EmployeeType {
         Employee,
         Freelancer
     }
     
+    /**
+        @notice It defines a company structure.
+     */
     struct Company {
         bytes32 id;
         bytes32 name;
@@ -18,12 +29,18 @@ contract ZalarifyCommon {
         bool paused;
     }
 
+    /**
+        @notice It defines a Receipt structure.
+     */
     struct Receipt {
         uint createdAt;
         string path;
         string ipfsHash;
     }
 
+    /**
+        @notice It defines an Employee structure.
+     */
     struct Employee {
         address employee;
         bytes32 name;
@@ -35,6 +52,9 @@ contract ZalarifyCommon {
         bool exist;
     }
 
+    /**
+        @notice It defines a Payment structure.
+     */
     struct Payment {
         address to;
         address sourceToken;

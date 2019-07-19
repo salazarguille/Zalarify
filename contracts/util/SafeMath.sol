@@ -8,8 +8,10 @@ pragma solidity 0.5.3;
 library SafeMath {
 
   /**
-  * @dev Multiplies two numbers, throws on overflow.
-  */
+    @notice Multiplies two numbers, throws on overflow.
+    @param a left value.
+    @param b right value.
+   */
   function mul(uint256 a, uint256 b) internal pure returns (uint256) {
     if (a == 0) {
       return 0;
@@ -20,8 +22,10 @@ library SafeMath {
   }
 
   /**
-  * @dev Integer division of two numbers, truncating the quotient.
-  */
+    @dev Integer division of two numbers, truncating the quotient.
+    @param a left value.
+    @param b right value.
+   */
   function div(uint256 a, uint256 b) internal pure returns (uint256) {
     // assert(b > 0); // Solidity automatically throws when dividing by 0
     uint256 c = a / b;
@@ -30,16 +34,20 @@ library SafeMath {
   }
 
   /**
-  * @dev Substracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).
-  */
+    @dev Substracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).
+    @param a left value.
+    @param b right value.
+   */
   function sub(uint256 a, uint256 b) internal pure returns (uint256) {
     assert(b <= a);
     return a - b;
   }
 
   /**
-  * @dev Adds two numbers, throws on overflow.
-  */
+    @dev Adds two numbers, throws on overflow.
+    @param a left value.
+    @param b right value.
+   */
   function add(uint256 a, uint256 b) internal pure returns (uint256) {
     uint256 c = a + b;
     assert(c >= a);
