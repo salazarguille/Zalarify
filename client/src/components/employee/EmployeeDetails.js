@@ -9,7 +9,7 @@ const styles = theme => ({
     },
     inner: {
         margin: '0 auto',
-		maxWidth: 'calc(100% - 10rem)',
+		maxWidth: '100%',
 		width: '80rem',
     },
     header: {
@@ -109,8 +109,8 @@ class EmployeeDetails extends React.Component {
         const renderReceipts = this.renderReceipts();
         return (
             <div className={classes.wrapper}>
-                <section className={`${classes.section} ${classes.style1}`} >
-                    <div className={classes.inner}>
+                <section className={`${classes.section}`} >
+                    <div className={`${classes.inner} ${classes.style1}`}>
                         <header className={classes.header}>
                             <h1>Employee Details</h1>
                             <p>{employee.name} | {employee.role}</p>

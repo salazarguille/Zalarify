@@ -16,7 +16,7 @@ const styles = theme => ({
     },
     inner: {
         margin: '0 auto',
-		maxWidth: 'calc(100% - 10rem)',
+		maxWidth: '100%',
 		width: '80rem',
     },
     header: {
@@ -48,7 +48,7 @@ const styles = theme => ({
         verticalAlign: 'baseline',
     },
     style1: {
-        background: '#f3f3f3'
+        background: '#f3f3f3',
     },
     spotlights: {
 		// display: '-moz-flex',
@@ -240,7 +240,6 @@ class CompanyDetails extends React.Component {
         const { classes, ...others} = this.props;
         return this.state.company ? <CompanyDetailsItem
                 width={1}
-                height={1}
                 item={this.state.company}
                 employees={this.state.employees}
                 {...others}/> : '';
@@ -256,91 +255,89 @@ class CompanyDetails extends React.Component {
         const employeesRender = this.renderEmployees();
         return (
             <div className={classes.wrapper}>
-                <section className={`${classes.section} ${classes.style1}`} >
-                    <div className={classes.inner}>
+                <section className={`${classes.section}`} >
+                    <div className={`${classes.inner} ${classes.style1}`}>
                         <header className={classes.header}>
                             <h1>'{this.state.company.name}' Details</h1>
                             <p>{this.state.company.description}</p>
                         </header>    
                     </div>
-                    {/* <div className={classes.spotlights}> */}
-                        <Flex flexDirection="row" width={1} height={1}>
-                            <Flex flexDirection="column" width={1/4}>
-                                {companyDetailsRender}
-                            </Flex>
-                            <Flex flexDirection="column" width={3/4} p={2}>
-                                <Flex flexDirection="row" width={1} p={3}>
-                                    <Tooltip message="View companies list.">
-                                        <Button.Outline height={'20hv'} m={1} as="a" href="/companies" >
-                                            Companies
-                                        </Button.Outline>
-                                    </Tooltip>
-                                    <Tooltip message="Create a new employee in the company (only company owner).">
-                                        <Button disabled={!isOwner} height={'20hv'} m={1} onClick={ this.onClickCreateEmployee }>
-                                            + Employee
-                                        </Button>
-                                    </Tooltip>
-                                </Flex>
-                                <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
-                                    List of employees who work on {this.state.company.name} company.
-                                </Text>
-                                <br/>
-                                <Table width={1}>
-                                    <thead>
-                                        <tr>
-                                        <th>Name / Email</th>
-                                        <th>Role</th>
-                                        <th>Salary</th>
-                                        <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {employeesRender}
-                                    </tbody>
-                                </Table>
-                            </Flex>
-                            <EmployeeFormModal
-                                config={config}
-                                info={info}
-                                width={2/3}
-                                isOpen={this.state.isEmployeeFormOpened}
-                                companies={this.state.companies}
-                                closeModal={this.onCloseModal}
-                                currentCompany={this.state.company}
-                                employeeCreatedCallback={this.onEmployeeCreatedCallback}
-                                {...others}
-                            />
-                            <EmployeePaymentFormModal
-                                config={config}
-                                info={info}
-                                width={2/3}
-                                company={this.state.company}
-                                isOpen={this.state.isEmployeePaymentFormOpened}
-                                closeModal={this.onCloseEmployeePaymentModal}
-                                employee={this.state.selectedEmployee}
-                                paymentSentCallback={this.onPaymentSentCallback}
-                                {...others}
-                            />
-                            <RegisterReceiptPaymentFormModal
-                                config={config}
-                                info={info}
-                                width={2/3}
-                                isOpen={this.state.isRegisterReceiptPaymentFormOpened}
-                                closeModal={this.onCloseRegisterReceiptPaymentModal}
-                                paymentData={this.state.paymentData}
-                                registerReceiptPaymentCallback={this.onRegisterReceiptPaymentCallback}
-                                {...others}
-                            />
-                            <MessageModal
-                                width={2/3}
-                                isOpen={this.state.isActionMessageOpened}
-                                closeModal={this.onCloseActionMessage}
-                                message={this.state.action.message}
-                                isSuccess={this.state.action.isSuccess}
-                                {...others}
-                            />
+                    <Flex flexDirection="row" width={1}>
+                        <Flex flexDirection="column" width={1/4} bg="red">
+                            {companyDetailsRender}
                         </Flex>
-                    {/* </div> */}
+                        <Flex flexDirection="column" width={3/4} p={2}>
+                            <Flex flexDirection="row" width={1} p={3}>
+                                <Tooltip message="View companies list.">
+                                    <Button.Outline height={'20hv'} m={1} as="a" href="/companies" >
+                                        Companies
+                                    </Button.Outline>
+                                </Tooltip>
+                                <Tooltip message="Create a new employee in the company (only company owner).">
+                                    <Button disabled={!isOwner} height={'20hv'} m={1} onClick={ this.onClickCreateEmployee }>
+                                        + Employee
+                                    </Button>
+                                </Tooltip>
+                            </Flex>
+                            <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
+                                List of employees who work on {this.state.company.name} company.
+                            </Text>
+                            <br/>
+                            <Table width={1}>
+                                <thead>
+                                    <tr>
+                                    <th>Name / Email</th>
+                                    <th>Role</th>
+                                    <th>Salary</th>
+                                    <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {employeesRender}
+                                </tbody>
+                            </Table>
+                        </Flex>
+                        <EmployeeFormModal
+                            config={config}
+                            info={info}
+                            width={2/3}
+                            isOpen={this.state.isEmployeeFormOpened}
+                            companies={this.state.companies}
+                            closeModal={this.onCloseModal}
+                            currentCompany={this.state.company}
+                            employeeCreatedCallback={this.onEmployeeCreatedCallback}
+                            {...others}
+                        />
+                        <EmployeePaymentFormModal
+                            config={config}
+                            info={info}
+                            width={2/3}
+                            company={this.state.company}
+                            isOpen={this.state.isEmployeePaymentFormOpened}
+                            closeModal={this.onCloseEmployeePaymentModal}
+                            employee={this.state.selectedEmployee}
+                            paymentSentCallback={this.onPaymentSentCallback}
+                            {...others}
+                        />
+                        <RegisterReceiptPaymentFormModal
+                            config={config}
+                            info={info}
+                            width={2/3}
+                            isOpen={this.state.isRegisterReceiptPaymentFormOpened}
+                            closeModal={this.onCloseRegisterReceiptPaymentModal}
+                            paymentData={this.state.paymentData}
+                            registerReceiptPaymentCallback={this.onRegisterReceiptPaymentCallback}
+                            {...others}
+                        />
+                        <MessageModal
+                            width={2/3}
+                            isOpen={this.state.isActionMessageOpened}
+                            closeModal={this.onCloseActionMessage}
+                            message={this.state.action.message}
+                            isSuccess={this.state.action.isSuccess}
+                            {...others}
+                        />
+                    </Flex>
                 </section>
             </div>
         );
