@@ -10,11 +10,16 @@ const t = require('../../util/consts').title;
 contract('ProxyBaseTest', function (accounts) {
 
     let storage;
+    let proxyTargetMock;
 
     beforeEach('Setup contract for each test', async () => {
         storage = await Storage.new();
         assert(storage);
         assert(storage.address);
+
+        proxyTargetMock = await ProxyTargetMock.deployed();
+        assert(proxyTargetMock);
+        assert(proxyTargetMock.address);
     });
 
     withData({
@@ -55,7 +60,7 @@ contract('ProxyBaseTest', function (accounts) {
     }, function(value, reasonExpected, mustFail) {
         it(t('anUser', 'fallback', 'Should be able (or not) to invoke function using proxy (delagatecall).', mustFail), async function() {
             //Setup
-            const instance = await IProxyTargetMock.at(ProxyTargetMock.address);
+            const instance = await IProxyTargetMock.at(proxyTargetMock.address);
             const previousResult = await instance.value();
 
             try {
@@ -79,18 +84,20 @@ contract('ProxyBaseTest', function (accounts) {
     });
 
     withData({
-        _1_ProxyTargetMock: ['ProxyTargetMock', ProxyTargetMock.address],
+        _1_ProxyTargetMock: ['ProxyTargetMock', undefined],
         _2_ProxyTargetMock: ['InvalidTargetId', NULL_ADDRESS]
     }, function(targetId, expectedAddress) {
         it(t('anUser', 'getTargetAddress', 'Should be able to get contract address based on target id / name.', false), async function() {
             //Setup
+            const expectedTargetAddress = expectedAddress === undefined ? proxyTargetMock.address : expectedAddress;
+
             const instance = await ProxyBaseMock.deployed();
 
             //Invocation
             const result = await instance._getTargetAddress(targetId);
 
             // Assertions
-            assert.equal(result, expectedAddress);
+            assert.equal(result, expectedTargetAddress);
         });
     });
 });

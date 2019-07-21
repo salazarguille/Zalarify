@@ -63,60 +63,11 @@
         },
         {
           "indexed": false,
-          "name": "employee",
-          "type": "address"
-        },
-        {
-          "indexed": false,
           "name": "reason",
           "type": "bytes32"
         }
       ],
-      "name": "DisableEmployee",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "thisContract",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "employee",
-          "type": "address"
-        }
-      ],
-      "name": "EnabledEmployee",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "thisContract",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "reason",
-          "type": "bytes32"
-        }
-      ],
-      "name": "DisabledCompany",
+      "name": "PausedCompany",
       "type": "event"
     },
     {
@@ -133,7 +84,7 @@
           "type": "address"
         }
       ],
-      "name": "EnabledCompany",
+      "name": "UnpausedCompany",
       "type": "event"
     },
     {
@@ -203,6 +154,10 @@
             {
               "name": "createdAt",
               "type": "uint256"
+            },
+            {
+              "name": "paused",
+              "type": "bool"
             }
           ],
           "name": "",
@@ -230,7 +185,7 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "isCompanyEnabled",
+      "name": "isCompanyPaused",
       "outputs": [
         {
           "name": "",
@@ -249,7 +204,7 @@
           "type": "bytes32"
         }
       ],
-      "name": "disable",
+      "name": "pause",
       "outputs": [
         {
           "name": "",
@@ -263,7 +218,7 @@
     {
       "constant": false,
       "inputs": [],
-      "name": "enable",
+      "name": "unpause",
       "outputs": [
         {
           "name": "",
@@ -272,25 +227,6 @@
       ],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "name": "_employee",
-          "type": "address"
-        }
-      ],
-      "name": "isEnabled",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -329,10 +265,6 @@
               "type": "uint256"
             },
             {
-              "name": "enabled",
-              "type": "bool"
-            },
-            {
               "name": "exist",
               "type": "bool"
             }
@@ -343,48 +275,6 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_employee",
-          "type": "address"
-        },
-        {
-          "name": "_reason",
-          "type": "bytes32"
-        }
-      ],
-      "name": "disableEmployee",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_employee",
-          "type": "address"
-        }
-      ],
-      "name": "enableEmployee",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -489,20 +379,20 @@
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity 0.5.3;\npragma experimental ABIEncoderV2;\n\nimport \"../services/stablepay/IProviderRegistry.sol\";\nimport \"../services/stablepay/StablePayCommon.sol\";\nimport \"../util/ZalarifyCommon.sol\";\n\ncontract IZalarifyCompany {\n\n    /** Events */\n\n    event NewEmployeeAdded(\n        address indexed thisContract,\n        address newEmployee,\n        bytes32 name,\n        bytes32 role,\n        bytes32 email,\n        address preferedTokenPayment,\n        ZalarifyCommon.EmployeeType employeeType,\n        uint salaryAmount\n    );\n\n    event DisableEmployee(\n        address indexed thisContract,\n        address owner,\n        address employee,\n        bytes32 reason\n    );\n\n    event EnabledEmployee(\n        address indexed thisContract,\n        address owner,\n        address employee\n    );\n\n    event DisabledCompany(\n        address indexed thisContract,\n        address owner,\n        bytes32 reason\n    );\n\n    event EnabledCompany(\n        address indexed thisContract,\n        address owner\n    );\n\n    event PaymentSent(\n        bytes32 indexed providerKey,\n        address sourceToken,\n        address targetToken,\n        address to,\n        uint fromAmount,\n        uint toAmount\n    );\n\n    /** Functions */\n\n    /** Company functions */\n\n    function getInfo() external view returns (ZalarifyCommon.Company memory);\n\n    function id() external view returns (bytes32);\n\n    function isCompanyEnabled() external view returns (bool);\n\n    function disable(bytes32 _reason) external returns (bool);\n\n    function enable() external returns (bool);\n\n    /** Employee functions */\n\n    function isEnabled(address _employee) external view returns (bool);\n\n    // function getEmployee(address employee) external view returns (ZalarifyCommon.Employee memory);\n\n    function getEmployees() external view returns (ZalarifyCommon.Employee[] memory);\n\n    function disableEmployee(address _employee, bytes32 _reason) external returns (bool);\n\n    function enableEmployee(address _employee) external returns (bool);\n\n    function addEmployee(address _newEmployee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount) external returns (bool);\n\n    function payWithTokens(ZalarifyCommon.Payment memory _payment) public returns (bool);\n}",
+  "source": "pragma solidity 0.5.3;\npragma experimental ABIEncoderV2;\n\nimport \"../services/stablepay/IProviderRegistry.sol\";\nimport \"../services/stablepay/StablePayCommon.sol\";\nimport \"../util/ZalarifyCommon.sol\";\n\n/**\n    @notice This represents a register company in the platform.\n    @dev It is used by the owner to register employees and transfer payrolls.\n    @author Guillermo Salazar\n */\ncontract IZalarifyCompany {\n\n    /** Events */\n\n    /**\n        @notice This event is emitted when a new employee is created.\n        @param newEmployee the addres of the new employee.\n        @param employeeType the type of employee in the company.\n        @param name full name of the employee.\n        @param role role associated to the employee.\n        @param email email associated to the employee.\n        @param preferedTokenPayment preferred token payment associated to the employee.\n        @param salaryAmount salary amount of the employee.\n     */\n    event NewEmployeeAdded(\n        address indexed thisContract,\n        address newEmployee,\n        bytes32 name,\n        bytes32 role,\n        bytes32 email,\n        address preferedTokenPayment,\n        ZalarifyCommon.EmployeeType employeeType,\n        uint salaryAmount\n    );\n\n    /**\n        @notice This event is emitted when a company is paused.\n        @param thisContract this smart contract address.\n        @param owner who paused the company.\n        @param reason why the company was paused.\n     */\n    event PausedCompany(\n        address indexed thisContract,\n        address owner,\n        bytes32 reason\n    );\n\n    /**\n        @notice This event is emitted when a company is unpaused.\n        @param thisContract this smart contract address.\n        @param owner who unpaused the company.\n     */\n    event UnpausedCompany(\n        address indexed thisContract,\n        address owner\n    );\n\n    /**\n        @notice This event is emitted when a payment is sent.\n        @param providerKey the provider key used for the payment.\n        @param sourceToken source token used for the payment.\n        @param targetToken target token used for the payment.\n        @param to address who recieved the payment.\n        @param fromAmount total source amount used for the payment.\n        @param toAmount total target amount used for the payment.\n     */\n    event PaymentSent(\n        bytes32 indexed providerKey,\n        address sourceToken,\n        address targetToken,\n        address to,\n        uint fromAmount,\n        uint toAmount\n    );\n\n    /** Functions */\n\n    /** Company functions */\n\n    /**\n        @notice It gets the company information.\n        @return a company struct with the company information.\n     */\n    function getInfo() external view returns (ZalarifyCommon.Company memory);\n\n    /**\n        @notice It gets the company id.\n        @return the company id.\n     */\n    function id() external view returns (bytes32);\n\n    /**\n        @notice It returns whether this company is paused or not.\n        @return true if the company is paused. Otherwise it returns false.\n     */\n    function isCompanyPaused() external view returns (bool);\n\n    /**\n        @notice It pauses this company due to a specific reason.\n        @dev It must be executed by the company owner.\n        @param _reason why the company is being paused.\n        @return true if the company is paused. Otherwise it returns false.\n     */\n    function pause(bytes32 _reason) external returns (bool);\n\n    /**\n        @notice It unpauses this company.\n        @dev It must be executed by the company owner.\n        @return true if the company is unpaused. Otherwise it returns false.\n     */\n    function unpause() external returns (bool);\n\n    /** Employee functions */\n\n    /**\n        @notice It gets all the employees registered in the company.\n        @return a list of employees.\n     */\n    function getEmployees() external view returns (ZalarifyCommon.Employee[] memory);\n\n    /**\n        @notice It add a new employee to this company.\n        @param _newEmployee the addres of the new employee.\n        @param _employeeType the type of employee in the company.\n        @param _name full name of the employee.\n        @param _role role associated to the employee.\n        @param _email email associated to the employee.\n        @param _preferedTokenPayment preferred token payment associated to the employee.\n        @param _salaryAmount salary amount of the employee.\n        @return true if the employee is added in this company. Otherwise it returns false.\n     */\n    function addEmployee(address _newEmployee, ZalarifyCommon.EmployeeType _employeeType, bytes32 _name, bytes32 _role, bytes32 _email, address _preferedTokenPayment, uint _salaryAmount) external returns (bool);\n\n    /**\n        @notice It transfer the payroll to a specific employee.\n        @dev It calls StablePay smart contract. So it needs to create an Order struct.\n        @param _payment contains all the payment and employee information.\n        @return true if the payment is transfered. Otherwise it returns false.\n     */\n    function payWithTokens(ZalarifyCommon.Payment memory _payment) public returns (bool);\n}",
   "sourcePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IZalarifyCompany.sol",
   "ast": {
     "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IZalarifyCompany.sol",
     "exportedSymbols": {
       "IZalarifyCompany": [
-        3671
+        3482
       ]
     },
-    "id": 3672,
+    "id": 3483,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3520,
+        "id": 3372,
         "literals": [
           "solidity",
           "0.5",
@@ -512,7 +402,7 @@
         "src": "0:22:22"
       },
       {
-        "id": 3521,
+        "id": 3373,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -523,10 +413,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/services/stablepay/IProviderRegistry.sol",
         "file": "../services/stablepay/IProviderRegistry.sol",
-        "id": 3522,
+        "id": 3374,
         "nodeType": "ImportDirective",
-        "scope": 3672,
-        "sourceUnit": 4721,
+        "scope": 3483,
+        "sourceUnit": 4502,
         "src": "58:53:22",
         "symbolAliases": [],
         "unitAlias": ""
@@ -534,10 +424,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/services/stablepay/StablePayCommon.sol",
         "file": "../services/stablepay/StablePayCommon.sol",
-        "id": 3523,
+        "id": 3375,
         "nodeType": "ImportDirective",
-        "scope": 3672,
-        "sourceUnit": 4880,
+        "scope": 3483,
+        "sourceUnit": 4661,
         "src": "112:51:22",
         "symbolAliases": [],
         "unitAlias": ""
@@ -545,10 +435,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
         "file": "../util/ZalarifyCommon.sol",
-        "id": 3524,
+        "id": 3376,
         "nodeType": "ImportDirective",
-        "scope": 3672,
-        "sourceUnit": 5246,
+        "scope": 3483,
+        "sourceUnit": 5027,
         "src": "164:36:22",
         "symbolAliases": [],
         "unitAlias": ""
@@ -557,33 +447,33 @@
         "baseContracts": [],
         "contractDependencies": [],
         "contractKind": "contract",
-        "documentation": null,
+        "documentation": "@notice This represents a register company in the platform.\n@dev It is used by the owner to register employees and transfer payrolls.\n@author Guillermo Salazar",
         "fullyImplemented": false,
-        "id": 3671,
+        "id": 3482,
         "linearizedBaseContracts": [
-          3671
+          3482
         ],
         "name": "IZalarifyCompany",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "anonymous": false,
-            "documentation": "Events ",
-            "id": 3542,
+            "documentation": "@notice This event is emitted when a new employee is created.\n@param newEmployee the addres of the new employee.\n@param employeeType the type of employee in the company.\n@param name full name of the employee.\n@param role role associated to the employee.\n@param email email associated to the employee.\n@param preferedTokenPayment preferred token payment associated to the employee.\n@param salaryAmount salary amount of the employee.",
+            "id": 3394,
             "name": "NewEmployeeAdded",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3541,
+              "id": 3393,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3526,
+                  "id": 3378,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "286:28:22",
+                  "scope": 3394,
+                  "src": "978:28:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -591,10 +481,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3525,
+                    "id": 3377,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "286:7:22",
+                    "src": "978:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -606,12 +496,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3528,
+                  "id": 3380,
                   "indexed": false,
                   "name": "newEmployee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "324:19:22",
+                  "scope": 3394,
+                  "src": "1016:19:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -619,10 +509,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3527,
+                    "id": 3379,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "324:7:22",
+                    "src": "1016:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -634,12 +524,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3530,
+                  "id": 3382,
                   "indexed": false,
                   "name": "name",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "353:12:22",
+                  "scope": 3394,
+                  "src": "1045:12:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -647,10 +537,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3529,
+                    "id": 3381,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "353:7:22",
+                    "src": "1045:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -661,12 +551,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3532,
+                  "id": 3384,
                   "indexed": false,
                   "name": "role",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "375:12:22",
+                  "scope": 3394,
+                  "src": "1067:12:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -674,10 +564,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3531,
+                    "id": 3383,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "375:7:22",
+                    "src": "1067:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -688,12 +578,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3534,
+                  "id": 3386,
                   "indexed": false,
                   "name": "email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "397:13:22",
+                  "scope": 3394,
+                  "src": "1089:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -701,10 +591,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3533,
+                    "id": 3385,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "397:7:22",
+                    "src": "1089:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -715,12 +605,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3536,
+                  "id": 3388,
                   "indexed": false,
                   "name": "preferedTokenPayment",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "420:28:22",
+                  "scope": 3394,
+                  "src": "1112:28:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -728,10 +618,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3535,
+                    "id": 3387,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "420:7:22",
+                    "src": "1112:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -743,27 +633,27 @@
                 },
                 {
                   "constant": false,
-                  "id": 3538,
+                  "id": 3390,
                   "indexed": false,
                   "name": "employeeType",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "458:40:22",
+                  "scope": 3394,
+                  "src": "1150:40:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_EmployeeType_$5188",
+                    "typeIdentifier": "t_enum$_EmployeeType_$4969",
                     "typeString": "enum ZalarifyCommon.EmployeeType"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3537,
+                    "id": 3389,
                     "name": "ZalarifyCommon.EmployeeType",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5188,
-                    "src": "458:27:22",
+                    "referencedDeclaration": 4969,
+                    "src": "1150:27:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_EmployeeType_$5188",
+                      "typeIdentifier": "t_enum$_EmployeeType_$4969",
                       "typeString": "enum ZalarifyCommon.EmployeeType"
                     }
                   },
@@ -772,12 +662,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3540,
+                  "id": 3392,
                   "indexed": false,
                   "name": "salaryAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "508:17:22",
+                  "scope": 3394,
+                  "src": "1200:17:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -785,10 +675,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3539,
+                    "id": 3391,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "508:4:22",
+                    "src": "1200:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -798,28 +688,28 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "276:255:22"
+              "src": "968:255:22"
             },
-            "src": "254:278:22"
+            "src": "946:278:22"
           },
           {
             "anonymous": false,
-            "documentation": null,
-            "id": 3552,
-            "name": "DisableEmployee",
+            "documentation": "@notice This event is emitted when a company is paused.\n@param thisContract this smart contract address.\n@param owner who paused the company.\n@param reason why the company was paused.",
+            "id": 3402,
+            "name": "PausedCompany",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3551,
+              "id": 3401,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3544,
+                  "id": 3396,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3552,
-                  "src": "569:28:22",
+                  "scope": 3402,
+                  "src": "1491:28:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -827,10 +717,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3543,
+                    "id": 3395,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "569:7:22",
+                    "src": "1491:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -842,12 +732,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3546,
+                  "id": 3398,
                   "indexed": false,
                   "name": "owner",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3552,
-                  "src": "607:13:22",
+                  "scope": 3402,
+                  "src": "1529:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -855,10 +745,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3545,
+                    "id": 3397,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "607:7:22",
+                    "src": "1529:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -870,40 +760,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3548,
-                  "indexed": false,
-                  "name": "employee",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3552,
-                  "src": "630:16:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3547,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "630:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3550,
+                  "id": 3400,
                   "indexed": false,
                   "name": "reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3552,
-                  "src": "656:14:22",
+                  "scope": 3402,
+                  "src": "1552:14:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -911,10 +773,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3549,
+                    "id": 3399,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "656:7:22",
+                    "src": "1552:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -924,28 +786,28 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "559:117:22"
+              "src": "1481:91:22"
             },
-            "src": "538:139:22"
+            "src": "1462:111:22"
           },
           {
             "anonymous": false,
-            "documentation": null,
-            "id": 3560,
-            "name": "EnabledEmployee",
+            "documentation": "@notice This event is emitted when a company is unpaused.\n@param thisContract this smart contract address.\n@param owner who unpaused the company.",
+            "id": 3408,
+            "name": "UnpausedCompany",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3559,
+              "id": 3407,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3554,
+                  "id": 3404,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3560,
-                  "src": "714:28:22",
+                  "scope": 3408,
+                  "src": "1796:28:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -953,10 +815,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3553,
+                    "id": 3403,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "714:7:22",
+                    "src": "1796:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -968,12 +830,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3556,
+                  "id": 3406,
                   "indexed": false,
                   "name": "owner",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3560,
-                  "src": "752:13:22",
+                  "scope": 3408,
+                  "src": "1834:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -981,38 +843,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3555,
+                    "id": 3405,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "752:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3558,
-                  "indexed": false,
-                  "name": "employee",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3560,
-                  "src": "775:16:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3557,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "775:7:22",
+                    "src": "1834:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1023,197 +857,28 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "704:93:22"
+              "src": "1786:67:22"
             },
-            "src": "683:115:22"
+            "src": "1765:89:22"
           },
           {
             "anonymous": false,
-            "documentation": null,
-            "id": 3568,
-            "name": "DisabledCompany",
-            "nodeType": "EventDefinition",
-            "parameters": {
-              "id": 3567,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3562,
-                  "indexed": true,
-                  "name": "thisContract",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3568,
-                  "src": "835:28:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3561,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "835:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3564,
-                  "indexed": false,
-                  "name": "owner",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3568,
-                  "src": "873:13:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3563,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "873:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3566,
-                  "indexed": false,
-                  "name": "reason",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3568,
-                  "src": "896:14:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bytes32",
-                    "typeString": "bytes32"
-                  },
-                  "typeName": {
-                    "id": 3565,
-                    "name": "bytes32",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "896:7:22",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "825:91:22"
-            },
-            "src": "804:113:22"
-          },
-          {
-            "anonymous": false,
-            "documentation": null,
-            "id": 3574,
-            "name": "EnabledCompany",
-            "nodeType": "EventDefinition",
-            "parameters": {
-              "id": 3573,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3570,
-                  "indexed": true,
-                  "name": "thisContract",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3574,
-                  "src": "953:28:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3569,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "953:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3572,
-                  "indexed": false,
-                  "name": "owner",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3574,
-                  "src": "991:13:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3571,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "991:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "943:67:22"
-            },
-            "src": "923:88:22"
-          },
-          {
-            "anonymous": false,
-            "documentation": null,
-            "id": 3588,
+            "documentation": "@notice This event is emitted when a payment is sent.\n@param providerKey the provider key used for the payment.\n@param sourceToken source token used for the payment.\n@param targetToken target token used for the payment.\n@param to address who recieved the payment.\n@param fromAmount total source amount used for the payment.\n@param toAmount total target amount used for the payment.",
+            "id": 3422,
             "name": "PaymentSent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3587,
+              "id": 3421,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3576,
+                  "id": 3410,
                   "indexed": true,
                   "name": "providerKey",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1044:27:22",
+                  "scope": 3422,
+                  "src": "2341:27:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1221,10 +886,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3575,
+                    "id": 3409,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1044:7:22",
+                    "src": "2341:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1235,12 +900,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3578,
+                  "id": 3412,
                   "indexed": false,
                   "name": "sourceToken",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1081:19:22",
+                  "scope": 3422,
+                  "src": "2378:19:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1248,10 +913,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3577,
+                    "id": 3411,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1081:7:22",
+                    "src": "2378:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1263,12 +928,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3580,
+                  "id": 3414,
                   "indexed": false,
                   "name": "targetToken",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1110:19:22",
+                  "scope": 3422,
+                  "src": "2407:19:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1276,10 +941,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3579,
+                    "id": 3413,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1110:7:22",
+                    "src": "2407:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1291,12 +956,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3582,
+                  "id": 3416,
                   "indexed": false,
                   "name": "to",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1139:10:22",
+                  "scope": 3422,
+                  "src": "2436:10:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1304,10 +969,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3581,
+                    "id": 3415,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1139:7:22",
+                    "src": "2436:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1319,12 +984,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3584,
+                  "id": 3418,
                   "indexed": false,
                   "name": "fromAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1159:15:22",
+                  "scope": 3422,
+                  "src": "2456:15:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1332,10 +997,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3583,
+                    "id": 3417,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1159:4:22",
+                    "src": "2456:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1346,12 +1011,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3586,
+                  "id": 3420,
                   "indexed": false,
                   "name": "toAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1184:13:22",
+                  "scope": 3422,
+                  "src": "2481:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1359,10 +1024,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3585,
+                    "id": 3419,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1184:4:22",
+                    "src": "2481:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1372,51 +1037,51 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1034:169:22"
+              "src": "2331:169:22"
             },
-            "src": "1017:187:22"
+            "src": "2314:187:22"
           },
           {
             "body": null,
-            "documentation": "Company functions ",
-            "id": 3593,
+            "documentation": "@notice It gets the company information.\n@return a company struct with the company information.",
+            "id": 3427,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getInfo",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3589,
+              "id": 3423,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1278:2:22"
+              "src": "2703:2:22"
             },
             "returnParameters": {
-              "id": 3592,
+              "id": 3426,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3591,
+                  "id": 3425,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3593,
-                  "src": "1304:29:22",
+                  "scope": 3427,
+                  "src": "2729:29:22",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Company_$5201_memory_ptr",
+                    "typeIdentifier": "t_struct$_Company_$4984_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Company"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3590,
+                    "id": 3424,
                     "name": "ZalarifyCommon.Company",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5201,
-                    "src": "1304:22:22",
+                    "referencedDeclaration": 4984,
+                    "src": "2729:22:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Company_$5201_storage_ptr",
+                      "typeIdentifier": "t_struct$_Company_$4984_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Company"
                     }
                   },
@@ -1424,40 +1089,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1303:31:22"
+              "src": "2728:31:22"
             },
-            "scope": 3671,
-            "src": "1262:73:22",
+            "scope": 3482,
+            "src": "2687:73:22",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3598,
+            "documentation": "@notice It gets the company id.\n@return the company id.",
+            "id": 3432,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "id",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3594,
+              "id": 3428,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1352:2:22"
+              "src": "2865:2:22"
             },
             "returnParameters": {
-              "id": 3597,
+              "id": 3431,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3596,
+                  "id": 3430,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3598,
-                  "src": "1378:7:22",
+                  "scope": 3432,
+                  "src": "2891:7:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1465,10 +1130,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3595,
+                    "id": 3429,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1378:7:22",
+                    "src": "2891:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1478,40 +1143,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1377:9:22"
+              "src": "2890:9:22"
             },
-            "scope": 3671,
-            "src": "1341:46:22",
+            "scope": 3482,
+            "src": "2854:46:22",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3603,
+            "documentation": "@notice It returns whether this company is paused or not.\n@return true if the company is paused. Otherwise it returns false.",
+            "id": 3437,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "isCompanyEnabled",
+            "name": "isCompanyPaused",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3599,
+              "id": 3433,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1418:2:22"
+              "src": "3087:2:22"
             },
             "returnParameters": {
-              "id": 3602,
+              "id": 3436,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3601,
+                  "id": 3435,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3603,
-                  "src": "1444:4:22",
+                  "scope": 3437,
+                  "src": "3113:4:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1519,10 +1184,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3600,
+                    "id": 3434,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1444:4:22",
+                    "src": "3113:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1532,34 +1197,34 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1443:6:22"
+              "src": "3112:6:22"
             },
-            "scope": 3671,
-            "src": "1393:57:22",
+            "scope": 3482,
+            "src": "3063:56:22",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3610,
+            "documentation": "@notice It pauses this company due to a specific reason.\n@dev It must be executed by the company owner.\n@param _reason why the company is being paused.\n@return true if the company is paused. Otherwise it returns false.",
+            "id": 3444,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "disable",
+            "name": "pause",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3606,
+              "id": 3440,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3605,
+                  "id": 3439,
                   "name": "_reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3610,
-                  "src": "1473:15:22",
+                  "scope": 3444,
+                  "src": "3407:15:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1567,10 +1232,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3604,
+                    "id": 3438,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1473:7:22",
+                    "src": "3407:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1580,19 +1245,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1472:17:22"
+              "src": "3406:17:22"
             },
             "returnParameters": {
-              "id": 3609,
+              "id": 3443,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3608,
+                  "id": 3442,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3610,
-                  "src": "1508:4:22",
+                  "scope": 3444,
+                  "src": "3442:4:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1600,10 +1265,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3607,
+                    "id": 3441,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1508:4:22",
+                    "src": "3442:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1613,40 +1278,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1507:6:22"
+              "src": "3441:6:22"
             },
-            "scope": 3671,
-            "src": "1456:58:22",
+            "scope": 3482,
+            "src": "3392:56:22",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3615,
+            "documentation": "@notice It unpauses this company.\n@dev It must be executed by the company owner.\n@return true if the company is unpaused. Otherwise it returns false.",
+            "id": 3449,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "enable",
+            "name": "unpause",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3611,
+              "id": 3445,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1535:2:22"
+              "src": "3660:2:22"
             },
             "returnParameters": {
-              "id": 3614,
+              "id": 3448,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3613,
+                  "id": 3447,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3615,
-                  "src": "1556:4:22",
+                  "scope": 3449,
+                  "src": "3681:4:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1654,10 +1319,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3612,
+                    "id": 3446,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1556:4:22",
+                    "src": "3681:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1667,147 +1332,65 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1555:6:22"
+              "src": "3680:6:22"
             },
-            "scope": 3671,
-            "src": "1520:42:22",
+            "scope": 3482,
+            "src": "3644:43:22",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": "Employee functions ",
-            "id": 3622,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "isEnabled",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 3618,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3617,
-                  "name": "_employee",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3622,
-                  "src": "1618:17:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3616,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1618:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1617:19:22"
-            },
-            "returnParameters": {
-              "id": 3621,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3620,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3622,
-                  "src": "1660:4:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bool",
-                    "typeString": "bool"
-                  },
-                  "typeName": {
-                    "id": 3619,
-                    "name": "bool",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1660:4:22",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1659:6:22"
-            },
-            "scope": 3671,
-            "src": "1599:67:22",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "external"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 3628,
+            "documentation": "@notice It gets all the employees registered in the company.\n@return a list of employees.",
+            "id": 3455,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getEmployees",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3623,
+              "id": 3450,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1796:2:22"
+              "src": "3867:2:22"
             },
             "returnParameters": {
-              "id": 3627,
+              "id": 3454,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3626,
+                  "id": 3453,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3628,
-                  "src": "1822:32:22",
+                  "scope": 3455,
+                  "src": "3893:32:22",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Employee_$5227_memory_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Employee_$5008_memory_$dyn_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Employee[]"
                   },
                   "typeName": {
                     "baseType": {
                       "contractScope": null,
-                      "id": 3624,
+                      "id": 3451,
                       "name": "ZalarifyCommon.Employee",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 5227,
-                      "src": "1822:23:22",
+                      "referencedDeclaration": 5008,
+                      "src": "3893:23:22",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Employee_$5227_storage_ptr",
+                        "typeIdentifier": "t_struct$_Employee_$5008_storage_ptr",
                         "typeString": "struct ZalarifyCommon.Employee"
                       }
                     },
-                    "id": 3625,
+                    "id": 3452,
                     "length": null,
                     "nodeType": "ArrayTypeName",
-                    "src": "1822:25:22",
+                    "src": "3893:25:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Employee_$5227_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Employee_$5008_storage_$dyn_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Employee[]"
                     }
                   },
@@ -1815,224 +1398,34 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1821:34:22"
+              "src": "3892:34:22"
             },
-            "scope": 3671,
-            "src": "1775:81:22",
+            "scope": 3482,
+            "src": "3846:81:22",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3637,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "disableEmployee",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 3633,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3630,
-                  "name": "_employee",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3637,
-                  "src": "1887:17:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3629,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1887:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3632,
-                  "name": "_reason",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3637,
-                  "src": "1906:15:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bytes32",
-                    "typeString": "bytes32"
-                  },
-                  "typeName": {
-                    "id": 3631,
-                    "name": "bytes32",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1906:7:22",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1886:36:22"
-            },
-            "returnParameters": {
-              "id": 3636,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3635,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3637,
-                  "src": "1941:4:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bool",
-                    "typeString": "bool"
-                  },
-                  "typeName": {
-                    "id": 3634,
-                    "name": "bool",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1941:4:22",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1940:6:22"
-            },
-            "scope": 3671,
-            "src": "1862:85:22",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "external"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 3644,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "enableEmployee",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 3640,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3639,
-                  "name": "_employee",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3644,
-                  "src": "1977:17:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3638,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1977:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1976:19:22"
-            },
-            "returnParameters": {
-              "id": 3643,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3642,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3644,
-                  "src": "2014:4:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bool",
-                    "typeString": "bool"
-                  },
-                  "typeName": {
-                    "id": 3641,
-                    "name": "bool",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "2014:4:22",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "2013:6:22"
-            },
-            "scope": 3671,
-            "src": "1953:67:22",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "external"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 3663,
+            "documentation": "@notice It add a new employee to this company.\n@param _newEmployee the addres of the new employee.\n@param _employeeType the type of employee in the company.\n@param _name full name of the employee.\n@param _role role associated to the employee.\n@param _email email associated to the employee.\n@param _preferedTokenPayment preferred token payment associated to the employee.\n@param _salaryAmount salary amount of the employee.\n@return true if the employee is added in this company. Otherwise it returns false.",
+            "id": 3474,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "addEmployee",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3659,
+              "id": 3470,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3646,
+                  "id": 3457,
                   "name": "_newEmployee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2047:20:22",
+                  "scope": 3474,
+                  "src": "4549:20:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2040,10 +1433,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3645,
+                    "id": 3456,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2047:7:22",
+                    "src": "4549:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2055,26 +1448,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 3648,
+                  "id": 3459,
                   "name": "_employeeType",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2069:41:22",
+                  "scope": 3474,
+                  "src": "4571:41:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_EmployeeType_$5188",
+                    "typeIdentifier": "t_enum$_EmployeeType_$4969",
                     "typeString": "enum ZalarifyCommon.EmployeeType"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3647,
+                    "id": 3458,
                     "name": "ZalarifyCommon.EmployeeType",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5188,
-                    "src": "2069:27:22",
+                    "referencedDeclaration": 4969,
+                    "src": "4571:27:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_EmployeeType_$5188",
+                      "typeIdentifier": "t_enum$_EmployeeType_$4969",
                       "typeString": "enum ZalarifyCommon.EmployeeType"
                     }
                   },
@@ -2083,11 +1476,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3650,
+                  "id": 3461,
                   "name": "_name",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2112:13:22",
+                  "scope": 3474,
+                  "src": "4614:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2095,10 +1488,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3649,
+                    "id": 3460,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2112:7:22",
+                    "src": "4614:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2109,11 +1502,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3652,
+                  "id": 3463,
                   "name": "_role",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2127:13:22",
+                  "scope": 3474,
+                  "src": "4629:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2121,10 +1514,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3651,
+                    "id": 3462,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2127:7:22",
+                    "src": "4629:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2135,11 +1528,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3654,
+                  "id": 3465,
                   "name": "_email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2142:14:22",
+                  "scope": 3474,
+                  "src": "4644:14:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2147,10 +1540,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3653,
+                    "id": 3464,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2142:7:22",
+                    "src": "4644:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2161,11 +1554,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3656,
+                  "id": 3467,
                   "name": "_preferedTokenPayment",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2158:29:22",
+                  "scope": 3474,
+                  "src": "4660:29:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2173,10 +1566,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3655,
+                    "id": 3466,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2158:7:22",
+                    "src": "4660:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2188,11 +1581,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3658,
+                  "id": 3469,
                   "name": "_salaryAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2189:18:22",
+                  "scope": 3474,
+                  "src": "4691:18:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2200,10 +1593,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3657,
+                    "id": 3468,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2189:4:22",
+                    "src": "4691:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2213,19 +1606,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2046:162:22"
+              "src": "4548:162:22"
             },
             "returnParameters": {
-              "id": 3662,
+              "id": 3473,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3661,
+                  "id": 3472,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2227:4:22",
+                  "scope": 3474,
+                  "src": "4729:4:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2233,10 +1626,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3660,
+                    "id": 3471,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2227:4:22",
+                    "src": "4729:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -2246,49 +1639,49 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2226:6:22"
+              "src": "4728:6:22"
             },
-            "scope": 3671,
-            "src": "2026:207:22",
+            "scope": 3482,
+            "src": "4528:207:22",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3670,
+            "documentation": "@notice It transfer the payroll to a specific employee.\n@dev It calls StablePay smart contract. So it needs to create an Order struct.\n@param _payment contains all the payment and employee information.\n@return true if the payment is transfered. Otherwise it returns false.",
+            "id": 3481,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "payWithTokens",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3666,
+              "id": 3477,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3665,
+                  "id": 3476,
                   "name": "_payment",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3670,
-                  "src": "2262:38:22",
+                  "scope": 3481,
+                  "src": "5085:38:22",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Payment_$5244_memory_ptr",
+                    "typeIdentifier": "t_struct$_Payment_$5025_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Payment"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3664,
+                    "id": 3475,
                     "name": "ZalarifyCommon.Payment",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5244,
-                    "src": "2262:22:22",
+                    "referencedDeclaration": 5025,
+                    "src": "5085:22:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Payment_$5244_storage_ptr",
+                      "typeIdentifier": "t_struct$_Payment_$5025_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Payment"
                     }
                   },
@@ -2296,19 +1689,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2261:40:22"
+              "src": "5084:40:22"
             },
             "returnParameters": {
-              "id": 3669,
+              "id": 3480,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3668,
+                  "id": 3479,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3670,
-                  "src": "2318:4:22",
+                  "scope": 3481,
+                  "src": "5141:4:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2316,10 +1709,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3667,
+                    "id": 3478,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2318:4:22",
+                    "src": "5141:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -2329,33 +1722,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2317:6:22"
+              "src": "5140:6:22"
             },
-            "scope": 3671,
-            "src": "2239:85:22",
+            "scope": 3482,
+            "src": "5062:85:22",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 3672,
-        "src": "202:2124:22"
+        "scope": 3483,
+        "src": "382:4767:22"
       }
     ],
-    "src": "0:2326:22"
+    "src": "0:5149:22"
   },
   "legacyAST": {
     "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IZalarifyCompany.sol",
     "exportedSymbols": {
       "IZalarifyCompany": [
-        3671
+        3482
       ]
     },
-    "id": 3672,
+    "id": 3483,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3520,
+        "id": 3372,
         "literals": [
           "solidity",
           "0.5",
@@ -2365,7 +1758,7 @@
         "src": "0:22:22"
       },
       {
-        "id": 3521,
+        "id": 3373,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -2376,10 +1769,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/services/stablepay/IProviderRegistry.sol",
         "file": "../services/stablepay/IProviderRegistry.sol",
-        "id": 3522,
+        "id": 3374,
         "nodeType": "ImportDirective",
-        "scope": 3672,
-        "sourceUnit": 4721,
+        "scope": 3483,
+        "sourceUnit": 4502,
         "src": "58:53:22",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2387,10 +1780,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/services/stablepay/StablePayCommon.sol",
         "file": "../services/stablepay/StablePayCommon.sol",
-        "id": 3523,
+        "id": 3375,
         "nodeType": "ImportDirective",
-        "scope": 3672,
-        "sourceUnit": 4880,
+        "scope": 3483,
+        "sourceUnit": 4661,
         "src": "112:51:22",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2398,10 +1791,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
         "file": "../util/ZalarifyCommon.sol",
-        "id": 3524,
+        "id": 3376,
         "nodeType": "ImportDirective",
-        "scope": 3672,
-        "sourceUnit": 5246,
+        "scope": 3483,
+        "sourceUnit": 5027,
         "src": "164:36:22",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2410,33 +1803,33 @@
         "baseContracts": [],
         "contractDependencies": [],
         "contractKind": "contract",
-        "documentation": null,
+        "documentation": "@notice This represents a register company in the platform.\n@dev It is used by the owner to register employees and transfer payrolls.\n@author Guillermo Salazar",
         "fullyImplemented": false,
-        "id": 3671,
+        "id": 3482,
         "linearizedBaseContracts": [
-          3671
+          3482
         ],
         "name": "IZalarifyCompany",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "anonymous": false,
-            "documentation": "Events ",
-            "id": 3542,
+            "documentation": "@notice This event is emitted when a new employee is created.\n@param newEmployee the addres of the new employee.\n@param employeeType the type of employee in the company.\n@param name full name of the employee.\n@param role role associated to the employee.\n@param email email associated to the employee.\n@param preferedTokenPayment preferred token payment associated to the employee.\n@param salaryAmount salary amount of the employee.",
+            "id": 3394,
             "name": "NewEmployeeAdded",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3541,
+              "id": 3393,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3526,
+                  "id": 3378,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "286:28:22",
+                  "scope": 3394,
+                  "src": "978:28:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2444,10 +1837,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3525,
+                    "id": 3377,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "286:7:22",
+                    "src": "978:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2459,12 +1852,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3528,
+                  "id": 3380,
                   "indexed": false,
                   "name": "newEmployee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "324:19:22",
+                  "scope": 3394,
+                  "src": "1016:19:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2472,10 +1865,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3527,
+                    "id": 3379,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "324:7:22",
+                    "src": "1016:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2487,12 +1880,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3530,
+                  "id": 3382,
                   "indexed": false,
                   "name": "name",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "353:12:22",
+                  "scope": 3394,
+                  "src": "1045:12:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2500,10 +1893,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3529,
+                    "id": 3381,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "353:7:22",
+                    "src": "1045:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2514,12 +1907,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3532,
+                  "id": 3384,
                   "indexed": false,
                   "name": "role",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "375:12:22",
+                  "scope": 3394,
+                  "src": "1067:12:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2527,10 +1920,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3531,
+                    "id": 3383,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "375:7:22",
+                    "src": "1067:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2541,12 +1934,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3534,
+                  "id": 3386,
                   "indexed": false,
                   "name": "email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "397:13:22",
+                  "scope": 3394,
+                  "src": "1089:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2554,10 +1947,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3533,
+                    "id": 3385,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "397:7:22",
+                    "src": "1089:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2568,12 +1961,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3536,
+                  "id": 3388,
                   "indexed": false,
                   "name": "preferedTokenPayment",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "420:28:22",
+                  "scope": 3394,
+                  "src": "1112:28:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2581,10 +1974,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3535,
+                    "id": 3387,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "420:7:22",
+                    "src": "1112:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2596,27 +1989,27 @@
                 },
                 {
                   "constant": false,
-                  "id": 3538,
+                  "id": 3390,
                   "indexed": false,
                   "name": "employeeType",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "458:40:22",
+                  "scope": 3394,
+                  "src": "1150:40:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_EmployeeType_$5188",
+                    "typeIdentifier": "t_enum$_EmployeeType_$4969",
                     "typeString": "enum ZalarifyCommon.EmployeeType"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3537,
+                    "id": 3389,
                     "name": "ZalarifyCommon.EmployeeType",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5188,
-                    "src": "458:27:22",
+                    "referencedDeclaration": 4969,
+                    "src": "1150:27:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_EmployeeType_$5188",
+                      "typeIdentifier": "t_enum$_EmployeeType_$4969",
                       "typeString": "enum ZalarifyCommon.EmployeeType"
                     }
                   },
@@ -2625,12 +2018,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3540,
+                  "id": 3392,
                   "indexed": false,
                   "name": "salaryAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3542,
-                  "src": "508:17:22",
+                  "scope": 3394,
+                  "src": "1200:17:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2638,10 +2031,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3539,
+                    "id": 3391,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "508:4:22",
+                    "src": "1200:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2651,28 +2044,28 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "276:255:22"
+              "src": "968:255:22"
             },
-            "src": "254:278:22"
+            "src": "946:278:22"
           },
           {
             "anonymous": false,
-            "documentation": null,
-            "id": 3552,
-            "name": "DisableEmployee",
+            "documentation": "@notice This event is emitted when a company is paused.\n@param thisContract this smart contract address.\n@param owner who paused the company.\n@param reason why the company was paused.",
+            "id": 3402,
+            "name": "PausedCompany",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3551,
+              "id": 3401,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3544,
+                  "id": 3396,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3552,
-                  "src": "569:28:22",
+                  "scope": 3402,
+                  "src": "1491:28:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2680,10 +2073,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3543,
+                    "id": 3395,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "569:7:22",
+                    "src": "1491:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2695,12 +2088,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3546,
+                  "id": 3398,
                   "indexed": false,
                   "name": "owner",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3552,
-                  "src": "607:13:22",
+                  "scope": 3402,
+                  "src": "1529:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2708,10 +2101,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3545,
+                    "id": 3397,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "607:7:22",
+                    "src": "1529:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2723,40 +2116,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3548,
-                  "indexed": false,
-                  "name": "employee",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3552,
-                  "src": "630:16:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3547,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "630:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3550,
+                  "id": 3400,
                   "indexed": false,
                   "name": "reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3552,
-                  "src": "656:14:22",
+                  "scope": 3402,
+                  "src": "1552:14:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2764,10 +2129,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3549,
+                    "id": 3399,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "656:7:22",
+                    "src": "1552:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -2777,28 +2142,28 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "559:117:22"
+              "src": "1481:91:22"
             },
-            "src": "538:139:22"
+            "src": "1462:111:22"
           },
           {
             "anonymous": false,
-            "documentation": null,
-            "id": 3560,
-            "name": "EnabledEmployee",
+            "documentation": "@notice This event is emitted when a company is unpaused.\n@param thisContract this smart contract address.\n@param owner who unpaused the company.",
+            "id": 3408,
+            "name": "UnpausedCompany",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3559,
+              "id": 3407,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3554,
+                  "id": 3404,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3560,
-                  "src": "714:28:22",
+                  "scope": 3408,
+                  "src": "1796:28:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2806,10 +2171,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3553,
+                    "id": 3403,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "714:7:22",
+                    "src": "1796:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2821,12 +2186,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3556,
+                  "id": 3406,
                   "indexed": false,
                   "name": "owner",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3560,
-                  "src": "752:13:22",
+                  "scope": 3408,
+                  "src": "1834:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2834,38 +2199,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3555,
+                    "id": 3405,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "752:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3558,
-                  "indexed": false,
-                  "name": "employee",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3560,
-                  "src": "775:16:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3557,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "775:7:22",
+                    "src": "1834:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2876,197 +2213,28 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "704:93:22"
+              "src": "1786:67:22"
             },
-            "src": "683:115:22"
+            "src": "1765:89:22"
           },
           {
             "anonymous": false,
-            "documentation": null,
-            "id": 3568,
-            "name": "DisabledCompany",
-            "nodeType": "EventDefinition",
-            "parameters": {
-              "id": 3567,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3562,
-                  "indexed": true,
-                  "name": "thisContract",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3568,
-                  "src": "835:28:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3561,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "835:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3564,
-                  "indexed": false,
-                  "name": "owner",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3568,
-                  "src": "873:13:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3563,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "873:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3566,
-                  "indexed": false,
-                  "name": "reason",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3568,
-                  "src": "896:14:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bytes32",
-                    "typeString": "bytes32"
-                  },
-                  "typeName": {
-                    "id": 3565,
-                    "name": "bytes32",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "896:7:22",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "825:91:22"
-            },
-            "src": "804:113:22"
-          },
-          {
-            "anonymous": false,
-            "documentation": null,
-            "id": 3574,
-            "name": "EnabledCompany",
-            "nodeType": "EventDefinition",
-            "parameters": {
-              "id": 3573,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3570,
-                  "indexed": true,
-                  "name": "thisContract",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3574,
-                  "src": "953:28:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3569,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "953:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3572,
-                  "indexed": false,
-                  "name": "owner",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3574,
-                  "src": "991:13:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3571,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "991:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "943:67:22"
-            },
-            "src": "923:88:22"
-          },
-          {
-            "anonymous": false,
-            "documentation": null,
-            "id": 3588,
+            "documentation": "@notice This event is emitted when a payment is sent.\n@param providerKey the provider key used for the payment.\n@param sourceToken source token used for the payment.\n@param targetToken target token used for the payment.\n@param to address who recieved the payment.\n@param fromAmount total source amount used for the payment.\n@param toAmount total target amount used for the payment.",
+            "id": 3422,
             "name": "PaymentSent",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3587,
+              "id": 3421,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3576,
+                  "id": 3410,
                   "indexed": true,
                   "name": "providerKey",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1044:27:22",
+                  "scope": 3422,
+                  "src": "2341:27:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3074,10 +2242,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3575,
+                    "id": 3409,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1044:7:22",
+                    "src": "2341:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3088,12 +2256,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3578,
+                  "id": 3412,
                   "indexed": false,
                   "name": "sourceToken",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1081:19:22",
+                  "scope": 3422,
+                  "src": "2378:19:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3101,10 +2269,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3577,
+                    "id": 3411,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1081:7:22",
+                    "src": "2378:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -3116,12 +2284,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3580,
+                  "id": 3414,
                   "indexed": false,
                   "name": "targetToken",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1110:19:22",
+                  "scope": 3422,
+                  "src": "2407:19:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3129,10 +2297,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3579,
+                    "id": 3413,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1110:7:22",
+                    "src": "2407:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -3144,12 +2312,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3582,
+                  "id": 3416,
                   "indexed": false,
                   "name": "to",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1139:10:22",
+                  "scope": 3422,
+                  "src": "2436:10:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3157,10 +2325,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3581,
+                    "id": 3415,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1139:7:22",
+                    "src": "2436:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -3172,12 +2340,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3584,
+                  "id": 3418,
                   "indexed": false,
                   "name": "fromAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1159:15:22",
+                  "scope": 3422,
+                  "src": "2456:15:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3185,10 +2353,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3583,
+                    "id": 3417,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1159:4:22",
+                    "src": "2456:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3199,12 +2367,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3586,
+                  "id": 3420,
                   "indexed": false,
                   "name": "toAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3588,
-                  "src": "1184:13:22",
+                  "scope": 3422,
+                  "src": "2481:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3212,10 +2380,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3585,
+                    "id": 3419,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1184:4:22",
+                    "src": "2481:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3225,51 +2393,51 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1034:169:22"
+              "src": "2331:169:22"
             },
-            "src": "1017:187:22"
+            "src": "2314:187:22"
           },
           {
             "body": null,
-            "documentation": "Company functions ",
-            "id": 3593,
+            "documentation": "@notice It gets the company information.\n@return a company struct with the company information.",
+            "id": 3427,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getInfo",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3589,
+              "id": 3423,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1278:2:22"
+              "src": "2703:2:22"
             },
             "returnParameters": {
-              "id": 3592,
+              "id": 3426,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3591,
+                  "id": 3425,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3593,
-                  "src": "1304:29:22",
+                  "scope": 3427,
+                  "src": "2729:29:22",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Company_$5201_memory_ptr",
+                    "typeIdentifier": "t_struct$_Company_$4984_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Company"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3590,
+                    "id": 3424,
                     "name": "ZalarifyCommon.Company",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5201,
-                    "src": "1304:22:22",
+                    "referencedDeclaration": 4984,
+                    "src": "2729:22:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Company_$5201_storage_ptr",
+                      "typeIdentifier": "t_struct$_Company_$4984_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Company"
                     }
                   },
@@ -3277,40 +2445,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1303:31:22"
+              "src": "2728:31:22"
             },
-            "scope": 3671,
-            "src": "1262:73:22",
+            "scope": 3482,
+            "src": "2687:73:22",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3598,
+            "documentation": "@notice It gets the company id.\n@return the company id.",
+            "id": 3432,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "id",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3594,
+              "id": 3428,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1352:2:22"
+              "src": "2865:2:22"
             },
             "returnParameters": {
-              "id": 3597,
+              "id": 3431,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3596,
+                  "id": 3430,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3598,
-                  "src": "1378:7:22",
+                  "scope": 3432,
+                  "src": "2891:7:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3318,10 +2486,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3595,
+                    "id": 3429,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1378:7:22",
+                    "src": "2891:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3331,40 +2499,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1377:9:22"
+              "src": "2890:9:22"
             },
-            "scope": 3671,
-            "src": "1341:46:22",
+            "scope": 3482,
+            "src": "2854:46:22",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3603,
+            "documentation": "@notice It returns whether this company is paused or not.\n@return true if the company is paused. Otherwise it returns false.",
+            "id": 3437,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "isCompanyEnabled",
+            "name": "isCompanyPaused",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3599,
+              "id": 3433,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1418:2:22"
+              "src": "3087:2:22"
             },
             "returnParameters": {
-              "id": 3602,
+              "id": 3436,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3601,
+                  "id": 3435,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3603,
-                  "src": "1444:4:22",
+                  "scope": 3437,
+                  "src": "3113:4:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3372,10 +2540,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3600,
+                    "id": 3434,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1444:4:22",
+                    "src": "3113:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -3385,34 +2553,34 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1443:6:22"
+              "src": "3112:6:22"
             },
-            "scope": 3671,
-            "src": "1393:57:22",
+            "scope": 3482,
+            "src": "3063:56:22",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3610,
+            "documentation": "@notice It pauses this company due to a specific reason.\n@dev It must be executed by the company owner.\n@param _reason why the company is being paused.\n@return true if the company is paused. Otherwise it returns false.",
+            "id": 3444,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "disable",
+            "name": "pause",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3606,
+              "id": 3440,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3605,
+                  "id": 3439,
                   "name": "_reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3610,
-                  "src": "1473:15:22",
+                  "scope": 3444,
+                  "src": "3407:15:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3420,10 +2588,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3604,
+                    "id": 3438,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1473:7:22",
+                    "src": "3407:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3433,19 +2601,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1472:17:22"
+              "src": "3406:17:22"
             },
             "returnParameters": {
-              "id": 3609,
+              "id": 3443,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3608,
+                  "id": 3442,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3610,
-                  "src": "1508:4:22",
+                  "scope": 3444,
+                  "src": "3442:4:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3453,10 +2621,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3607,
+                    "id": 3441,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1508:4:22",
+                    "src": "3442:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -3466,40 +2634,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1507:6:22"
+              "src": "3441:6:22"
             },
-            "scope": 3671,
-            "src": "1456:58:22",
+            "scope": 3482,
+            "src": "3392:56:22",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3615,
+            "documentation": "@notice It unpauses this company.\n@dev It must be executed by the company owner.\n@return true if the company is unpaused. Otherwise it returns false.",
+            "id": 3449,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "enable",
+            "name": "unpause",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3611,
+              "id": 3445,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1535:2:22"
+              "src": "3660:2:22"
             },
             "returnParameters": {
-              "id": 3614,
+              "id": 3448,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3613,
+                  "id": 3447,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3615,
-                  "src": "1556:4:22",
+                  "scope": 3449,
+                  "src": "3681:4:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3507,10 +2675,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3612,
+                    "id": 3446,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1556:4:22",
+                    "src": "3681:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -3520,147 +2688,65 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1555:6:22"
+              "src": "3680:6:22"
             },
-            "scope": 3671,
-            "src": "1520:42:22",
+            "scope": 3482,
+            "src": "3644:43:22",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": "Employee functions ",
-            "id": 3622,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "isEnabled",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 3618,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3617,
-                  "name": "_employee",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3622,
-                  "src": "1618:17:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3616,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1618:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1617:19:22"
-            },
-            "returnParameters": {
-              "id": 3621,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3620,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3622,
-                  "src": "1660:4:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bool",
-                    "typeString": "bool"
-                  },
-                  "typeName": {
-                    "id": 3619,
-                    "name": "bool",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1660:4:22",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1659:6:22"
-            },
-            "scope": 3671,
-            "src": "1599:67:22",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "external"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 3628,
+            "documentation": "@notice It gets all the employees registered in the company.\n@return a list of employees.",
+            "id": 3455,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getEmployees",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3623,
+              "id": 3450,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1796:2:22"
+              "src": "3867:2:22"
             },
             "returnParameters": {
-              "id": 3627,
+              "id": 3454,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3626,
+                  "id": 3453,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3628,
-                  "src": "1822:32:22",
+                  "scope": 3455,
+                  "src": "3893:32:22",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Employee_$5227_memory_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Employee_$5008_memory_$dyn_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Employee[]"
                   },
                   "typeName": {
                     "baseType": {
                       "contractScope": null,
-                      "id": 3624,
+                      "id": 3451,
                       "name": "ZalarifyCommon.Employee",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 5227,
-                      "src": "1822:23:22",
+                      "referencedDeclaration": 5008,
+                      "src": "3893:23:22",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Employee_$5227_storage_ptr",
+                        "typeIdentifier": "t_struct$_Employee_$5008_storage_ptr",
                         "typeString": "struct ZalarifyCommon.Employee"
                       }
                     },
-                    "id": 3625,
+                    "id": 3452,
                     "length": null,
                     "nodeType": "ArrayTypeName",
-                    "src": "1822:25:22",
+                    "src": "3893:25:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Employee_$5227_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Employee_$5008_storage_$dyn_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Employee[]"
                     }
                   },
@@ -3668,224 +2754,34 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1821:34:22"
+              "src": "3892:34:22"
             },
-            "scope": 3671,
-            "src": "1775:81:22",
+            "scope": 3482,
+            "src": "3846:81:22",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3637,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "disableEmployee",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 3633,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3630,
-                  "name": "_employee",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3637,
-                  "src": "1887:17:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3629,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1887:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 3632,
-                  "name": "_reason",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3637,
-                  "src": "1906:15:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bytes32",
-                    "typeString": "bytes32"
-                  },
-                  "typeName": {
-                    "id": 3631,
-                    "name": "bytes32",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1906:7:22",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1886:36:22"
-            },
-            "returnParameters": {
-              "id": 3636,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3635,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3637,
-                  "src": "1941:4:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bool",
-                    "typeString": "bool"
-                  },
-                  "typeName": {
-                    "id": 3634,
-                    "name": "bool",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1941:4:22",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1940:6:22"
-            },
-            "scope": 3671,
-            "src": "1862:85:22",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "external"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 3644,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "enableEmployee",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 3640,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3639,
-                  "name": "_employee",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3644,
-                  "src": "1977:17:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 3638,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1977:7:22",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1976:19:22"
-            },
-            "returnParameters": {
-              "id": 3643,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 3642,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 3644,
-                  "src": "2014:4:22",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bool",
-                    "typeString": "bool"
-                  },
-                  "typeName": {
-                    "id": 3641,
-                    "name": "bool",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "2014:4:22",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "2013:6:22"
-            },
-            "scope": 3671,
-            "src": "1953:67:22",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "external"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 3663,
+            "documentation": "@notice It add a new employee to this company.\n@param _newEmployee the addres of the new employee.\n@param _employeeType the type of employee in the company.\n@param _name full name of the employee.\n@param _role role associated to the employee.\n@param _email email associated to the employee.\n@param _preferedTokenPayment preferred token payment associated to the employee.\n@param _salaryAmount salary amount of the employee.\n@return true if the employee is added in this company. Otherwise it returns false.",
+            "id": 3474,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "addEmployee",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3659,
+              "id": 3470,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3646,
+                  "id": 3457,
                   "name": "_newEmployee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2047:20:22",
+                  "scope": 3474,
+                  "src": "4549:20:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3893,10 +2789,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3645,
+                    "id": 3456,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2047:7:22",
+                    "src": "4549:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -3908,26 +2804,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 3648,
+                  "id": 3459,
                   "name": "_employeeType",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2069:41:22",
+                  "scope": 3474,
+                  "src": "4571:41:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_EmployeeType_$5188",
+                    "typeIdentifier": "t_enum$_EmployeeType_$4969",
                     "typeString": "enum ZalarifyCommon.EmployeeType"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3647,
+                    "id": 3458,
                     "name": "ZalarifyCommon.EmployeeType",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5188,
-                    "src": "2069:27:22",
+                    "referencedDeclaration": 4969,
+                    "src": "4571:27:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_EmployeeType_$5188",
+                      "typeIdentifier": "t_enum$_EmployeeType_$4969",
                       "typeString": "enum ZalarifyCommon.EmployeeType"
                     }
                   },
@@ -3936,11 +2832,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3650,
+                  "id": 3461,
                   "name": "_name",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2112:13:22",
+                  "scope": 3474,
+                  "src": "4614:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3948,10 +2844,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3649,
+                    "id": 3460,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2112:7:22",
+                    "src": "4614:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3962,11 +2858,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3652,
+                  "id": 3463,
                   "name": "_role",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2127:13:22",
+                  "scope": 3474,
+                  "src": "4629:13:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3974,10 +2870,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3651,
+                    "id": 3462,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2127:7:22",
+                    "src": "4629:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -3988,11 +2884,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3654,
+                  "id": 3465,
                   "name": "_email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2142:14:22",
+                  "scope": 3474,
+                  "src": "4644:14:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4000,10 +2896,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3653,
+                    "id": 3464,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2142:7:22",
+                    "src": "4644:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -4014,11 +2910,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3656,
+                  "id": 3467,
                   "name": "_preferedTokenPayment",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2158:29:22",
+                  "scope": 3474,
+                  "src": "4660:29:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4026,10 +2922,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3655,
+                    "id": 3466,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2158:7:22",
+                    "src": "4660:7:22",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -4041,11 +2937,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3658,
+                  "id": 3469,
                   "name": "_salaryAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2189:18:22",
+                  "scope": 3474,
+                  "src": "4691:18:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4053,10 +2949,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3657,
+                    "id": 3468,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2189:4:22",
+                    "src": "4691:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -4066,19 +2962,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2046:162:22"
+              "src": "4548:162:22"
             },
             "returnParameters": {
-              "id": 3662,
+              "id": 3473,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3661,
+                  "id": 3472,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3663,
-                  "src": "2227:4:22",
+                  "scope": 3474,
+                  "src": "4729:4:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4086,10 +2982,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3660,
+                    "id": 3471,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2227:4:22",
+                    "src": "4729:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -4099,49 +2995,49 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2226:6:22"
+              "src": "4728:6:22"
             },
-            "scope": 3671,
-            "src": "2026:207:22",
+            "scope": 3482,
+            "src": "4528:207:22",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           },
           {
             "body": null,
-            "documentation": null,
-            "id": 3670,
+            "documentation": "@notice It transfer the payroll to a specific employee.\n@dev It calls StablePay smart contract. So it needs to create an Order struct.\n@param _payment contains all the payment and employee information.\n@return true if the payment is transfered. Otherwise it returns false.",
+            "id": 3481,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "payWithTokens",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3666,
+              "id": 3477,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3665,
+                  "id": 3476,
                   "name": "_payment",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3670,
-                  "src": "2262:38:22",
+                  "scope": 3481,
+                  "src": "5085:38:22",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Payment_$5244_memory_ptr",
+                    "typeIdentifier": "t_struct$_Payment_$5025_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Payment"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3664,
+                    "id": 3475,
                     "name": "ZalarifyCommon.Payment",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5244,
-                    "src": "2262:22:22",
+                    "referencedDeclaration": 5025,
+                    "src": "5085:22:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Payment_$5244_storage_ptr",
+                      "typeIdentifier": "t_struct$_Payment_$5025_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Payment"
                     }
                   },
@@ -4149,19 +3045,19 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2261:40:22"
+              "src": "5084:40:22"
             },
             "returnParameters": {
-              "id": 3669,
+              "id": 3480,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3668,
+                  "id": 3479,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3670,
-                  "src": "2318:4:22",
+                  "scope": 3481,
+                  "src": "5141:4:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -4169,10 +3065,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3667,
+                    "id": 3478,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2318:4:22",
+                    "src": "5141:4:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -4182,20 +3078,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2317:6:22"
+              "src": "5140:6:22"
             },
-            "scope": 3671,
-            "src": "2239:85:22",
+            "scope": 3482,
+            "src": "5062:85:22",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 3672,
-        "src": "202:2124:22"
+        "scope": 3483,
+        "src": "382:4767:22"
       }
     ],
-    "src": "0:2326:22"
+    "src": "0:5149:22"
   },
   "compiler": {
     "name": "solc",
@@ -4203,18 +3099,82 @@
   },
   "networks": {},
   "schemaVersion": "3.0.9",
-  "updatedAt": "2019-07-10T17:13:23.325Z",
+  "updatedAt": "2019-07-19T15:49:23.793Z",
   "devdoc": {
-    "methods": {}
+    "author": "Guillermo Salazar",
+    "details": "It is used by the owner to register employees and transfer payrolls.",
+    "methods": {
+      "addEmployee(address,uint8,bytes32,bytes32,bytes32,address,uint256)": {
+        "params": {
+          "_email": "email associated to the employee.",
+          "_employeeType": "the type of employee in the company.",
+          "_name": "full name of the employee.",
+          "_newEmployee": "the addres of the new employee.",
+          "_preferedTokenPayment": "preferred token payment associated to the employee.",
+          "_role": "role associated to the employee.",
+          "_salaryAmount": "salary amount of the employee."
+        },
+        "return": "true if the employee is added in this company. Otherwise it returns false."
+      },
+      "getEmployees()": {
+        "return": "a list of employees."
+      },
+      "getInfo()": {
+        "return": "a company struct with the company information."
+      },
+      "id()": {
+        "return": "the company id."
+      },
+      "isCompanyPaused()": {
+        "return": "true if the company is paused. Otherwise it returns false."
+      },
+      "pause(bytes32)": {
+        "details": "It must be executed by the company owner.",
+        "params": {
+          "_reason": "why the company is being paused."
+        },
+        "return": "true if the company is paused. Otherwise it returns false."
+      },
+      "payWithTokens((address,address,address,uint256,uint256,uint256,uint256,bytes32))": {
+        "details": "It calls StablePay smart contract. So it needs to create an Order struct.",
+        "params": {
+          "_payment": "contains all the payment and employee information."
+        },
+        "return": "true if the payment is transfered. Otherwise it returns false."
+      },
+      "unpause()": {
+        "details": "It must be executed by the company owner.",
+        "return": "true if the company is unpaused. Otherwise it returns false."
+      }
+    }
   },
   "userdoc": {
     "methods": {
-      "getInfo()": {
-        "notice": "Company functions "
+      "addEmployee(address,uint8,bytes32,bytes32,bytes32,address,uint256)": {
+        "notice": "It add a new employee to this company."
       },
-      "isEnabled(address)": {
-        "notice": "Employee functions "
+      "getEmployees()": {
+        "notice": "It gets all the employees registered in the company."
+      },
+      "getInfo()": {
+        "notice": "It gets the company information."
+      },
+      "id()": {
+        "notice": "It gets the company id."
+      },
+      "isCompanyPaused()": {
+        "notice": "It returns whether this company is paused or not."
+      },
+      "pause(bytes32)": {
+        "notice": "It pauses this company due to a specific reason."
+      },
+      "payWithTokens((address,address,address,uint256,uint256,uint256,uint256,bytes32))": {
+        "notice": "It transfer the payroll to a specific employee."
+      },
+      "unpause()": {
+        "notice": "It unpauses this company."
       }
-    }
+    },
+    "notice": "This represents a register company in the platform."
   }
 }

@@ -8,8 +8,8 @@ const STABLE_PAY_NAME = 'StablePay';
 /** Platform configuration values. */
 
 // Mock Smart Contracts
-const ProxyBaseMock = artifacts.require("./mock/ProxyBaseMock.sol");
-const ProxyTargetMock = artifacts.require("./mock/ProxyTargetMock.sol");
+const ProxyBaseMock = artifacts.require("./mock/proxy/ProxyBaseMock.sol");
+const ProxyTargetMock = artifacts.require("./mock/proxy/ProxyTargetMock.sol");
 
 // Libraries
 const AddressArrayLib = artifacts.require("./util/AddressArrayLib.sol");
@@ -27,7 +27,7 @@ const ZalarifyBase = artifacts.require("./base/ZalarifyBase.sol");
 const ZalarifyCompanyFactory = artifacts.require("./base/ZalarifyCompanyFactory.sol");
 const ZalarifyCommon = artifacts.require("./ZalarifyCommon.sol");
 
-const allowedNetworks = ['ganache', 'test', 'coverage'];
+const allowedNetworks = ['ganache', 'test', 'coverage', 'develop'];
 
 module.exports = function(deployer, network, accounts) {
   console.log(`Deploying smart contracts to '${network}'.`)
@@ -52,7 +52,7 @@ module.exports = function(deployer, network, accounts) {
   const owner = accounts[0];
 
   deployer.deploy(SafeMath).then(async (txInfo) => {
-    const deployerApp = new DeployerApp(deployer, web3, owner, network);
+    const deployerApp = new DeployerApp(deployer, web3, owner, network, ["test", "ganache"]);
     
     await deployerApp.deploys([
       AddressArrayLib,

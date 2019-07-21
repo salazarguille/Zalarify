@@ -2,6 +2,8 @@
 
 # Welcome to Zalarify
 
+[![CircleCI](https://circleci.com/gh/salazarguille/Zalarify/tree/master.svg?style=svg&circle-token=2233c5b8e37df5758cbdd49dcb034b65837b89f8)](https://circleci.com/gh/salazarguille/Zalarify/tree/master)
+
 This is the official [Zalarify](http://zalarify.io) repository for the:
 
 - Smart contracts.

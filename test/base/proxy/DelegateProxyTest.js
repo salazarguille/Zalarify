@@ -11,15 +11,24 @@ contract('DelegateProxyTest', function (accounts) {
 
     const account0 = accounts[0];
 
+    let proxyTargetMock;
+
+    beforeEach('Setup contract for each test', async () => {
+        proxyTargetMock = await ProxyTargetMock.deployed();
+        assert(proxyTargetMock);
+        assert(proxyTargetMock.address);
+    });
+
     withData({
-        _1_proxyTargetMockAddress: [ProxyTargetMock.address],
+        _1_proxyTargetMockAddress: [undefined],
         _2_emptyAddress: [NULL_ADDRESS]
     }, function(address) {
         it(t('anUser', 'new', 'Should be able to create a inherited contract.', false), async function() {
             //Setup
+            const proxyAddress = address === undefined ? proxyTargetMock.address : address;
 
             // Invocation
-            const result = await DelegateProxyMock.new(address);
+            const result = await DelegateProxyMock.new(proxyAddress);
 
             // Assertions
             assert(result);

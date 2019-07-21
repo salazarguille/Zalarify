@@ -47,7 +47,7 @@ module.exports = {
 		'truffle-plugin-verify'
 	],
 	verify: {
-		preamble: "Author: Guillermo Salazar <guillesalazar@gmail.com>.\nVersion: 1.0.1"
+		preamble: "Author: Guillermo Salazar <guillesalazar@gmail.com>.\nVersion: 1.0.0"
 	},
 	networks: {
 		geth: {
@@ -58,7 +58,7 @@ module.exports = {
 		ganache: {
 			host: '127.0.0.1',
 			port: 8545,
-			network_id: 5777,
+			network_id: '*',
 			function() {
 				return new HDWalletProvider(
 					mnemonicKeyValue,
@@ -72,11 +72,11 @@ module.exports = {
 			skipDryRun: true
 		},
 		coverage: {
-			host: "localhost",
+			host: "127.0.0.1",
 			network_id: "*",
-			port: 8555, // <-- If you change this, also set the port option in .solcover.js.
-			gas: 0xfffffffffff, // <-- Use this high gas value
-			gasPrice: 0x01 // <-- Use this low gas price
+			port: 8555,		// <-- If you change this, also set the port option in .solcover.js.
+			gas: 6721975,	// <-- Use this high gas value
+			gasPrice: 0x01	// <-- Use this low gas price
 		},
 		infuraRinkeby: {
 			provider: function() {

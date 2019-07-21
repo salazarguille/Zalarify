@@ -13,7 +13,9 @@
     "start:ganache": "ganache-cli --db ./db --accounts 10 --mnemonic 'gesture rather obey video awake genuine patient base soon parrot upset lounge' --networkId 5777 --debug",
     "start:api-rest": "npm run --prefix api-rest dev",
     "start:client": "npm run --prefix client start",
-    "start:all": "concurrently npm:start:ganache npm:start:api-rest npm:start:client"
+    "start:all": "concurrently npm:start:ganache npm:start:api-rest npm:start:client",
+
+    "coverage": "scripts/coverage.sh"
   },
   "repository": {
     "type": "git",
@@ -51,7 +53,8 @@
     "web3": "1.0.0-beta.55",
     "web3-provider-engine": "^15.0.0",
     "web3-utils": "1.0.0-beta.55",
-    "zeppelin-solidity": "1.7.0"
+    "zeppelin-solidity": "1.7.0",
+    "solidity-coverage": "leapdao/solidity-coverage"
   },
   "devDependencies": {
     "axios": "^0.18.0",
@@ -68,10 +71,10 @@
     "mocha": "5.0.4",
     "npm-run-all": "^4.1.2",
     "shx": "^0.2.2",
-    "solidity-coverage": "leapdao/solidity-coverage",
     "solidity-docgen": "^0.1.1",
     "solium": "1.1.2",
     "truffle-assertions": "^0.8.0",
-    "truffle-hdwallet-provider": "^1.0.2"
+    "truffle-hdwallet-provider": "^1.0.2",
+    "coveralls": "^3.0.2"
   }
 }
