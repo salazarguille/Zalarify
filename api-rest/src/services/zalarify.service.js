@@ -37,7 +37,7 @@ export const getInfo = async (companyAddress, network) => {
         throw new BadRequestError(`Company ${companyAddress} not found.`);
     }
     const companyEmployees = await company.getEmployees();
-    const isEnabled = await company.isCompanyEnabled();
+    const isPaused = await company.isCompanyPaused();
 
     const mapEmployeeAsyncFunction = async (employee) => {
         const preferedTokenPayment = await getTokenDataByAddress(employee.preferedTokenPayment);
@@ -56,7 +56,7 @@ export const getInfo = async (companyAddress, network) => {
 
     return {
         info: {
-            isEnabled,
+            isEnabled: !isPaused,
             id: utils.hexToString(companyInfo.id),
             name: utils.hexToString(companyInfo.name),
             description: utils.hexToString(companyInfo.description),
