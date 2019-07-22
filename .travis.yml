@@ -13,4 +13,5 @@ before_script:
   - sleep 5
 
 after_script:
+  - "travis_wait 30 sleep 1800 &"
   - npm run test:coverage
