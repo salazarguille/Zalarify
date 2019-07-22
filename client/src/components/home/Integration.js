@@ -155,6 +155,10 @@ class Integration extends React.Component {
                             The platform is deployed in Ropsten, and they will deploy on mainnet in some weeks. Also, they will support new swapping providers after launching.
                             </Text>
                             <Text width={1} p={'0'} mr={4} textAlign="center" fontSize="20px">
+                            <strong>StablePay gets a fixed fee for each payment/transfer it does.</strong> That fee is 1 %, and it means if you want to transfer 10 DAIs, the receiver will get 9 DAIs.]
+                            The DAI left will be transfered to a StablePay smart contract.
+                            </Text>
+                            <Text width={1} p={'0'} mr={4} textAlign="center" fontSize="20px">
                             Zalarify uses StablePay to transfer the payrolls to the employees. The employees usually prefer to get the payrolls using a stable coin (like DAI), but Zalarify allows to the company owner can pay with any ERC20 token (supported by StablePay and its swapping providers).
                             </Text>
                         </CardInfo>

@@ -72,7 +72,7 @@ class WithWeb3 extends Component {
     async componentDidMount() {
         const web3 = await getWeb3();
 
-        const isWeb3Injected = !_.isNull(web3.givenProvider) && !_.isUndefined(web3.givenProvider);
+        const isWeb3Injected = !_.isNull(web3) && !_.isUndefined(web3) && !_.isNull(web3.givenProvider) && !_.isUndefined(web3.givenProvider);
         if(!isWeb3Injected) {
             const info = {
                 isEnabled: false,

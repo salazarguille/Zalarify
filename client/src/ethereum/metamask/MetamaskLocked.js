@@ -1,6 +1,7 @@
 import { withStyles } from '@material-ui/styles';
 import React from 'react';
 import Color from 'color';
+import { Button, Flex } from "rimble-ui";
 
 const orange = Color('#f6851B');
 
@@ -62,6 +63,9 @@ class MetamaskLocked extends React.Component {
 						<h1>Your Metamask Extension is Locked</h1>
                     <p>Please, signin into your Metamask account to interact to Zalarify.</p>
                     </header>
+                    <Flex width={1} flexDirection="row" justifyContent="center">
+                        <Button.Outline onClick={this.props.onClick} title="Connect">Connect</Button.Outline>
+                    </Flex>
                 </div>
             </div>
         );
