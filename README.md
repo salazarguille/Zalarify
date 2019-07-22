@@ -4,6 +4,8 @@
 
 [![CircleCI](https://circleci.com/gh/salazarguille/Zalarify/tree/master.svg?style=svg&circle-token=2233c5b8e37df5758cbdd49dcb034b65837b89f8)](https://circleci.com/gh/salazarguille/Zalarify/tree/master)
 
+[![Coverage Status](https://coveralls.io/repos/github/salazarguille/Zalarify/badge.svg?branch=master)](https://coveralls.io/github/salazarguille/Zalarify?branch=master)
+
 This is the official [Zalarify](http://zalarify.io) repository for the:
 
 - Smart contracts.
@@ -102,6 +104,22 @@ $ truffle test
 
 ![Unit Tests Result](./docs/images/truffle_test_results.png)
 
+#### Code Coverage (solidity-coverage)
+
+The platform uses the [solidity-coverage](https://github.com/sc-forks/solidity-coverage) dependency. It can be executed with the command below:
+
+```npm run test:coverage```
+
+As result, you will get:
+
+![Code Coverage Result](./docs/images/code_coverage_results.png)
+
+##### Code Coverage Status
+
+- Statements: 52.94 %
+- Branches: 42.42 %
+- Functions: 63.87 %
+- Lines: 54.65 %
 
 ## Security
 

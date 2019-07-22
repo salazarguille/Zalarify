@@ -1,5 +1,3 @@
-const config = require("../truffle");
-const appConfig = require('../src/config');
 const DeployerApp = require('../src/deployer/DeployerApp');
 
 /** Platform configuration keys for smart contracts. */
@@ -52,7 +50,7 @@ module.exports = function(deployer, network, accounts) {
   const owner = accounts[0];
 
   deployer.deploy(SafeMath).then(async (txInfo) => {
-    const deployerApp = new DeployerApp(deployer, web3, owner, network, ["test", "ganache"]);
+    const deployerApp = new DeployerApp(deployer, web3, owner, network, ["test", "ganache", "coverage"]);
     
     await deployerApp.deploys([
       AddressArrayLib,

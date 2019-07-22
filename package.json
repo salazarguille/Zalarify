@@ -4,18 +4,20 @@
   "description": "This is the official repository of the Zalarify platform.",
   "main": "truffle.js",
   "scripts": {
+    "verify:ropsten": "truffle run verify Role Settings Storage Upgrade Vault ZalarifyBase ZalarifyCompanyFactory --network infuraRopsten",
+
+    "init:ropsten": "truffle exec ./scripts/createCompanies.js --network infuraRopsten",
+
+    "deploy:ganache": "truffle migrate --network ganache",
+    "deploy:ropsten": "npm run test && truffle migrate --reset --all --network infuraRopsten",
+
     "test": "truffle test",
-    "deploy-ganache": "truffle migrate --network ganache",
-    "verify-contracts": "truffle run verify Role Settings Storage Upgrade Vault ZalarifyBase ZalarifyCompanyFactory --network infuraRopsten",
-    "initdata-ropsten": "truffle exec ./scripts/createCompanies.js --network infuraRopsten",
-    "migrate-ropsten": "npm run test && truffle migrate --reset --all --network infuraRopsten",
-    
+    "test:coverage": "scripts/coverage.sh",
+
     "start:ganache": "ganache-cli --db ./db --accounts 10 --mnemonic 'gesture rather obey video awake genuine patient base soon parrot upset lounge' --networkId 5777 --debug",
     "start:api-rest": "npm run --prefix api-rest dev",
     "start:client": "npm run --prefix client start",
-    "start:all": "concurrently npm:start:ganache npm:start:api-rest npm:start:client",
-
-    "coverage": "scripts/coverage.sh"
+    "start:all": "concurrently npm:start:ganache npm:start:api-rest npm:start:client"
   },
   "repository": {
     "type": "git",
@@ -46,15 +48,16 @@
     "jsonfile": "4.0.0",
     "lodash": "4.17.5",
     "run-s": "^0.0.0",
-    "truffle": "^5.0.18",
-    "truffle-core": "5.0.18",
+    "truffle": "^5.0.26",
+    "truffle-core": "5.0.26",
     "truffle-legacy-system": "^1.0.7",
     "truffle-plugin-verify": "^0.3.1",
+    "truffle-environment": "0.1.4",
     "web3": "1.0.0-beta.55",
     "web3-provider-engine": "^15.0.0",
     "web3-utils": "1.0.0-beta.55",
     "zeppelin-solidity": "1.7.0",
-    "solidity-coverage": "leapdao/solidity-coverage"
+    "solidity-coverage": "0.6.3"
   },
   "devDependencies": {
     "axios": "^0.18.0",
