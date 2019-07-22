@@ -4,18 +4,13 @@ node_js:
 
 install:
   - npm install
-#  - npm install -g ganache-cli
-#  - npm install -g truffle
 
 script:
-#  - ganache-cli &
-#  - sleep 5
   - truffle test
-
 
 before_script:
   - testrpc > /dev/null &
   - sleep 5
 
 after_script:
-  - npm run test:coverage --prefix zalarify
+  - npm run test:coverage
