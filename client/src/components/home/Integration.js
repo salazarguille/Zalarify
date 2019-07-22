@@ -129,6 +129,11 @@ class Integration extends React.Component {
         win.focus();
     }
 
+    onClickABIEncoderV2 = () => {
+        var win = window.open(`https://medium.com/@dillonsvincent/solidity-enable-experimental-abiencoderv2-to-use-a-struct-as-function-parameter-27979603a879`, '_blank');
+        win.focus();
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -193,6 +198,19 @@ class Integration extends React.Component {
                             </Text>
                             <Text width={1} p={'0'} mr={4} textAlign="center" fontSize="20px">
                             Zalarify uses this pattern to allow to update smart contracts in the platform.
+                            </Text>
+                        </CardInfo>
+                    </Flex>
+                    <Flex width={1}>
+                        <CardInfo
+                            width={1}
+                            title="Using ABIEncoderV2 in Smart Contracts"
+                            primaryText="What Is ABIEncoderV2?"
+                            primaryTooltip="ABIEncoderV2 Explained."
+                            onPrimaryClick={this.onClickABIEncoderV2}
+                            >
+                            <Text width={1} p={'0'} mr={4} textAlign="center" fontSize="20px">
+                            The ABIEncoderV2 enabled you can pass a struct type into a function from web3 or another contract. When compiling a contract with ABIEncoderV2 enabled there are a few changes to the compiled ABI output.
                             </Text>
                         </CardInfo>
                     </Flex>

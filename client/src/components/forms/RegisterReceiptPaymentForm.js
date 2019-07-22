@@ -173,8 +173,7 @@ class RegisterReceiptPaymentForm extends React.Component {
         <br/>
         {renderProcessing}
         <br/>
-        {/* disabled={this.state.processing || this.state.isLoadingRate || !this.state.isTokenApprove } */}
-        <Button  type="submit" style={{width:'100%'}}>
+        <Button disabled={this.state.processing }  type="submit" style={{width:'100%'}}>
           Register Receipt
         </Button>
         <ToastContainer

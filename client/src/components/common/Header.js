@@ -1,7 +1,8 @@
 import { withStyles } from '@material-ui/styles';
 import React from 'react';
-import { Flex, Text } from 'rimble-ui';
+import { Flex, Text, Tooltip, Icon, } from 'rimble-ui';
 import MenuButton from './MenuButton';
+import BigNumber from 'bignumber.js';
 
 const styles = theme => ({
   header: {
@@ -9,12 +10,9 @@ const styles = theme => ({
     '-webkit-justify-content': 'space-between',
     '-ms-justify-content': 'space-between',
     justifyContent: 'space-between',
-    //color: 'rgba(255, 255, 255, 0.5)',
     cursor: 'default',
     height: '3.25rem',
     lineHeight: '3.25rem',
-    //position: 'fixed',
-    //top: 0,
     '& > nav': {
         '& > a[href="#menu"]': {
             color: '#ffffff',
@@ -76,16 +74,22 @@ class Header extends React.Component {
         console.log(name);
     }
 
+    onClickSeeWallet(address) {
+        const { config } = this.props;
+        const url = `${config.explorer.address}${address}`;
+        const win = window.open(url, '_blank');
+        win.focus();   
+    }
+
     render() {
-        //const { classes } = this.props;
+        const { info } = this.props;
         return (
             <Flex
-                //className={classes.header}
                 width={1}
                 flexDirection={'row'}
                 bg="#4468ca">
                 <Flex
-                    width={1/4}
+                    width={1 / 4}
                     pl="15px"
                     pt="5px"
                     verticalAlign="middle"
@@ -94,12 +98,41 @@ class Header extends React.Component {
                         fontFamily="Fjalla One"
                         fontSize="24px"
                         color="white"
-                        height={'100hv'} verticalAlign="middle">Zalarify</Text>
+                        height={'100hv'} verticalAlign="middle">
+                        Zalarify
+                    </Text>
                 </Flex>
                 <Flex width={3 / 4} flexDirection={'row'}>
                     <MenuButton width="25vw" text="Home" value="home" link="/" onClick={this.onClickMenuButton} />
                     <MenuButton width="25vw" text="Companies" value="company" link="/companies" onClick={this.onClickMenuButton} />
                     <MenuButton width="25vw" text="Integration" value="integration" link="/integration" onClick={this.onClickMenuButton} />
+                    <Flex flexDirection="column" justifyContent="center" height={'100%'}>
+                        <Flex flexDirection="row" justifyContent="center" height={'100%'} p="1">
+                            <Tooltip message={`You are using the account: ${info.selectedAddress}`}>
+                                <Text
+                                    fontFamily="Fjalla One"
+                                    fontSize="15px"
+                                    color="white"
+                                    p="1"
+                                    height={'100%'} verticalAlign="middle">
+                                    {info.selectedAddress}
+                                </Text>
+                            </Tooltip>
+                            <Tooltip message="View address on Etherscan.io.">
+                                <Icon color="white" name="Pageview" size="24px" onClick={ e => this.onClickSeeWallet(info.selectedAddress)}/>
+                            </Tooltip>
+                        </Flex>
+                        <Tooltip message={`Your current balance is: ${info.selectedAddressBalance.balanceWei} WEI`}>
+                            <Text
+                                fontFamily="Fjalla One"
+                                fontSize="15px"
+                                color="white"
+                                textAlign="center"
+                                height={'100%'} verticalAlign="middle">
+                                {BigNumber(info.selectedAddressBalance.balanceEther).toFixed(2)} ETH
+                            </Text>
+                        </Tooltip>
+                    </Flex>
                 </Flex>
 			</Flex>
         );

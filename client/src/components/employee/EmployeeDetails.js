@@ -1,7 +1,8 @@
 import { withStyles } from '@material-ui/styles';
 import axios from "axios";
 import React from 'react';
-import { Text, Flex, Table, Button, EthAddress, PublicAddress, QR, Tooltip, Loader } from 'rimble-ui';
+import CustomMessageModal from '../modals/CustomMessageModal';
+import { Text, Flex, Table, Button, EthAddress, PublicAddress, QR, Tooltip, Loader, Link } from 'rimble-ui';
 
 const styles = theme => ({
     wrapper: {
@@ -50,10 +51,8 @@ class EmployeeDetails extends React.Component {
         employee: undefined,
         loading: true,
         errorMessage: undefined,
-        action: {
-            isSuccess: false,
-            message: undefined,
-        }
+        isActionMessageOpened: false,
+        currentReceipt: undefined,
     }
 
     updateEmployee() {
@@ -90,17 +89,50 @@ class EmployeeDetails extends React.Component {
                         />
                     </Tooltip>
                 </td>
-                <td>{receipt.createdAt}</td>
+                <td>{new Date(parseInt(receipt.createdAt)).toLocaleString()}</td>
                 <td><Tooltip message={receipt.path}>
                         <EthAddress
                             address={receipt.path}
                             truncate={true}
                         />
                     </Tooltip></td>
-                <td><a href={receipt.ipfsUrl} rel="noopener noreferrer" target="_blank">View</a></td>
+                <td>
+                    <Button.Text onClick={e => this.onClickIpfsUrl(receipt)}>View</Button.Text>
+                </td>
             </tr>;
         });
         return employeesRender;
+    }
+
+    onClickSeeWallet(address) {
+        const { config } = this.props;
+        const url = `${config.explorer.address}${address}`;
+        const win = window.open(url, '_blank');
+        win.focus();
+    }
+
+    onClickIpfsUrl = (receipt)  => {
+        this.openActionMessage(receipt);
+    }
+
+    onCloseActionMessage = () => {
+        this.setState({
+            isActionMessageOpened: false,
+            currentReceipt: undefined,
+        });
+    }
+
+    openActionMessage = (receipt) => {
+        this.setState({
+            isActionMessageOpened: true,
+            currentReceipt: receipt,
+        });
+    }
+
+    openIpfsUrl = (receipt)  => {
+        console.log(receipt);
+        const win = window.open(receipt.ipfsUrl, '_blank');
+        win.focus();
     }
 
     renderEmployee() {
@@ -151,22 +183,21 @@ class EmployeeDetails extends React.Component {
                                 <Text width={1} p={1} textAlign="left" fontSize="17px" bold={true}>
                                 Salary Amount
                                 </Text>
-                                {/* <Text width={1} p={1} textAlign="left" fontSize="14px"> */}
-                                    <Text.p width={1} textAlign="left" fontSize="14px">{employee.salaryAmount} {employee.preferredTokenPayment.symbol}</Text.p>
-                                {/* </Text> */}
-                                <Text width={1} p={1} textAlign="left" fontSize="17px" bold={true}>
-                                Enabled?
-                                </Text>
-                                <Text width={1} p={1} textAlign="left" fontSize="14px">
-                                {`${employee.enabled === true}`}
-                                </Text>
+                                <Text.p width={1} textAlign="left" fontSize="14px">{employee.salaryAmount} {employee.preferredTokenPayment.symbol}</Text.p>
                             </Flex>
                         </Flex>
                         <Flex flexDirection="column" width={3/4} p={2}>
                             <Flex flexDirection="row" width={1} p={3}>
-                                <Button.Outline height={'20hv'} m={1} as="a" href={`/company/${companyAddress}`} >
-                                    View Company
-                                </Button.Outline>
+                                <Tooltip message="View company details.">
+                                    <Button.Outline height={'20hv'} m={1} as="a" href={`/company/${companyAddress}`} >
+                                        View Company
+                                    </Button.Outline>
+                                </Tooltip>
+                                <Tooltip message="View the employee wallet in ropsten testnet Etherscan website.">
+                                    <Button.Outline height={'20hv'} m={1} onClick={() => this.onClickSeeWallet(employee.wallet)}>
+                                        View Wallet
+                                    </Button.Outline>
+                                </Tooltip>
                             </Flex>
                             <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
                                 List of payment receipts.
@@ -186,6 +217,29 @@ class EmployeeDetails extends React.Component {
                                 </tbody>
                             </Table>
                         </Flex>
+                        <CustomMessageModal
+                            width={2/3}
+                            messageStyle="warn"
+                            isOpen={this.state.isActionMessageOpened}
+                            closeModal={this.onCloseActionMessage}
+                            description="Please read important information about IPFS Gateways"
+                        >
+                            <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
+                                IPFS Gateways are <strong>working intermittently</strong>. It may take a long time to see your receipt payment. See details about it in the folowing links:
+                            </Text>
+                            <Text width={1} p={2} mr={5} textAlign="center" fontSize="21px">
+                                <Link href="https://ethereum.stackexchange.com/questions/64143/ipfs-gateway-not-getting-my-files-keeps-on-loading-without-any-errors" target="_blank" title="IPFS Issue I">
+                                IPFS Gateway not getting files.
+                                </Link>
+                                <br/>
+                                <Link href="https://stackoverflow.com/questions/51036693/ipfs-file-not-downloading." target="_blank" title="IPFS Issue II">
+                                IPFS Gateway not downloading files.
+                                </Link>
+                            </Text>
+                            <Flex width={1} justifyContent="center">
+                                <Button.Outline onClick={() => this.openIpfsUrl(this.state.currentReceipt)}>View Receipt</Button.Outline>
+                            </Flex>
+                        </CustomMessageModal>
                     </Flex>
                 </section>
             </div>

@@ -263,7 +263,7 @@ class CompanyDetails extends React.Component {
                         </header>    
                     </div>
                     <Flex flexDirection="row" width={1}>
-                        <Flex flexDirection="column" width={1/4} bg="red">
+                        <Flex flexDirection="column" width={1/4}>
                             {companyDetailsRender}
                         </Flex>
                         <Flex flexDirection="column" width={3/4} p={2}>

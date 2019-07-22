@@ -35,7 +35,7 @@ class App extends Component {
               currentContract="IZalarify"
             >
               {(props) => (
-              <Layout config={this.state.config}>
+              <Layout {...props} config={this.state.config}>
                 <Route
                   path="/"
                   exact

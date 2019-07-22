@@ -121,7 +121,6 @@ export const getEmployee = async (companyAddress, employeeAddress, network) => {
             email: utils.hexToString(employee.email),
             salaryAmount: parseInt(employee.salaryAmount.toString(), 10),
             employeeType: getType(employee.employeeType),
-            enabled: employee.enabled,
         };
     } catch (error) {
         throw new BadRequestError(`Company ${companyAddress} or employee ${employeeAddress} not found.`);

@@ -18,10 +18,10 @@ class Layout extends Component {
 
 
     render() {
-        const { config } = this.props;
+        const { config, info } = this.props;
         return (
                 <div style={{width: '100%', height:'100hv'}}>
-                    <Header config={config} clickOnMenu={this.clickOnMenu}/>
+                    <Header config={config} info={info} clickOnMenu={this.clickOnMenu}/>
                     {this.props.children}
                     <Flex width={1} height="70px" bg="#e8e8e8" borderRadius="10px" align="center">
                         <Text.p width={2/3} height={1} verticalAlign="middle" textAlign="center" fontSize="20px" bold>

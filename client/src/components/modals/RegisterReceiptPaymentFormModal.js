@@ -42,9 +42,8 @@ class RegisterReceiptPaymentFormModal extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, nextContext) {
-    if( nextProps.processing || nextProps.paymentData) {
+    if( nextProps.paymentData) {
         return {
-          processing: nextProps.processing,
           paymentData: nextProps.paymentData,
         };
     }
