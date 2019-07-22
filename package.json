@@ -78,6 +78,7 @@
     "solium": "1.1.2",
     "truffle-assertions": "^0.8.0",
     "truffle-hdwallet-provider": "^1.0.2",
-    "coveralls": "^3.0.2"
+    "coveralls": "^3.0.2",
+    "ethereumjs-testrpc": "^6.0.3"
   }
 }
