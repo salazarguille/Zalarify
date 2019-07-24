@@ -48,40 +48,98 @@ Install Ganache Cli
 $ npm install ganache-cli -g
 ```
 
-### Install Dependencies
+---
 
-Once you have installed Truffle and Ganache CLI, you need to install the project dependencies. Located at the root project folder, run the command
+### Configure Modules
+
+Once you have installed Truffle and Ganache CLI, you need to configure each module.
+
+#### Truffle Module
+
+##### Setup Environment Variables
+
+*The Truffle module is located in the root folder.*
+The Truffle module needs some env variables to be configured properly. In order to configure them, create a `.env` file based on the `.env.template` file (copy `.env.template` file to `.env`).
+
+Once the file was created, it needs to setup some values. Please, follow the instruction to setup these values before executing any command.
+
+###### Infura (required)
+
+The **INFURA_KEY** key is needed to execute smart contracts in a testnet or mainnet. To get a key, just visit [Infura.net](https://infura.net), and signup.
+
+###### Mnemonic (required)
+
+ The **MNEMONIC_KEY** key is used to get/create the ethereum addresses.
+
+###### Etherscan API Key (optional)
+
+The **ETHERSCAN_API_KEY** key was used to verify the smart contracts in [Ropsten Etherscan](https://ropsten.etherscan).
+
+##### Install Dependencies
+
+In ```root``` folder, execute:
 
 ```sh
 $ npm install
 ```
 
-### Setup Environment Variables
+---
 
-The platform needs some env variables to be configured properly. In order to configure them, create a `.env` file based on the `.env.template` file.
+#### Rest API Module
 
-Once the file was created, it needs to setup some values. Please, follow the instruction to setup these values before executing any command.
+The API module needs some env variables to be configured properly. In order to configure them, create a `.env` file based on the `.env.template` file located at `api-rest` folder (copy `api-rest/.env.template` file to `api-rest/.env`).
 
-#### Infura
+##### Setup Environment Variables
 
-The **INFURA_KEY** key is needed to execute smart contracts in a testnet or mainnet. To get a key, just visit [Infura.net](https://infura.net), and signup.
+The values in the `api-rest/.env.template` file are valid to run the application using Ganache. So, you don't need to modify it.
 
-#### Mnemonic
+> In case you need to run the application pointing to Ropsten, just modify the variable value DEFAULT_ETHEREUM_NETWORK to `ropsten`.
 
- The **MNEMONIC_KEY** key is used to get/create the ethereum addresses.
+##### Install Dependencies
 
-#### Etherscan API Key (optional)
+In the ```./api-rest``` folder, execute:
 
-The **ETHERSCAN_API_KEY** key was used to verify the smart contracts in [Ropsten Etherscan](https://ropsten.etherscan).
+```sh
+$ npm install
+```
 
-### Start Zalarify
+---
+
+#### UI Module
+
+This module is located at `client` folder. In order to configure them, create a `.env` file based on the `.env.local.template` file located at `client` folder (copy `client/.env.local.template` file to `client/.env`).
+
+##### Setup Environment Variables
+
+The values in the `.env.local.template` file are valid to run the application using Ganache. So, you don't need to modify it.
+
+> In case you need to run the application pointing to Ropsten, just modify the variable value REACT_APP_DEFAULT_NETWORK to ropsten.
+
+##### Install Dependencies
+
+In the ```./client``` folder, execute:
+
+```sh
+$ npm install
+```
+
+
+#### The Graph Module (not required)
+
+This module is not required to configure because it is only for testnets, and it is already configured and deployed in Ropsten.
+
+You can access to it using this [link](https://thegraph.com/explorer/subgraph/salazarguille/zalarify).
+
+### Start Zalarify Locally
+
+Once you have configured all the required module, you are able to start the application using Ganache.
 
 #### Using Ganache
 
-The platform uses the [StablePay](http://stablepay.io) smart contracts which also uses the [Kyber Network](https://kyber.network) and [Uniswap](https://uniswap.io/k) smart contracts. So, Zalarify needs a Ganache snapshot with the full smart contracts. It is included in the project. So, to start Zalarify using Ganache, please follow the below steps:
+The platform uses the [StablePay](http://stablepay.io) smart contracts which also uses the [Kyber Network](https://kyber.network) and [Uniswap](https://uniswap.io/k) smart contracts. So, Zalarify needs a Ganache snapshot with the full smart contracts which is included in the project. So, to start Zalarify using Ganache, please follow the below steps:
 
-1. Uncompress the file ```resources/db.zip``` into ```./db``` folder (at the root level).
-2. Verify there is not any sub-folder in ```./db``` (just a lot of files).
+1. Uncompress the file ```resources/db.zip``` into ```./db``` folder (at the root project folder).
+2. Verify there is not any sub-folder in ```./db``` (just files).
 3. Execute in the root folder.
 
 ```sh
@@ -142,6 +200,7 @@ $ solc-select 0.4.24
 $ solc --version
 solc, the solidity compiler commandline interface
 Version: 0.4.24+commit.e67f0147.Linux.g++
+
 ```
 
 ### Verification Results
@@ -149,6 +208,15 @@ Version: 0.4.24+commit.e67f0147.Linux.g++
 ![diagram](./docs/images/slither_results.png)
 
 All the high severity issues were fixed during the development. Now the smart contracts contain only low priority issues.
+
+## Smart Contract Verification on Etherscan
+
+I have used the Truffle plugin [truffle-verify-plugin](https://github.com/rkalis/truffle-plugin-verify) to verify the smart contracts.
+The result is:
+
+![Etherscan Result](./docs/images/verify_contract_results.png)
+
+The file ```deployed_addresses.md``` contains which ones were verified.
 
 ## Contact Me
 

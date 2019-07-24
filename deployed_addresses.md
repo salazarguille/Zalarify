@@ -1,13 +1,31 @@
-## Ropsten Addresses:
+# Deployment Addresses
 
-1. AddressArrayLib: [0x528783426A82c92a537fbEA45bA6fC712a92B411](https://ropsten.etherscan.io/address/0x528783426A82c92a537fbEA45bA6fC712a92B411)
-2. Storage: [0xffdA0B0EE27e85730A358e2d719b08bF31DA19A6](https://ropsten.etherscan.io/address/0xffdA0B0EE27e85730A358e2d719b08bF31DA19A6)
-3. ZalarifyCommon: [0x9541B822a255F72cd770c1Ff759A41A03B88ADD0](https://ropsten.etherscan.io/address/0x9541B822a255F72cd770c1Ff759A41A03B88ADD0)
-4. ReceiptRegistry: [0xB245dF8eF71839d84D06a87206aC54Cb4034511d](https://ropsten.etherscan.io/address/0xB245dF8eF71839d84D06a87206aC54Cb4034511d)
-5. ZalarifyCompanyFactory: [0xeC038fDAb2EDB1d85C76737E66CdFbd06f4DA754](https://ropsten.etherscan.io/address/0xeC038fDAb2EDB1d85C76737E66CdFbd06f4DA754)
-6. Settings: [0x1A9A13321Edadf208921CCC82f6BB31214B21029](https://ropsten.etherscan.io/address/0x1A9A13321Edadf208921CCC82f6BB31214B21029)
-7. Upgrade: [0xc7E27ccc531D91666e4FC5B49E746cdC36DA8fa6](https://ropsten.etherscan.io/address/0xc7E27ccc531D91666e4FC5B49E746cdC36DA8fa6)
-8. Role: [0xbb8C5A7Dd8A41047Aa2d3f896655F89f7726207E](https://ropsten.etherscan.io/address/0xbb8C5A7Dd8A41047Aa2d3f896655F89f7726207E)
-9. Vault: [0x4E1cd645159E88Ca14DAb4468164C200D70436C1](https://ropsten.etherscan.io/address/0x4E1cd645159E88Ca14DAb4468164C200D70436C1)
-10. Zalarify: [0x34fEC398d86e10d266153DaC9E3e38845182a6F7](https://ropsten.etherscan.io/address/0x34fEC398d86e10d266153DaC9E3e38845182a6F7)
-11. ZalarifyBase: [0xEfa1F726354AC49d83f9900d86B32C899a4567e6](https://ropsten.etherscan.io/address/0xEfa1F726354AC49d83f9900d86B32C899a4567e6)
+## Ropsten Addresses
+
+1. AddressArrayLib: [0x7685022B7Fe93AD4C277c0382c1DA8DEF49Bc624](https://ropsten.etherscan.io/address/0x7685022B7Fe93AD4C277c0382c1DA8DEF49Bc624)
+2. Storage: [0x1449f21FCb551e3B827bB2E40cf1170F5d3624D9](https://ropsten.etherscan.io/address/0x1449f21FCb551e3B827bB2E40cf1170F5d3624D9) (Verified)
+3. ZalarifyCommon: [0x662c7Db5dAd4912Dc34962BEb3Cd5224B7320642](https://ropsten.etherscan.io/address/0x662c7Db5dAd4912Dc34962BEb3Cd5224B7320642) (Verified)
+4. ReceiptRegistry: [0xeA847b506999639d451C38a8a3F01F9251C6FCa8](https://ropsten.etherscan.io/address/0xeA847b506999639d451C38a8a3F01F9251C6FCa8) (Verified)
+5. ZalarifyCompanyFactory: [0xc93Dd2753FC5faba9dc292EF3AC2b927EC24502c](https://ropsten.etherscan.io/address/0xc93Dd2753FC5faba9dc292EF3AC2b927EC24502c) (Verified)
+6. Settings: [0xD97098907D591A6524F8765b9830DE9989549C3a](https://ropsten.etherscan.io/address/0xD97098907D591A6524F8765b9830DE9989549C3a)
+7. Upgrade: [0xFcaCF6299F6041952f79caE60CddCA2e2E714586](https://ropsten.etherscan.io/address/0xFcaCF6299F6041952f79caE60CddCA2e2E714586)
+8. Role: [0x9eb4d8D40487aaa09F2a58Cd3c62d29524c1Eb5f](https://ropsten.etherscan.io/address/0x9eb4d8D40487aaa09F2a58Cd3c62d29524c1Eb5f)
+9. Vault: [0x61cDc2038E8180298a7a33addA2848c43E3F8b60](https://ropsten.etherscan.io/address/0x61cDc2038E8180298a7a33addA2848c43E3F8b60)
+10. Zalarify: [0x89F03b7C3C87d39Fd89Af82F210DfBFB0B48FF58](https://ropsten.etherscan.io/address/0x89F03b7C3C87d39Fd89Af82F210DfBFB0B48FF58) (Verified)
+11. ZalarifyBase: [0xa2791f94F2214901B3327eEADB5ea24ec859e862](https://ropsten.etherscan.io/address/0xa2791f94F2214901B3327eEADB5ea24ec859e862) (Verified)
+
+## Ganache Addresses
+
+Ganache Addresses:
+
+1. AddressArrayLib: 0x896c4E41b0ad415BD9DF7381a9dcAb1A13C4460f
+2. Storage: 0x3A18BBB8046142c44E86C4a17A2a8EE12E3bDcf8
+3. ZalarifyCommon: 0x0Ce4669FF2a2fBB17b37f1fC2490D3680f6c6Fbf
+4. ReceiptRegistry: 0x1e9eE0a8a2090F2728BF8293AfbECE9eC3388ed1
+5. ZalarifyCompanyFactory: 0x1f6af6469EaE76AbC6C046B07F260C8d29A02A98
+6. Settings: 0xFAd204b67Fd779b49aa666c34F8B55ac05cD65A0
+7. Upgrade: 0xC89c6e19E1D76F91c2148D7e20216B5Fc83401Bd
+8. Role: 0xa6E8c7cC7dC2D5849391e7137d1908A60CaD365a
+9. Vault: 0xF4F9f1514247b2f9987A69381C052a86eEf94e6C
+10. Zalarify: 0x6a376f32EC6D1d5b31b1c0F6072C8fc1181a8379
+11. ZalarifyBase: 0x79E6d9ed71De2c95b3CE1371764D08C1bD1192E7

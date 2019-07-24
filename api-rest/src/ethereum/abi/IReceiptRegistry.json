@@ -136,14 +136,14 @@
     "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
     "exportedSymbols": {
       "IReceiptRegistry": [
-        3066
+        3060
       ]
     },
-    "id": 3067,
+    "id": 3061,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3019,
+        "id": 3013,
         "literals": [
           "solidity",
           "0.5",
@@ -153,7 +153,7 @@
         "src": "0:22:16"
       },
       {
-        "id": 3020,
+        "id": 3014,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -164,10 +164,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
         "file": "../util/ZalarifyCommon.sol",
-        "id": 3021,
+        "id": 3015,
         "nodeType": "ImportDirective",
-        "scope": 3067,
-        "sourceUnit": 5027,
+        "scope": 3061,
+        "sourceUnit": 5056,
         "src": "58:36:16",
         "symbolAliases": [],
         "unitAlias": ""
@@ -178,9 +178,9 @@
         "contractKind": "contract",
         "documentation": "@notice This is a receipt registry abstraction.\n@author Guillermo Salazar.",
         "fullyImplemented": false,
-        "id": 3066,
+        "id": 3060,
         "linearizedBaseContracts": [
-          3066
+          3060
         ],
         "name": "IReceiptRegistry",
         "nodeType": "ContractDefinition",
@@ -188,20 +188,20 @@
           {
             "anonymous": false,
             "documentation": "@notice This event is emitted when a new receipt is created.\n@param thisContract the current smart contract address.\n@param company the company address.\n@param employee the employee address.\n@param receiptHash the receipt hash created on IPFS.\n@param path the path created on IPFS.",
-            "id": 3033,
+            "id": 3027,
             "name": "NewReceiptCreated",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3032,
+              "id": 3026,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3023,
+                  "id": 3017,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3033,
+                  "scope": 3027,
                   "src": "618:28:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -210,7 +210,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3022,
+                    "id": 3016,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "618:7:16",
@@ -225,11 +225,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3025,
+                  "id": 3019,
                   "indexed": false,
                   "name": "company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3033,
+                  "scope": 3027,
                   "src": "656:15:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -238,7 +238,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3024,
+                    "id": 3018,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "656:7:16",
@@ -253,11 +253,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3027,
+                  "id": 3021,
                   "indexed": false,
                   "name": "employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3033,
+                  "scope": 3027,
                   "src": "681:16:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -266,7 +266,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3026,
+                    "id": 3020,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "681:7:16",
@@ -281,11 +281,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3029,
+                  "id": 3023,
                   "indexed": false,
                   "name": "receiptHash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3033,
+                  "scope": 3027,
                   "src": "707:18:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -294,7 +294,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3028,
+                    "id": 3022,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "707:6:16",
@@ -308,11 +308,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3031,
+                  "id": 3025,
                   "indexed": false,
                   "name": "path",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3033,
+                  "scope": 3027,
                   "src": "735:11:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -321,7 +321,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3030,
+                    "id": 3024,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "735:6:16",
@@ -341,22 +341,22 @@
           {
             "body": null,
             "documentation": "@notice It creates a receipt payment associated to a company and employee.\n@dev It can be invoked only by the company owner/creator.\n@dev The receipt parameter values must be not empty.\n@param _company the company address where the employee works.\n@param _employee the employee address who receives the receipt payment.\n@param _path the IPFS path where the receipt was stored.\n@param _receiptHash the IPFS hash from the receipt document.",
-            "id": 3046,
+            "id": 3040,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createReceipt",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3042,
+              "id": 3036,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3035,
+                  "id": 3029,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3046,
+                  "scope": 3040,
                   "src": "1319:16:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -365,7 +365,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3034,
+                    "id": 3028,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1319:7:16",
@@ -380,10 +380,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3037,
+                  "id": 3031,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3046,
+                  "scope": 3040,
                   "src": "1337:17:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -392,7 +392,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3036,
+                    "id": 3030,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1337:7:16",
@@ -407,10 +407,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3039,
+                  "id": 3033,
                   "name": "_path",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3046,
+                  "scope": 3040,
                   "src": "1356:19:16",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -419,7 +419,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3038,
+                    "id": 3032,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1356:6:16",
@@ -433,10 +433,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3041,
+                  "id": 3035,
                   "name": "_receiptHash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3046,
+                  "scope": 3040,
                   "src": "1377:26:16",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -445,7 +445,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3040,
+                    "id": 3034,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1377:6:16",
@@ -461,15 +461,15 @@
               "src": "1318:86:16"
             },
             "returnParameters": {
-              "id": 3045,
+              "id": 3039,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3044,
+                  "id": 3038,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3046,
+                  "scope": 3040,
                   "src": "1438:4:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -478,7 +478,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3043,
+                    "id": 3037,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1438:4:16",
@@ -493,7 +493,7 @@
               ],
               "src": "1437:6:16"
             },
-            "scope": 3066,
+            "scope": 3060,
             "src": "1296:148:16",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -502,22 +502,22 @@
           {
             "body": null,
             "documentation": "@notice It gets all the receipt payments for a specific company and employee relation.\n@param _company the company where the employee got the receipts.\n@param _employee the employee address who owns the receipts.\n@return It returns a list of receipt payments for a specific company/employee relation.",
-            "id": 3056,
+            "id": 3050,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getReceipts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3051,
+              "id": 3045,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3048,
+                  "id": 3042,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3056,
+                  "scope": 3050,
                   "src": "1820:16:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -526,7 +526,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3047,
+                    "id": 3041,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1820:7:16",
@@ -541,10 +541,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3050,
+                  "id": 3044,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3056,
+                  "scope": 3050,
                   "src": "1838:17:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -553,7 +553,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3049,
+                    "id": 3043,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1838:7:16",
@@ -570,41 +570,41 @@
               "src": "1819:37:16"
             },
             "returnParameters": {
-              "id": 3055,
+              "id": 3049,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3054,
+                  "id": 3048,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3056,
+                  "scope": 3050,
                   "src": "1902:31:16",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Receipt_$4991_memory_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Receipt_$5020_memory_$dyn_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Receipt[]"
                   },
                   "typeName": {
                     "baseType": {
                       "contractScope": null,
-                      "id": 3052,
+                      "id": 3046,
                       "name": "ZalarifyCommon.Receipt",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 4991,
+                      "referencedDeclaration": 5020,
                       "src": "1902:22:16",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Receipt_$4991_storage_ptr",
+                        "typeIdentifier": "t_struct$_Receipt_$5020_storage_ptr",
                         "typeString": "struct ZalarifyCommon.Receipt"
                       }
                     },
-                    "id": 3053,
+                    "id": 3047,
                     "length": null,
                     "nodeType": "ArrayTypeName",
                     "src": "1902:24:16",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Receipt_$4991_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Receipt_$5020_storage_$dyn_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Receipt[]"
                     }
                   },
@@ -614,7 +614,7 @@
               ],
               "src": "1901:33:16"
             },
-            "scope": 3066,
+            "scope": 3060,
             "src": "1799:136:16",
             "stateMutability": "view",
             "superFunction": null,
@@ -623,22 +623,22 @@
           {
             "body": null,
             "documentation": "@notice It tests whether a company and employee relation has receipts.\n@param _company the company where the employee got the receipts.\n@param _employee the employee address who owns the receipts.\n@return true if the employee has receipt payments in the company. Otherwise it returns false.",
-            "id": 3065,
+            "id": 3059,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "hasReceipts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3061,
+              "id": 3055,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3058,
+                  "id": 3052,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3065,
+                  "scope": 3059,
                   "src": "2301:16:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -647,7 +647,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3057,
+                    "id": 3051,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2301:7:16",
@@ -662,10 +662,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3060,
+                  "id": 3054,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3065,
+                  "scope": 3059,
                   "src": "2319:17:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -674,7 +674,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3059,
+                    "id": 3053,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2319:7:16",
@@ -691,15 +691,15 @@
               "src": "2300:37:16"
             },
             "returnParameters": {
-              "id": 3064,
+              "id": 3058,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3063,
+                  "id": 3057,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3065,
+                  "scope": 3059,
                   "src": "2383:4:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -708,7 +708,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3062,
+                    "id": 3056,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "2383:4:16",
@@ -723,14 +723,14 @@
               ],
               "src": "2382:6:16"
             },
-            "scope": 3066,
+            "scope": 3060,
             "src": "2280:109:16",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 3067,
+        "scope": 3061,
         "src": "187:2204:16"
       }
     ],
@@ -740,14 +740,14 @@
     "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
     "exportedSymbols": {
       "IReceiptRegistry": [
-        3066
+        3060
       ]
     },
-    "id": 3067,
+    "id": 3061,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3019,
+        "id": 3013,
         "literals": [
           "solidity",
           "0.5",
@@ -757,7 +757,7 @@
         "src": "0:22:16"
       },
       {
-        "id": 3020,
+        "id": 3014,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -768,10 +768,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
         "file": "../util/ZalarifyCommon.sol",
-        "id": 3021,
+        "id": 3015,
         "nodeType": "ImportDirective",
-        "scope": 3067,
-        "sourceUnit": 5027,
+        "scope": 3061,
+        "sourceUnit": 5056,
         "src": "58:36:16",
         "symbolAliases": [],
         "unitAlias": ""
@@ -782,9 +782,9 @@
         "contractKind": "contract",
         "documentation": "@notice This is a receipt registry abstraction.\n@author Guillermo Salazar.",
         "fullyImplemented": false,
-        "id": 3066,
+        "id": 3060,
         "linearizedBaseContracts": [
-          3066
+          3060
         ],
         "name": "IReceiptRegistry",
         "nodeType": "ContractDefinition",
@@ -792,20 +792,20 @@
           {
             "anonymous": false,
             "documentation": "@notice This event is emitted when a new receipt is created.\n@param thisContract the current smart contract address.\n@param company the company address.\n@param employee the employee address.\n@param receiptHash the receipt hash created on IPFS.\n@param path the path created on IPFS.",
-            "id": 3033,
+            "id": 3027,
             "name": "NewReceiptCreated",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3032,
+              "id": 3026,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3023,
+                  "id": 3017,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3033,
+                  "scope": 3027,
                   "src": "618:28:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -814,7 +814,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3022,
+                    "id": 3016,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "618:7:16",
@@ -829,11 +829,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3025,
+                  "id": 3019,
                   "indexed": false,
                   "name": "company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3033,
+                  "scope": 3027,
                   "src": "656:15:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -842,7 +842,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3024,
+                    "id": 3018,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "656:7:16",
@@ -857,11 +857,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3027,
+                  "id": 3021,
                   "indexed": false,
                   "name": "employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3033,
+                  "scope": 3027,
                   "src": "681:16:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -870,7 +870,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3026,
+                    "id": 3020,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "681:7:16",
@@ -885,11 +885,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3029,
+                  "id": 3023,
                   "indexed": false,
                   "name": "receiptHash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3033,
+                  "scope": 3027,
                   "src": "707:18:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -898,7 +898,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3028,
+                    "id": 3022,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "707:6:16",
@@ -912,11 +912,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3031,
+                  "id": 3025,
                   "indexed": false,
                   "name": "path",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3033,
+                  "scope": 3027,
                   "src": "735:11:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -925,7 +925,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3030,
+                    "id": 3024,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "735:6:16",
@@ -945,22 +945,22 @@
           {
             "body": null,
             "documentation": "@notice It creates a receipt payment associated to a company and employee.\n@dev It can be invoked only by the company owner/creator.\n@dev The receipt parameter values must be not empty.\n@param _company the company address where the employee works.\n@param _employee the employee address who receives the receipt payment.\n@param _path the IPFS path where the receipt was stored.\n@param _receiptHash the IPFS hash from the receipt document.",
-            "id": 3046,
+            "id": 3040,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createReceipt",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3042,
+              "id": 3036,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3035,
+                  "id": 3029,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3046,
+                  "scope": 3040,
                   "src": "1319:16:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -969,7 +969,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3034,
+                    "id": 3028,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1319:7:16",
@@ -984,10 +984,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3037,
+                  "id": 3031,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3046,
+                  "scope": 3040,
                   "src": "1337:17:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -996,7 +996,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3036,
+                    "id": 3030,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1337:7:16",
@@ -1011,10 +1011,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3039,
+                  "id": 3033,
                   "name": "_path",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3046,
+                  "scope": 3040,
                   "src": "1356:19:16",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1023,7 +1023,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3038,
+                    "id": 3032,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1356:6:16",
@@ -1037,10 +1037,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3041,
+                  "id": 3035,
                   "name": "_receiptHash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3046,
+                  "scope": 3040,
                   "src": "1377:26:16",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1049,7 +1049,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3040,
+                    "id": 3034,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1377:6:16",
@@ -1065,15 +1065,15 @@
               "src": "1318:86:16"
             },
             "returnParameters": {
-              "id": 3045,
+              "id": 3039,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3044,
+                  "id": 3038,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3046,
+                  "scope": 3040,
                   "src": "1438:4:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1082,7 +1082,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3043,
+                    "id": 3037,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1438:4:16",
@@ -1097,7 +1097,7 @@
               ],
               "src": "1437:6:16"
             },
-            "scope": 3066,
+            "scope": 3060,
             "src": "1296:148:16",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1106,22 +1106,22 @@
           {
             "body": null,
             "documentation": "@notice It gets all the receipt payments for a specific company and employee relation.\n@param _company the company where the employee got the receipts.\n@param _employee the employee address who owns the receipts.\n@return It returns a list of receipt payments for a specific company/employee relation.",
-            "id": 3056,
+            "id": 3050,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getReceipts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3051,
+              "id": 3045,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3048,
+                  "id": 3042,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3056,
+                  "scope": 3050,
                   "src": "1820:16:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1130,7 +1130,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3047,
+                    "id": 3041,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1820:7:16",
@@ -1145,10 +1145,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3050,
+                  "id": 3044,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3056,
+                  "scope": 3050,
                   "src": "1838:17:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1157,7 +1157,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3049,
+                    "id": 3043,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1838:7:16",
@@ -1174,41 +1174,41 @@
               "src": "1819:37:16"
             },
             "returnParameters": {
-              "id": 3055,
+              "id": 3049,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3054,
+                  "id": 3048,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3056,
+                  "scope": 3050,
                   "src": "1902:31:16",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Receipt_$4991_memory_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Receipt_$5020_memory_$dyn_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Receipt[]"
                   },
                   "typeName": {
                     "baseType": {
                       "contractScope": null,
-                      "id": 3052,
+                      "id": 3046,
                       "name": "ZalarifyCommon.Receipt",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 4991,
+                      "referencedDeclaration": 5020,
                       "src": "1902:22:16",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Receipt_$4991_storage_ptr",
+                        "typeIdentifier": "t_struct$_Receipt_$5020_storage_ptr",
                         "typeString": "struct ZalarifyCommon.Receipt"
                       }
                     },
-                    "id": 3053,
+                    "id": 3047,
                     "length": null,
                     "nodeType": "ArrayTypeName",
                     "src": "1902:24:16",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Receipt_$4991_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Receipt_$5020_storage_$dyn_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Receipt[]"
                     }
                   },
@@ -1218,7 +1218,7 @@
               ],
               "src": "1901:33:16"
             },
-            "scope": 3066,
+            "scope": 3060,
             "src": "1799:136:16",
             "stateMutability": "view",
             "superFunction": null,
@@ -1227,22 +1227,22 @@
           {
             "body": null,
             "documentation": "@notice It tests whether a company and employee relation has receipts.\n@param _company the company where the employee got the receipts.\n@param _employee the employee address who owns the receipts.\n@return true if the employee has receipt payments in the company. Otherwise it returns false.",
-            "id": 3065,
+            "id": 3059,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "hasReceipts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3061,
+              "id": 3055,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3058,
+                  "id": 3052,
                   "name": "_company",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3065,
+                  "scope": 3059,
                   "src": "2301:16:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1251,7 +1251,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3057,
+                    "id": 3051,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2301:7:16",
@@ -1266,10 +1266,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3060,
+                  "id": 3054,
                   "name": "_employee",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3065,
+                  "scope": 3059,
                   "src": "2319:17:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1278,7 +1278,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3059,
+                    "id": 3053,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2319:7:16",
@@ -1295,15 +1295,15 @@
               "src": "2300:37:16"
             },
             "returnParameters": {
-              "id": 3064,
+              "id": 3058,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3063,
+                  "id": 3057,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3065,
+                  "scope": 3059,
                   "src": "2383:4:16",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1312,7 +1312,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3062,
+                    "id": 3056,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "2383:4:16",
@@ -1327,14 +1327,14 @@
               ],
               "src": "2382:6:16"
             },
-            "scope": 3066,
+            "scope": 3060,
             "src": "2280:109:16",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 3067,
+        "scope": 3061,
         "src": "187:2204:16"
       }
     ],
@@ -1346,7 +1346,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.9",
-  "updatedAt": "2019-07-19T15:49:23.783Z",
+  "updatedAt": "2019-07-24T18:24:32.068Z",
   "devdoc": {
     "author": "Guillermo Salazar.",
     "methods": {

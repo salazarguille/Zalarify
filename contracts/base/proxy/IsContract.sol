@@ -1,9 +1,5 @@
 pragma solidity 0.5.3;
 
-import "../Base.sol";
-import "./DelegateProxy.sol";
-import "../../interface/IStorage.sol";
-
 /**
     @title It validates whether an address is a contract or an user address.
     @author Guillermo Salazar

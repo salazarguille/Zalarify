@@ -6,7 +6,7 @@ dotenv.config({ silent: true });
 const config = {
 
     // General Configuration
-    DEFAULT_ETHEREUM_NETWORK: process.env.DEFAULT_ETHEREUM_NETWORK || 'homestead',
+    DEFAULT_ETHEREUM_NETWORK: process.env.DEFAULT_ETHEREUM_NETWORK || 'ropsten',
     THE_GRAPH_ITEMS_PER_PAGE: process.env.THE_GRAPH_ITEMS_PER_PAGE,
 
     // Ganache Configuration

@@ -8,7 +8,6 @@ import "../util/ZalarifyCommon.sol";
 import "../services/erc20/ERC20.sol";
 import "../services/stablepay/StablePayCommon.sol";
 import "../services/stablepay/IStablePay.sol";
-import "../services/stablepay/IProviderRegistry.sol";
 import "../interface/IZalarifyCompany.sol";
 
 /**

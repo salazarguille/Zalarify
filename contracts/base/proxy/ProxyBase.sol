@@ -2,7 +2,6 @@ pragma solidity 0.5.3;
 
 import "../Base.sol";
 import "./DelegateProxy.sol";
-import "../../interface/IStorage.sol";
 
 /**
     @title This is a Proxy base contract.

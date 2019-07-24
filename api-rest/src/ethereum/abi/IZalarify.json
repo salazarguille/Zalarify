@@ -134,14 +134,14 @@
     "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IZalarify.sol",
     "exportedSymbols": {
       "IZalarify": [
-        3370
+        3364
       ]
     },
-    "id": 3371,
+    "id": 3365,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3322,
+        "id": 3316,
         "literals": [
           "solidity",
           "0.5",
@@ -151,7 +151,7 @@
         "src": "0:22:21"
       },
       {
-        "id": 3323,
+        "id": 3317,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -162,10 +162,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/SafeMath.sol",
         "file": "../util/SafeMath.sol",
-        "id": 3324,
+        "id": 3318,
         "nodeType": "ImportDirective",
-        "scope": 3371,
-        "sourceUnit": 4965,
+        "scope": 3365,
+        "sourceUnit": 4994,
         "src": "58:30:21",
         "symbolAliases": [],
         "unitAlias": ""
@@ -173,10 +173,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
         "file": "../util/ZalarifyCommon.sol",
-        "id": 3325,
+        "id": 3319,
         "nodeType": "ImportDirective",
-        "scope": 3371,
-        "sourceUnit": 5027,
+        "scope": 3365,
+        "sourceUnit": 5056,
         "src": "89:36:21",
         "symbolAliases": [],
         "unitAlias": ""
@@ -184,10 +184,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/Bytes32ArrayLib.sol",
         "file": "../util/Bytes32ArrayLib.sol",
-        "id": 3326,
+        "id": 3320,
         "nodeType": "ImportDirective",
-        "scope": 3371,
-        "sourceUnit": 4867,
+        "scope": 3365,
+        "sourceUnit": 4861,
         "src": "126:37:21",
         "symbolAliases": [],
         "unitAlias": ""
@@ -198,31 +198,31 @@
         "contractKind": "contract",
         "documentation": "@title This is one of the main smart contract for the platform. This is the entry point to create companies.\n@notice It creates companies using a factory instance called IZalarifyCompanyFactory.\n@author Guillermo Salazar",
         "fullyImplemented": false,
-        "id": 3370,
+        "id": 3364,
         "linearizedBaseContracts": [
-          3370
+          3364
         ],
         "name": "IZalarify",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "id": 3329,
+            "id": 3323,
             "libraryName": {
               "contractScope": null,
-              "id": 3327,
+              "id": 3321,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4964,
+              "referencedDeclaration": 4993,
               "src": "437:8:21",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$4964",
+                "typeIdentifier": "t_contract$_SafeMath_$4993",
                 "typeString": "library SafeMath"
               }
             },
             "nodeType": "UsingForDirective",
             "src": "431:27:21",
             "typeName": {
-              "id": 3328,
+              "id": 3322,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "450:7:21",
@@ -233,16 +233,16 @@
             }
           },
           {
-            "id": 3333,
+            "id": 3327,
             "libraryName": {
               "contractScope": null,
-              "id": 3330,
+              "id": 3324,
               "name": "Bytes32ArrayLib",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4866,
+              "referencedDeclaration": 4860,
               "src": "469:15:21",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Bytes32ArrayLib_$4866",
+                "typeIdentifier": "t_contract$_Bytes32ArrayLib_$4860",
                 "typeString": "library Bytes32ArrayLib"
               }
             },
@@ -250,7 +250,7 @@
             "src": "463:36:21",
             "typeName": {
               "baseType": {
-                "id": 3331,
+                "id": 3325,
                 "name": "bytes32",
                 "nodeType": "ElementaryTypeName",
                 "src": "489:7:21",
@@ -259,7 +259,7 @@
                   "typeString": "bytes32"
                 }
               },
-              "id": 3332,
+              "id": 3326,
               "length": null,
               "nodeType": "ArrayTypeName",
               "src": "489:9:21",
@@ -272,20 +272,20 @@
           {
             "anonymous": false,
             "documentation": "@notice This event is emitted when a new company is created.\n@param thisContract this smart contract address.\n@param companyAddress the new company address created.\n@param createdAt the timestamp when company was created.\n@param creator who created the company.",
-            "id": 3343,
+            "id": 3337,
             "name": "NewCompanyCreated",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3342,
+              "id": 3336,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3335,
+                  "id": 3329,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3343,
+                  "scope": 3337,
                   "src": "875:28:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -294,7 +294,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3334,
+                    "id": 3328,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "875:7:21",
@@ -309,11 +309,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3337,
+                  "id": 3331,
                   "indexed": false,
                   "name": "companyAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3343,
+                  "scope": 3337,
                   "src": "913:22:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -322,7 +322,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3336,
+                    "id": 3330,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "913:7:21",
@@ -337,11 +337,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3339,
+                  "id": 3333,
                   "indexed": false,
                   "name": "createdAt",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3343,
+                  "scope": 3337,
                   "src": "945:14:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -350,7 +350,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3338,
+                    "id": 3332,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "945:4:21",
@@ -364,11 +364,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3341,
+                  "id": 3335,
                   "indexed": false,
                   "name": "creator",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3343,
+                  "scope": 3337,
                   "src": "969:15:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -377,7 +377,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3340,
+                    "id": 3334,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "969:7:21",
@@ -398,22 +398,22 @@
           {
             "body": null,
             "documentation": "@notice It creates a compamy in the platform.\n@dev It is created using a company factory.\n@param _id id associated to the company.\n@param _name name associated to the company.\n@param _website website URL associated to the company.\n@param _description description associated to the company.\n@return the new company address created.",
-            "id": 3356,
+            "id": 3350,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createCompany",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3352,
+              "id": 3346,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3345,
+                  "id": 3339,
                   "name": "_id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3356,
+                  "scope": 3350,
                   "src": "1445:11:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -422,7 +422,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3344,
+                    "id": 3338,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1445:7:21",
@@ -436,10 +436,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3347,
+                  "id": 3341,
                   "name": "_name",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3356,
+                  "scope": 3350,
                   "src": "1458:13:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -448,7 +448,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3346,
+                    "id": 3340,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1458:7:21",
@@ -462,10 +462,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3349,
+                  "id": 3343,
                   "name": "_website",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3356,
+                  "scope": 3350,
                   "src": "1473:16:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -474,7 +474,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3348,
+                    "id": 3342,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1473:7:21",
@@ -488,10 +488,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3351,
+                  "id": 3345,
                   "name": "_description",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3356,
+                  "scope": 3350,
                   "src": "1491:20:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -500,7 +500,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3350,
+                    "id": 3344,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1491:7:21",
@@ -516,15 +516,15 @@
               "src": "1444:68:21"
             },
             "returnParameters": {
-              "id": 3355,
+              "id": 3349,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3354,
+                  "id": 3348,
                   "name": "companyAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3356,
+                  "scope": 3350,
                   "src": "1531:22:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -533,7 +533,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3353,
+                    "id": 3347,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1531:7:21",
@@ -549,7 +549,7 @@
               ],
               "src": "1530:24:21"
             },
-            "scope": 3370,
+            "scope": 3364,
             "src": "1422:133:21",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -558,54 +558,54 @@
           {
             "body": null,
             "documentation": "@notice Get all the companies registered in the platform.\n@return a list of companies.",
-            "id": 3362,
+            "id": 3356,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getCompanies",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3357,
+              "id": 3351,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1701:2:21"
             },
             "returnParameters": {
-              "id": 3361,
+              "id": 3355,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3360,
+                  "id": 3354,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3362,
+                  "scope": 3356,
                   "src": "1725:31:21",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Company_$4984_memory_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Company_$5013_memory_$dyn_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Company[]"
                   },
                   "typeName": {
                     "baseType": {
                       "contractScope": null,
-                      "id": 3358,
+                      "id": 3352,
                       "name": "ZalarifyCommon.Company",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 4984,
+                      "referencedDeclaration": 5013,
                       "src": "1725:22:21",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Company_$4984_storage_ptr",
+                        "typeIdentifier": "t_struct$_Company_$5013_storage_ptr",
                         "typeString": "struct ZalarifyCommon.Company"
                       }
                     },
-                    "id": 3359,
+                    "id": 3353,
                     "length": null,
                     "nodeType": "ArrayTypeName",
                     "src": "1725:24:21",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Company_$4984_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Company_$5013_storage_$dyn_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Company[]"
                     }
                   },
@@ -615,7 +615,7 @@
               ],
               "src": "1724:33:21"
             },
-            "scope": 3370,
+            "scope": 3364,
             "src": "1680:78:21",
             "stateMutability": "view",
             "superFunction": null,
@@ -624,22 +624,22 @@
           {
             "body": null,
             "documentation": "@notice It gets the company address associated to a specific id.\n@return the company address for a specific id.",
-            "id": 3369,
+            "id": 3363,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getCompany",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3365,
+              "id": 3359,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3364,
+                  "id": 3358,
                   "name": "_id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3369,
+                  "scope": 3363,
                   "src": "1928:11:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -648,7 +648,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3363,
+                    "id": 3357,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1928:7:21",
@@ -664,15 +664,15 @@
               "src": "1927:13:21"
             },
             "returnParameters": {
-              "id": 3368,
+              "id": 3362,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3367,
+                  "id": 3361,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3369,
+                  "scope": 3363,
                   "src": "1962:7:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -681,7 +681,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3366,
+                    "id": 3360,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1962:7:21",
@@ -697,14 +697,14 @@
               ],
               "src": "1961:9:21"
             },
-            "scope": 3370,
+            "scope": 3364,
             "src": "1908:63:21",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 3371,
+        "scope": 3365,
         "src": "406:1567:21"
       }
     ],
@@ -714,14 +714,14 @@
     "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IZalarify.sol",
     "exportedSymbols": {
       "IZalarify": [
-        3370
+        3364
       ]
     },
-    "id": 3371,
+    "id": 3365,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3322,
+        "id": 3316,
         "literals": [
           "solidity",
           "0.5",
@@ -731,7 +731,7 @@
         "src": "0:22:21"
       },
       {
-        "id": 3323,
+        "id": 3317,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -742,10 +742,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/SafeMath.sol",
         "file": "../util/SafeMath.sol",
-        "id": 3324,
+        "id": 3318,
         "nodeType": "ImportDirective",
-        "scope": 3371,
-        "sourceUnit": 4965,
+        "scope": 3365,
+        "sourceUnit": 4994,
         "src": "58:30:21",
         "symbolAliases": [],
         "unitAlias": ""
@@ -753,10 +753,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
         "file": "../util/ZalarifyCommon.sol",
-        "id": 3325,
+        "id": 3319,
         "nodeType": "ImportDirective",
-        "scope": 3371,
-        "sourceUnit": 5027,
+        "scope": 3365,
+        "sourceUnit": 5056,
         "src": "89:36:21",
         "symbolAliases": [],
         "unitAlias": ""
@@ -764,10 +764,10 @@
       {
         "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/Bytes32ArrayLib.sol",
         "file": "../util/Bytes32ArrayLib.sol",
-        "id": 3326,
+        "id": 3320,
         "nodeType": "ImportDirective",
-        "scope": 3371,
-        "sourceUnit": 4867,
+        "scope": 3365,
+        "sourceUnit": 4861,
         "src": "126:37:21",
         "symbolAliases": [],
         "unitAlias": ""
@@ -778,31 +778,31 @@
         "contractKind": "contract",
         "documentation": "@title This is one of the main smart contract for the platform. This is the entry point to create companies.\n@notice It creates companies using a factory instance called IZalarifyCompanyFactory.\n@author Guillermo Salazar",
         "fullyImplemented": false,
-        "id": 3370,
+        "id": 3364,
         "linearizedBaseContracts": [
-          3370
+          3364
         ],
         "name": "IZalarify",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "id": 3329,
+            "id": 3323,
             "libraryName": {
               "contractScope": null,
-              "id": 3327,
+              "id": 3321,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4964,
+              "referencedDeclaration": 4993,
               "src": "437:8:21",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$4964",
+                "typeIdentifier": "t_contract$_SafeMath_$4993",
                 "typeString": "library SafeMath"
               }
             },
             "nodeType": "UsingForDirective",
             "src": "431:27:21",
             "typeName": {
-              "id": 3328,
+              "id": 3322,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "450:7:21",
@@ -813,16 +813,16 @@
             }
           },
           {
-            "id": 3333,
+            "id": 3327,
             "libraryName": {
               "contractScope": null,
-              "id": 3330,
+              "id": 3324,
               "name": "Bytes32ArrayLib",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4866,
+              "referencedDeclaration": 4860,
               "src": "469:15:21",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Bytes32ArrayLib_$4866",
+                "typeIdentifier": "t_contract$_Bytes32ArrayLib_$4860",
                 "typeString": "library Bytes32ArrayLib"
               }
             },
@@ -830,7 +830,7 @@
             "src": "463:36:21",
             "typeName": {
               "baseType": {
-                "id": 3331,
+                "id": 3325,
                 "name": "bytes32",
                 "nodeType": "ElementaryTypeName",
                 "src": "489:7:21",
@@ -839,7 +839,7 @@
                   "typeString": "bytes32"
                 }
               },
-              "id": 3332,
+              "id": 3326,
               "length": null,
               "nodeType": "ArrayTypeName",
               "src": "489:9:21",
@@ -852,20 +852,20 @@
           {
             "anonymous": false,
             "documentation": "@notice This event is emitted when a new company is created.\n@param thisContract this smart contract address.\n@param companyAddress the new company address created.\n@param createdAt the timestamp when company was created.\n@param creator who created the company.",
-            "id": 3343,
+            "id": 3337,
             "name": "NewCompanyCreated",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3342,
+              "id": 3336,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3335,
+                  "id": 3329,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3343,
+                  "scope": 3337,
                   "src": "875:28:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -874,7 +874,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3334,
+                    "id": 3328,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "875:7:21",
@@ -889,11 +889,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3337,
+                  "id": 3331,
                   "indexed": false,
                   "name": "companyAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3343,
+                  "scope": 3337,
                   "src": "913:22:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -902,7 +902,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3336,
+                    "id": 3330,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "913:7:21",
@@ -917,11 +917,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3339,
+                  "id": 3333,
                   "indexed": false,
                   "name": "createdAt",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3343,
+                  "scope": 3337,
                   "src": "945:14:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -930,7 +930,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3338,
+                    "id": 3332,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "945:4:21",
@@ -944,11 +944,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3341,
+                  "id": 3335,
                   "indexed": false,
                   "name": "creator",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3343,
+                  "scope": 3337,
                   "src": "969:15:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -957,7 +957,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3340,
+                    "id": 3334,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "969:7:21",
@@ -978,22 +978,22 @@
           {
             "body": null,
             "documentation": "@notice It creates a compamy in the platform.\n@dev It is created using a company factory.\n@param _id id associated to the company.\n@param _name name associated to the company.\n@param _website website URL associated to the company.\n@param _description description associated to the company.\n@return the new company address created.",
-            "id": 3356,
+            "id": 3350,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createCompany",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3352,
+              "id": 3346,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3345,
+                  "id": 3339,
                   "name": "_id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3356,
+                  "scope": 3350,
                   "src": "1445:11:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1002,7 +1002,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3344,
+                    "id": 3338,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1445:7:21",
@@ -1016,10 +1016,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3347,
+                  "id": 3341,
                   "name": "_name",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3356,
+                  "scope": 3350,
                   "src": "1458:13:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1028,7 +1028,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3346,
+                    "id": 3340,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1458:7:21",
@@ -1042,10 +1042,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3349,
+                  "id": 3343,
                   "name": "_website",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3356,
+                  "scope": 3350,
                   "src": "1473:16:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1054,7 +1054,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3348,
+                    "id": 3342,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1473:7:21",
@@ -1068,10 +1068,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 3351,
+                  "id": 3345,
                   "name": "_description",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3356,
+                  "scope": 3350,
                   "src": "1491:20:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1080,7 +1080,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3350,
+                    "id": 3344,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1491:7:21",
@@ -1096,15 +1096,15 @@
               "src": "1444:68:21"
             },
             "returnParameters": {
-              "id": 3355,
+              "id": 3349,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3354,
+                  "id": 3348,
                   "name": "companyAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3356,
+                  "scope": 3350,
                   "src": "1531:22:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1113,7 +1113,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3353,
+                    "id": 3347,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1531:7:21",
@@ -1129,7 +1129,7 @@
               ],
               "src": "1530:24:21"
             },
-            "scope": 3370,
+            "scope": 3364,
             "src": "1422:133:21",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1138,54 +1138,54 @@
           {
             "body": null,
             "documentation": "@notice Get all the companies registered in the platform.\n@return a list of companies.",
-            "id": 3362,
+            "id": 3356,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getCompanies",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3357,
+              "id": 3351,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1701:2:21"
             },
             "returnParameters": {
-              "id": 3361,
+              "id": 3355,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3360,
+                  "id": 3354,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3362,
+                  "scope": 3356,
                   "src": "1725:31:21",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Company_$4984_memory_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Company_$5013_memory_$dyn_memory_ptr",
                     "typeString": "struct ZalarifyCommon.Company[]"
                   },
                   "typeName": {
                     "baseType": {
                       "contractScope": null,
-                      "id": 3358,
+                      "id": 3352,
                       "name": "ZalarifyCommon.Company",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 4984,
+                      "referencedDeclaration": 5013,
                       "src": "1725:22:21",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Company_$4984_storage_ptr",
+                        "typeIdentifier": "t_struct$_Company_$5013_storage_ptr",
                         "typeString": "struct ZalarifyCommon.Company"
                       }
                     },
-                    "id": 3359,
+                    "id": 3353,
                     "length": null,
                     "nodeType": "ArrayTypeName",
                     "src": "1725:24:21",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Company_$4984_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Company_$5013_storage_$dyn_storage_ptr",
                       "typeString": "struct ZalarifyCommon.Company[]"
                     }
                   },
@@ -1195,7 +1195,7 @@
               ],
               "src": "1724:33:21"
             },
-            "scope": 3370,
+            "scope": 3364,
             "src": "1680:78:21",
             "stateMutability": "view",
             "superFunction": null,
@@ -1204,22 +1204,22 @@
           {
             "body": null,
             "documentation": "@notice It gets the company address associated to a specific id.\n@return the company address for a specific id.",
-            "id": 3369,
+            "id": 3363,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getCompany",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3365,
+              "id": 3359,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3364,
+                  "id": 3358,
                   "name": "_id",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3369,
+                  "scope": 3363,
                   "src": "1928:11:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1228,7 +1228,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 3363,
+                    "id": 3357,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1928:7:21",
@@ -1244,15 +1244,15 @@
               "src": "1927:13:21"
             },
             "returnParameters": {
-              "id": 3368,
+              "id": 3362,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3367,
+                  "id": 3361,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3369,
+                  "scope": 3363,
                   "src": "1962:7:21",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1261,7 +1261,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3366,
+                    "id": 3360,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1962:7:21",
@@ -1277,14 +1277,14 @@
               ],
               "src": "1961:9:21"
             },
-            "scope": 3370,
+            "scope": 3364,
             "src": "1908:63:21",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 3371,
+        "scope": 3365,
         "src": "406:1567:21"
       }
     ],
@@ -1296,7 +1296,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.9",
-  "updatedAt": "2019-07-19T15:49:23.790Z",
+  "updatedAt": "2019-07-24T18:24:32.073Z",
   "devdoc": {
     "author": "Guillermo Salazar",
     "methods": {

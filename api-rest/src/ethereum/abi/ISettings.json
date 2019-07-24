@@ -99,14 +99,14 @@
     "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/ISettings.sol",
     "exportedSymbols": {
       "ISettings": [
-        3100
+        3094
       ]
     },
-    "id": 3101,
+    "id": 3095,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3068,
+        "id": 3062,
         "literals": [
           "solidity",
           "0.5",
@@ -121,9 +121,9 @@
         "contractKind": "interface",
         "documentation": "@notice This is an abstraction for the settings in the platform.\n@author Guillermo Salazar.",
         "fullyImplemented": false,
-        "id": 3100,
+        "id": 3094,
         "linearizedBaseContracts": [
-          3100
+          3094
         ],
         "name": "ISettings",
         "nodeType": "ContractDefinition",
@@ -131,20 +131,20 @@
           {
             "anonymous": false,
             "documentation": "@notice This event is emitted when the platform is paused due to maintenance reasons.",
-            "id": 3074,
+            "id": 3068,
             "name": "PlatformPaused",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3073,
+              "id": 3067,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3070,
+                  "id": 3064,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3074,
+                  "scope": 3068,
                   "src": "323:28:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -153,7 +153,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3069,
+                    "id": 3063,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "323:7:17",
@@ -168,11 +168,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3072,
+                  "id": 3066,
                   "indexed": false,
                   "name": "reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3074,
+                  "scope": 3068,
                   "src": "361:13:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -181,7 +181,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3071,
+                    "id": 3065,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "361:6:17",
@@ -201,20 +201,20 @@
           {
             "anonymous": false,
             "documentation": "@notice This event is emitted when the platform is unpaused.",
-            "id": 3080,
+            "id": 3074,
             "name": "PlatformUnpaused",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3079,
+              "id": 3073,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3076,
+                  "id": 3070,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3080,
+                  "scope": 3074,
                   "src": "505:28:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -223,7 +223,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3075,
+                    "id": 3069,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "505:7:17",
@@ -238,11 +238,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3078,
+                  "id": 3072,
                   "indexed": false,
                   "name": "reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3080,
+                  "scope": 3074,
                   "src": "543:13:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -251,7 +251,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3077,
+                    "id": 3071,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "543:6:17",
@@ -271,22 +271,22 @@
           {
             "body": null,
             "documentation": "@notice It pauses the platform in emergency cases.\n@dev The sender must be a super user (owner or admin) only.\n@param _reason the reason why the platform is being paused.",
-            "id": 3087,
+            "id": 3081,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "pausePlatform",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3083,
+              "id": 3077,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3082,
+                  "id": 3076,
                   "name": "_reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3087,
+                  "scope": 3081,
                   "src": "826:23:17",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -295,7 +295,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3081,
+                    "id": 3075,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "826:6:17",
@@ -311,15 +311,15 @@
               "src": "825:25:17"
             },
             "returnParameters": {
-              "id": 3086,
+              "id": 3080,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3085,
+                  "id": 3079,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3087,
+                  "scope": 3081,
                   "src": "869:4:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -328,7 +328,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3084,
+                    "id": 3078,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "869:4:17",
@@ -343,7 +343,7 @@
               ],
               "src": "868:6:17"
             },
-            "scope": 3100,
+            "scope": 3094,
             "src": "803:72:17",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -352,22 +352,22 @@
           {
             "body": null,
             "documentation": "@notice It unpauses the platform in when an emergency issue was fixed.\n@dev The sender must be a super user (owner or admin) only.\n@param _reason the reason why the platform is being unpaused.",
-            "id": 3094,
+            "id": 3088,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "unpausePlatform",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3090,
+              "id": 3084,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3089,
+                  "id": 3083,
                   "name": "_reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3094,
+                  "scope": 3088,
                   "src": "1140:23:17",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -376,7 +376,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3088,
+                    "id": 3082,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1140:6:17",
@@ -392,15 +392,15 @@
               "src": "1139:25:17"
             },
             "returnParameters": {
-              "id": 3093,
+              "id": 3087,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3092,
+                  "id": 3086,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3094,
+                  "scope": 3088,
                   "src": "1183:4:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -409,7 +409,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3091,
+                    "id": 3085,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1183:4:17",
@@ -424,7 +424,7 @@
               ],
               "src": "1182:6:17"
             },
-            "scope": 3100,
+            "scope": 3094,
             "src": "1115:74:17",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -433,28 +433,28 @@
           {
             "body": null,
             "documentation": "@notice It gets whether the platform is paused or not.\n@return true if the platform is paused. Otherwise it returns false.",
-            "id": 3099,
+            "id": 3093,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "isPlatformPaused",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3095,
+              "id": 3089,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1375:2:17"
             },
             "returnParameters": {
-              "id": 3098,
+              "id": 3092,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3097,
+                  "id": 3091,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3099,
+                  "scope": 3093,
                   "src": "1401:4:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -463,7 +463,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3096,
+                    "id": 3090,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1401:4:17",
@@ -478,14 +478,14 @@
               ],
               "src": "1400:6:17"
             },
-            "scope": 3100,
+            "scope": 3094,
             "src": "1350:57:17",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 3101,
+        "scope": 3095,
         "src": "132:1278:17"
       }
     ],
@@ -495,14 +495,14 @@
     "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/ISettings.sol",
     "exportedSymbols": {
       "ISettings": [
-        3100
+        3094
       ]
     },
-    "id": 3101,
+    "id": 3095,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3068,
+        "id": 3062,
         "literals": [
           "solidity",
           "0.5",
@@ -517,9 +517,9 @@
         "contractKind": "interface",
         "documentation": "@notice This is an abstraction for the settings in the platform.\n@author Guillermo Salazar.",
         "fullyImplemented": false,
-        "id": 3100,
+        "id": 3094,
         "linearizedBaseContracts": [
-          3100
+          3094
         ],
         "name": "ISettings",
         "nodeType": "ContractDefinition",
@@ -527,20 +527,20 @@
           {
             "anonymous": false,
             "documentation": "@notice This event is emitted when the platform is paused due to maintenance reasons.",
-            "id": 3074,
+            "id": 3068,
             "name": "PlatformPaused",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3073,
+              "id": 3067,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3070,
+                  "id": 3064,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3074,
+                  "scope": 3068,
                   "src": "323:28:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -549,7 +549,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3069,
+                    "id": 3063,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "323:7:17",
@@ -564,11 +564,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3072,
+                  "id": 3066,
                   "indexed": false,
                   "name": "reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3074,
+                  "scope": 3068,
                   "src": "361:13:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -577,7 +577,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3071,
+                    "id": 3065,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "361:6:17",
@@ -597,20 +597,20 @@
           {
             "anonymous": false,
             "documentation": "@notice This event is emitted when the platform is unpaused.",
-            "id": 3080,
+            "id": 3074,
             "name": "PlatformUnpaused",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 3079,
+              "id": 3073,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3076,
+                  "id": 3070,
                   "indexed": true,
                   "name": "thisContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3080,
+                  "scope": 3074,
                   "src": "505:28:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -619,7 +619,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3075,
+                    "id": 3069,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "505:7:17",
@@ -634,11 +634,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3078,
+                  "id": 3072,
                   "indexed": false,
                   "name": "reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3080,
+                  "scope": 3074,
                   "src": "543:13:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -647,7 +647,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3077,
+                    "id": 3071,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "543:6:17",
@@ -667,22 +667,22 @@
           {
             "body": null,
             "documentation": "@notice It pauses the platform in emergency cases.\n@dev The sender must be a super user (owner or admin) only.\n@param _reason the reason why the platform is being paused.",
-            "id": 3087,
+            "id": 3081,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "pausePlatform",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3083,
+              "id": 3077,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3082,
+                  "id": 3076,
                   "name": "_reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3087,
+                  "scope": 3081,
                   "src": "826:23:17",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -691,7 +691,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3081,
+                    "id": 3075,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "826:6:17",
@@ -707,15 +707,15 @@
               "src": "825:25:17"
             },
             "returnParameters": {
-              "id": 3086,
+              "id": 3080,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3085,
+                  "id": 3079,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3087,
+                  "scope": 3081,
                   "src": "869:4:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -724,7 +724,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3084,
+                    "id": 3078,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "869:4:17",
@@ -739,7 +739,7 @@
               ],
               "src": "868:6:17"
             },
-            "scope": 3100,
+            "scope": 3094,
             "src": "803:72:17",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -748,22 +748,22 @@
           {
             "body": null,
             "documentation": "@notice It unpauses the platform in when an emergency issue was fixed.\n@dev The sender must be a super user (owner or admin) only.\n@param _reason the reason why the platform is being unpaused.",
-            "id": 3094,
+            "id": 3088,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "unpausePlatform",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3090,
+              "id": 3084,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3089,
+                  "id": 3083,
                   "name": "_reason",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3094,
+                  "scope": 3088,
                   "src": "1140:23:17",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -772,7 +772,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3088,
+                    "id": 3082,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1140:6:17",
@@ -788,15 +788,15 @@
               "src": "1139:25:17"
             },
             "returnParameters": {
-              "id": 3093,
+              "id": 3087,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3092,
+                  "id": 3086,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3094,
+                  "scope": 3088,
                   "src": "1183:4:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -805,7 +805,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3091,
+                    "id": 3085,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1183:4:17",
@@ -820,7 +820,7 @@
               ],
               "src": "1182:6:17"
             },
-            "scope": 3100,
+            "scope": 3094,
             "src": "1115:74:17",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -829,28 +829,28 @@
           {
             "body": null,
             "documentation": "@notice It gets whether the platform is paused or not.\n@return true if the platform is paused. Otherwise it returns false.",
-            "id": 3099,
+            "id": 3093,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "isPlatformPaused",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3095,
+              "id": 3089,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1375:2:17"
             },
             "returnParameters": {
-              "id": 3098,
+              "id": 3092,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3097,
+                  "id": 3091,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3099,
+                  "scope": 3093,
                   "src": "1401:4:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -859,7 +859,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 3096,
+                    "id": 3090,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1401:4:17",
@@ -874,14 +874,14 @@
               ],
               "src": "1400:6:17"
             },
-            "scope": 3100,
+            "scope": 3094,
             "src": "1350:57:17",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 3101,
+        "scope": 3095,
         "src": "132:1278:17"
       }
     ],
@@ -893,7 +893,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.9",
-  "updatedAt": "2019-07-19T15:49:23.784Z",
+  "updatedAt": "2019-07-24T18:24:32.069Z",
   "devdoc": {
     "author": "Guillermo Salazar.",
     "methods": {

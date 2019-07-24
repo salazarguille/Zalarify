@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/styles';
 import React from 'react';
 import axios from 'axios';
-import { Flex, Text, Icon, EthAddress, Tooltip } from 'rimble-ui';
+import { Flex, Text, EthAddress, Tooltip } from 'rimble-ui';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import CardInfo from '../common/CardInfo';
 

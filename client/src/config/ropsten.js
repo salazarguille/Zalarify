@@ -26,7 +26,7 @@ export const config = {
             {
                 name: 'IZalarify',
                 abi: IZalarify,
-                address: '0x34fEC398d86e10d266153DaC9E3e38845182a6F7'
+                address: '0x89F03b7C3C87d39Fd89Af82F210DfBFB0B48FF58'
             },
             {
                 name: 'IZalarifyCompany',
@@ -36,7 +36,7 @@ export const config = {
             {
                 name: 'IReceiptRegistry',
                 abi: IReceiptRegistry,
-                address: '0xB245dF8eF71839d84D06a87206aC54Cb4034511d'
+                address: '0xeA847b506999639d451C38a8a3F01F9251C6FCa8'
             },
             {
                 name: 'IStablePay',

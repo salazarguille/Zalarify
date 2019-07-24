@@ -82,7 +82,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const { info } = this.props;
+        const { info, config } = this.props;
         return (
             <Flex
                 width={1}
@@ -123,16 +123,28 @@ class Header extends React.Component {
                                 <Icon color="white" name="Pageview" size="24px" onClick={ e => this.onClickSeeWallet(info.selectedAddress)}/>
                             </Tooltip>
                         </Flex>
-                        <Tooltip message={`Your current balance is: ${info.selectedAddressBalance.balanceWei} WEI`}>
-                            <Text
-                                fontFamily="Fjalla One"
-                                fontSize="15px"
-                                color="white"
-                                textAlign="center"
-                                height={'100%'} verticalAlign="middle">
-                                {BigNumber(info.selectedAddressBalance.balanceEther).toFixed(2)} ETH
-                            </Text>
-                        </Tooltip>
+                        <Flex flexDirection="row" justifyContent="center" height={'100%'} p="1">
+                            <Tooltip message={`Your current networ is: ${config.name}`}>
+                                <Text
+                                    fontFamily="Fjalla One"
+                                    fontSize="15px"
+                                    color="white"
+                                    textAlign="center"
+                                    height={'100%'} verticalAlign="middle">
+                                    {config.name} - 
+                                </Text>
+                            </Tooltip>
+                            <Tooltip message={`Your current balance is: ${info.selectedAddressBalance.balanceWei} WEI`}>
+                                <Text
+                                    fontFamily="Fjalla One"
+                                    fontSize="15px"
+                                    color="white"
+                                    textAlign="center"
+                                    height={'100%'} verticalAlign="middle">
+                                    {BigNumber(info.selectedAddressBalance.balanceEther).toFixed(2)} ETH
+                                </Text>
+                            </Tooltip>
+                        </Flex>
                     </Flex>
                 </Flex>
 			</Flex>

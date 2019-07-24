@@ -4,7 +4,6 @@ import "../interface/IStorage.sol";
 import "../interface/IVault.sol";
 import "../interface/ISettings.sol";
 import "../interface/IZalarifyCompanyFactory.sol";
-import "../util/ZalarifyCommon.sol";
 
 /**
     @title It is the base smart contract for the Zalarify platform.

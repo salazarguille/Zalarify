@@ -4,17 +4,13 @@
   "description": "This is the official repository of the Zalarify platform.",
   "main": "truffle.js",
   "scripts": {
-    "verify:ropsten": "truffle run verify Role Settings Storage Upgrade Vault ZalarifyBase ZalarifyCompanyFactory --network infuraRopsten",
-
+    "verify:ropsten": "truffle run verify AddressArrayLib Storage ZalarifyCommon ReceiptRegistry ZalarifyCompanyFactory Settings Upgrade Role Vault Zalarify ZalarifyBase --network infuraRopsten",
     "init:ganache": "truffle exec ./scripts/createCompanies.js --network ganache",
     "init:ropsten": "truffle exec ./scripts/createCompanies.js --network infuraRopsten",
-
-    "deploy:ganache": "npm run test && truffle migrate --reset --network ganache",
+    "deploy:ganache": "npm run test && truffle migrate --network ganache",
     "deploy:ropsten": "npm run test && truffle migrate --reset --all --network infuraRopsten",
-
     "test": "truffle test",
     "test:coverage": "scripts/coverage.sh",
-
     "start:ganache": "ganache-cli --db ./db --accounts 10 --mnemonic 'gesture rather obey video awake genuine patient base soon parrot upset lounge' --networkId 5777 --debug",
     "start:api-rest": "npm run --prefix api-rest dev",
     "start:client": "npm run --prefix client start",
@@ -79,7 +75,7 @@
     "truffle-assertions": "^0.8.0",
     "truffle-hdwallet-provider": "^1.0.2",
     "coveralls": "^3.0.2",
-    "ethereumjs-testrpc": "^6.0.3",
-    "truffle-plugin-verify": "^0.3.1"
+    "ethereumjs-testrpc-sc": "6.4.5-sc.3",
+    "truffle-plugin-verify": "katat/truffle-plugin-verify"
   }
 }
