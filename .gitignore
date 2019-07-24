@@ -5,7 +5,7 @@ tslint.json
 yarn.lock
 .idea
 .vscode
-coverage/
+/coverage
 coverageEnv/
 coverage.json
 /.soliumignore
@@ -17,3 +17,4 @@ resources/**/
 .DS_Store
 resources/.DS_Store
 client/design
+ignored_files/
