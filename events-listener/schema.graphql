@@ -1,0 +1,76 @@
+type NewCompanyCreated @entity {
+  id: ID!
+  thisContract: Bytes! # address
+  companyAddress: Bytes! # address
+  createdAt: BigInt! # uint256
+  creator: Bytes! # address
+
+  blockTimestamp: BigInt! # uint256
+  blockHash: Bytes!
+  blockGasLimit: BigInt!
+  blockGasUsed: BigInt!
+  blockNumber: BigInt!
+  
+  txInput: Bytes!
+  txValue: BigInt!
+  txGasPrice: BigInt!
+  txGasUsed: BigInt!
+  txHash: Bytes!
+}
+
+type NewReceiptCreated @entity {
+  id: ID!
+  thisContract: Bytes! # address
+  company: Bytes! # address
+  employee: Bytes! # address
+  receiptHash: String!
+  path: String!
+
+  blockTimestamp: BigInt! # uint256
+  blockHash: Bytes!
+  blockGasLimit: BigInt!
+  blockGasUsed: BigInt!
+  blockNumber: BigInt!
+  
+  txInput: Bytes!
+  txValue: BigInt!
+  txGasPrice: BigInt!
+  txGasUsed: BigInt!
+  txHash: Bytes!
+}
+
+type PlatformPaused @entity {
+  id: ID!
+  thisContract: Bytes! # address
+  reason: String!
+
+  blockTimestamp: BigInt! # uint256
+  blockHash: Bytes!
+  blockGasLimit: BigInt!
+  blockGasUsed: BigInt!
+  blockNumber: BigInt!
+  
+  txInput: Bytes!
+  txValue: BigInt!
+  txGasPrice: BigInt!
+  txGasUsed: BigInt!
+  txHash: Bytes!
+}
+
+type PlatformUnpaused @entity {
+  id: ID!
+  thisContract: Bytes! # address
+  reason: String!
+
+  blockTimestamp: BigInt! # uint256
+  blockHash: Bytes!
+  blockGasLimit: BigInt!
+  blockGasUsed: BigInt!
+  blockNumber: BigInt!
+  
+  txInput: Bytes!
+  txValue: BigInt!
+  txGasPrice: BigInt!
+  txGasUsed: BigInt!
+  txHash: Bytes!
+}

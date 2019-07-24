@@ -119,6 +119,11 @@ class Integration extends React.Component {
         win.focus();
     }
 
+    onClickTheGraph = () => {
+        var win = window.open(`https://thegraph.com`, '_blank');
+        win.focus();
+    }
+
     onClickIPFS = () => {
         var win = window.open(`https://en.wikipedia.org/wiki/InterPlanetary_File_System`, '_blank');
         win.focus();
@@ -165,6 +170,22 @@ class Integration extends React.Component {
                             </Text>
                             <Text width={1} p={'0'} mr={4} textAlign="center" fontSize="20px">
                             Zalarify uses StablePay to transfer the payrolls to the employees. The employees usually prefer to get the payrolls using a stable coin (like DAI), but Zalarify allows to the company owner can pay with any ERC20 token (supported by StablePay and its swapping providers).
+                            </Text>
+                        </CardInfo>
+                    </Flex>
+                    <Flex width={1}>
+                        <CardInfo
+                            width={1}
+                            title="The Graph"
+                            primaryText="The Graph Website"
+                            primaryTooltip="Visit The Graph Website."
+                            onPrimaryClick={this.onClickTheGraph}
+                            >
+                            <Text width={1} p={'0'} mr={4} textAlign="center" fontSize="20px">
+                            On The Graph, queries are processed on a decentralized network that ensures that data remains open and that dApps continue to run no matter what. Users don’t have to trust teams to operate servers and developers can deploy to trustworthy public infrastructure they don’t have to manage.
+                            </Text>
+                            <Text width={1} p={'0'} mr={4} textAlign="center" fontSize="20px">
+                            Zalarify uses TheGraph to get smart contract events and display event, transaction and block information. See details in the Events menu.
                             </Text>
                         </CardInfo>
                     </Flex>

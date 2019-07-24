@@ -140,7 +140,7 @@ class WithWeb3 extends Component {
             return <Web3Loading size={size} />;
         }
 
-        if (!isWeb3Injected) {
+        if (!isWeb3Injected || web3 === undefined) {
             // Metamask not installed.
             return <AccountUnavailable onClick={this.connectWeb3} size={size}>
                     Connect to Metamask

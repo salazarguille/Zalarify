@@ -1,0 +1,2289 @@
+{
+  "contractName": "IZalarify",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "thisContract",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "companyAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "createdAt",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "creator",
+          "type": "address"
+        }
+      ],
+      "name": "NewCompanyCreated",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_id",
+          "type": "bytes32"
+        },
+        {
+          "name": "_name",
+          "type": "bytes32"
+        },
+        {
+          "name": "_website",
+          "type": "bytes32"
+        },
+        {
+          "name": "_description",
+          "type": "bytes32"
+        }
+      ],
+      "name": "createCompany",
+      "outputs": [
+        {
+          "name": "companyAddress",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getCompany",
+      "outputs": [
+        {
+          "components": [
+            {
+              "name": "id",
+              "type": "bytes32"
+            },
+            {
+              "name": "name",
+              "type": "bytes32"
+            },
+            {
+              "name": "description",
+              "type": "bytes32"
+            },
+            {
+              "name": "website",
+              "type": "bytes32"
+            },
+            {
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "name": "createdAt",
+              "type": "uint256"
+            },
+            {
+              "name": "paused",
+              "type": "bool"
+            }
+          ],
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getCompany",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity 0.5.3;\npragma experimental ABIEncoderV2;\n\nimport \"../util/SafeMath.sol\";\nimport \"../util/ZalarifyCommon.sol\";\nimport \"../util/Bytes32ArrayLib.sol\";\n\n/**\n    @title This is one of the main smart contract for the platform. This is the entry point to create companies.\n    @notice It creates companies using a factory instance called IZalarifyCompanyFactory.\n    @author Guillermo Salazar\n */\ncontract IZalarify {\n    using SafeMath for uint256;\n    using Bytes32ArrayLib for bytes32[];\n\n    /** Events */\n\n    /**\n        @notice This event is emitted when a new company is created.\n        @param thisContract this smart contract address.\n        @param companyAddress the new company address created.\n        @param createdAt the timestamp when company was created.\n        @param creator who created the company.\n     */\n    event NewCompanyCreated(\n        address indexed thisContract,\n        address companyAddress,\n        uint createdAt,\n        address creator\n    );\n\n    /** Functions */\n\n    /**\n        @notice It creates a compamy in the platform.\n        @dev It is created using a company factory.\n        @param _id id associated to the company.\n        @param _name name associated to the company.\n        @param _website website URL associated to the company.\n        @param _description description associated to the company.\n        @return the new company address created.\n     */\n    function createCompany(bytes32 _id, bytes32 _name, bytes32 _website, bytes32 _description) external returns (address companyAddress);\n\n    /**\n        @notice Get all the companies registered in the platform.\n        @return a list of companies.\n     */\n    //function getCompanies() public view returns (ZalarifyCommon.Company[] memory);\n\n    /**\n        @notice It gets the company address associated to a specific id.\n        @return the company address for a specific id.\n     */\n    function getCompany(bytes32 _id) public view returns (address);\n}",
+  "sourcePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IZalarify.sol",
+  "ast": {
+    "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IZalarify.sol",
+    "exportedSymbols": {
+      "IZalarify": [
+        3364
+      ]
+    },
+    "id": 3365,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3322,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".3"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:21"
+      },
+      {
+        "id": 3323,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "23:33:21"
+      },
+      {
+        "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/SafeMath.sol",
+        "file": "../util/SafeMath.sol",
+        "id": 3324,
+        "nodeType": "ImportDirective",
+        "scope": 3365,
+        "sourceUnit": 4994,
+        "src": "58:30:21",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
+        "file": "../util/ZalarifyCommon.sol",
+        "id": 3325,
+        "nodeType": "ImportDirective",
+        "scope": 3365,
+        "sourceUnit": 5056,
+        "src": "89:36:21",
+        "symbolAliases": [],
+        "unitAlias": "",
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title This is one of the main smart contract for the platform. This is the entry point to create companies.\n@notice It creates companies using a factory instance called IZalarifyCompanyFactory.\n@author Guillermo Salazar",
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          3378
+        ],
+        "name": "IZalarify",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@notice This event is emitted when a new company is created.\n@param thisContract this smart contract address.\n@param companyAddress the new company address created.\n@param createdAt the timestamp when company was created.\n@param creator who created the company.",
+            "id": 3351,
+            "name": "NewCompanyCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3350,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3343,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3351,
+                  "src": "885:28:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3342,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "885:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3345,
+                  "indexed": false,
+                  "name": "companyAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3351,
+                  "src": "923:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3344,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "923:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3347,
+                  "indexed": false,
+                  "name": "createdAt",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3351,
+                  "src": "955:14:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3346,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "955:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3349,
+                  "indexed": false,
+                  "name": "creator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3351,
+                  "src": "979:15:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3348,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "979:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "875:125:21"
+            },
+            "src": "852:149:21"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It creates a compamy in the platform.\n@dev It is created using a company factory.\n@param _id id associated to the company.\n@param _name name associated to the company.\n@param _website website URL associated to the company.\n@param _description description associated to the company.\n@return the new company address created.",
+            "id": 3364,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createCompany",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3360,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3353,
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3364,
+                  "src": "1455:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3352,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1455:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3355,
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3364,
+                  "src": "1468:13:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3354,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1468:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3357,
+                  "name": "_website",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3364,
+                  "src": "1483:16:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3356,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1483:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3359,
+                  "name": "_description",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3364,
+                  "src": "1501:20:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3358,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1501:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1454:68:21"
+            },
+            "returnParameters": {
+              "id": 3363,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3362,
+                  "name": "companyAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3364,
+                  "src": "1541:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3361,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1541:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1540:24:21"
+            },
+            "scope": 3378,
+            "src": "1432:133:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@notice Get all the companies registered in the platform.\n@return a list of companies.",
+            "id": 3370,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCompanies",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3365,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1711:2:21"
+            },
+            "returnParameters": {
+              "id": 3369,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3368,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3370,
+                  "src": "1735:31:21",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_Company_$5027_memory_$dyn_memory_ptr",
+                    "typeString": "struct ZalarifyCommon.Company[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "contractScope": null,
+                      "id": 3366,
+                      "name": "ZalarifyCommon.Company",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 5027,
+                      "src": "1735:22:21",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Company_$5027_storage_ptr",
+                        "typeString": "struct ZalarifyCommon.Company"
+                      }
+                    },
+                    "id": 3367,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1735:24:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_Company_$5027_storage_$dyn_storage_ptr",
+                      "typeString": "struct ZalarifyCommon.Company[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1734:33:21"
+            },
+            "scope": 3378,
+            "src": "1690:78:21",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It gets the company address associated to a specific id.\n@return the company address for a specific id.",
+            "id": 3377,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCompany",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3373,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3372,
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3377,
+                  "src": "1938:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3371,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1938:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1937:13:21"
+            },
+            "returnParameters": {
+              "id": 3376,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3375,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3377,
+                  "src": "1972:7:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3374,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1972:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1971:9:21"
+            },
+            "scope": 3378,
+            "src": "1918:63:21",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ]
+      },
+      {
+        "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/Bytes32ArrayLib.sol",
+        "file": "../util/Bytes32ArrayLib.sol",
+        "id": 3326,
+        "nodeType": "ImportDirective",
+        "scope": 3365,
+        "sourceUnit": 4861,
+        "src": "126:37:21",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title This is one of the main smart contract for the platform. This is the entry point to create companies.\n@notice It creates companies using a factory instance called IZalarifyCompanyFactory.\n@author Guillermo Salazar",
+        "fullyImplemented": false,
+        "id": 3364,
+        "linearizedBaseContracts": [
+          3364
+        ],
+        "name": "IZalarify",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "id": 3329,
+            "libraryName": {
+              "contractScope": null,
+              "id": 3327,
+              "name": "SafeMath",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 4993,
+              "src": "437:8:21",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_SafeMath_$4993",
+                "typeString": "library SafeMath"
+              }
+            },
+            "nodeType": "UsingForDirective",
+            "src": "431:27:21",
+            "typeName": {
+              "id": 3328,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "450:7:21",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            }
+          },
+          {
+            "id": 3333,
+            "libraryName": {
+              "contractScope": null,
+              "id": 3330,
+              "name": "Bytes32ArrayLib",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 4860,
+              "src": "469:15:21",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Bytes32ArrayLib_$4860",
+                "typeString": "library Bytes32ArrayLib"
+              }
+            },
+            "nodeType": "UsingForDirective",
+            "src": "463:36:21",
+            "typeName": {
+              "baseType": {
+                "id": 3331,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "489:7:21",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "id": 3332,
+              "length": null,
+              "nodeType": "ArrayTypeName",
+              "src": "489:9:21",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_bytes32_$dyn_storage_ptr",
+                "typeString": "bytes32[]"
+              }
+            }
+          },
+          {
+            "anonymous": false,
+            "documentation": "@notice This event is emitted when a new company is created.\n@param thisContract this smart contract address.\n@param companyAddress the new company address created.\n@param createdAt the timestamp when company was created.\n@param creator who created the company.",
+            "id": 3343,
+            "name": "NewCompanyCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3342,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3335,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3343,
+                  "src": "875:28:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3334,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "875:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3337,
+                  "indexed": false,
+                  "name": "companyAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3343,
+                  "src": "913:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3336,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "913:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3339,
+                  "indexed": false,
+                  "name": "createdAt",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3343,
+                  "src": "945:14:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3338,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "945:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3341,
+                  "indexed": false,
+                  "name": "creator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3343,
+                  "src": "969:15:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3340,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "969:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "865:125:21"
+            },
+            "src": "842:149:21"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It creates a compamy in the platform.\n@dev It is created using a company factory.\n@param _id id associated to the company.\n@param _name name associated to the company.\n@param _website website URL associated to the company.\n@param _description description associated to the company.\n@return the new company address created.",
+            "id": 3356,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createCompany",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3352,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3345,
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3356,
+                  "src": "1445:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3344,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1445:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3347,
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3356,
+                  "src": "1458:13:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3346,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1458:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3349,
+                  "name": "_website",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3356,
+                  "src": "1473:16:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3348,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1473:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3351,
+                  "name": "_description",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3356,
+                  "src": "1491:20:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3350,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1491:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1444:68:21"
+            },
+            "returnParameters": {
+              "id": 3355,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3354,
+                  "name": "companyAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3356,
+                  "src": "1531:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3353,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1531:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1530:24:21"
+            },
+            "scope": 3364,
+            "src": "1422:133:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It gets the company address associated to a specific id.\n@return the company address for a specific id.",
+            "id": 3363,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCompany",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3359,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3358,
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3363,
+                  "src": "1930:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3357,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1930:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1929:13:21"
+            },
+            "returnParameters": {
+              "id": 3362,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3361,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3363,
+                  "src": "1964:7:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "contractScope": null,
+                      "id": 3358,
+                      "name": "ZalarifyCommon.Company",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 5019,
+                      "src": "1725:22:21",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Company_$5019_storage_ptr",
+                        "typeString": "struct ZalarifyCommon.Company"
+                      }
+                    },
+                    "id": 3360,
+                    "length": null,
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1964:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    },
+                    "name": "address",
+                    "stateMutability": "nonpayable"
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1963:9:21"
+            },
+            "scope": 3364,
+            "src": "1910:63:21",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It gets the company address associated to a specific id.\n@return the company address for a specific id.",
+            "id": 3369,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCompany",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3365,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3364,
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3369,
+                  "src": "1928:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3363,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1928:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1927:13:21"
+            },
+            "returnParameters": {
+              "id": 3368,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3367,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3369,
+                  "src": "1962:7:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3366,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1962:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1961:9:21"
+            },
+            "scope": 3370,
+            "src": "1908:63:21",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3365,
+        "src": "406:1569:21"
+      }
+    ],
+    "src": "0:1975:21"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IZalarify.sol",
+    "exportedSymbols": {
+      "IZalarify": [
+        3364
+      ]
+    },
+    "id": 3365,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3322,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".3"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:21"
+      },
+      {
+        "id": 3323,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "23:33:21"
+      },
+      {
+        "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/SafeMath.sol",
+        "file": "../util/SafeMath.sol",
+        "id": 3324,
+        "nodeType": "ImportDirective",
+        "scope": 3365,
+        "sourceUnit": 4994,
+        "src": "58:30:21",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
+        "file": "../util/ZalarifyCommon.sol",
+        "id": 3325,
+        "nodeType": "ImportDirective",
+        "scope": 3365,
+        "sourceUnit": 5056,
+        "src": "89:36:21",
+        "symbolAliases": [],
+        "unitAlias": "",
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title This is one of the main smart contract for the platform. This is the entry point to create companies.\n@notice It creates companies using a factory instance called IZalarifyCompanyFactory.\n@author Guillermo Salazar",
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          3378
+        ],
+        "name": "IZalarify",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@notice This event is emitted when a new company is created.\n@param thisContract this smart contract address.\n@param companyAddress the new company address created.\n@param createdAt the timestamp when company was created.\n@param creator who created the company.",
+            "id": 3351,
+            "name": "NewCompanyCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3350,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3343,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3351,
+                  "src": "885:28:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3342,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "885:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3345,
+                  "indexed": false,
+                  "name": "companyAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3351,
+                  "src": "923:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3344,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "923:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3347,
+                  "indexed": false,
+                  "name": "createdAt",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3351,
+                  "src": "955:14:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3346,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "955:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3349,
+                  "indexed": false,
+                  "name": "creator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3351,
+                  "src": "979:15:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3348,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "979:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "875:125:21"
+            },
+            "src": "852:149:21"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It creates a compamy in the platform.\n@dev It is created using a company factory.\n@param _id id associated to the company.\n@param _name name associated to the company.\n@param _website website URL associated to the company.\n@param _description description associated to the company.\n@return the new company address created.",
+            "id": 3364,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createCompany",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3360,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3353,
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3364,
+                  "src": "1455:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3352,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1455:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3355,
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3364,
+                  "src": "1468:13:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3354,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1468:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3357,
+                  "name": "_website",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3364,
+                  "src": "1483:16:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3356,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1483:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3359,
+                  "name": "_description",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3364,
+                  "src": "1501:20:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3358,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1501:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1454:68:21"
+            },
+            "returnParameters": {
+              "id": 3363,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3362,
+                  "name": "companyAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3364,
+                  "src": "1541:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3361,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1541:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1540:24:21"
+            },
+            "scope": 3378,
+            "src": "1432:133:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@notice Get all the companies registered in the platform.\n@return a list of companies.",
+            "id": 3370,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCompanies",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3365,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1711:2:21"
+            },
+            "returnParameters": {
+              "id": 3369,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3368,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3370,
+                  "src": "1735:31:21",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_Company_$5027_memory_$dyn_memory_ptr",
+                    "typeString": "struct ZalarifyCommon.Company[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "contractScope": null,
+                      "id": 3366,
+                      "name": "ZalarifyCommon.Company",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 5027,
+                      "src": "1735:22:21",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Company_$5027_storage_ptr",
+                        "typeString": "struct ZalarifyCommon.Company"
+                      }
+                    },
+                    "id": 3367,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1735:24:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_Company_$5027_storage_$dyn_storage_ptr",
+                      "typeString": "struct ZalarifyCommon.Company[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1734:33:21"
+            },
+            "scope": 3378,
+            "src": "1690:78:21",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It gets the company address associated to a specific id.\n@return the company address for a specific id.",
+            "id": 3377,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCompany",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3373,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3372,
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3377,
+                  "src": "1938:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3371,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1938:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1937:13:21"
+            },
+            "returnParameters": {
+              "id": 3376,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3375,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3377,
+                  "src": "1972:7:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3374,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1972:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1971:9:21"
+            },
+            "scope": 3378,
+            "src": "1918:63:21",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ]
+      },
+      {
+        "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/Bytes32ArrayLib.sol",
+        "file": "../util/Bytes32ArrayLib.sol",
+        "id": 3326,
+        "nodeType": "ImportDirective",
+        "scope": 3365,
+        "sourceUnit": 4861,
+        "src": "126:37:21",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title This is one of the main smart contract for the platform. This is the entry point to create companies.\n@notice It creates companies using a factory instance called IZalarifyCompanyFactory.\n@author Guillermo Salazar",
+        "fullyImplemented": false,
+        "id": 3364,
+        "linearizedBaseContracts": [
+          3364
+        ],
+        "name": "IZalarify",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "id": 3329,
+            "libraryName": {
+              "contractScope": null,
+              "id": 3327,
+              "name": "SafeMath",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 4993,
+              "src": "437:8:21",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_SafeMath_$4993",
+                "typeString": "library SafeMath"
+              }
+            },
+            "nodeType": "UsingForDirective",
+            "src": "431:27:21",
+            "typeName": {
+              "id": 3328,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "450:7:21",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            }
+          },
+          {
+            "id": 3333,
+            "libraryName": {
+              "contractScope": null,
+              "id": 3330,
+              "name": "Bytes32ArrayLib",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 4860,
+              "src": "469:15:21",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Bytes32ArrayLib_$4860",
+                "typeString": "library Bytes32ArrayLib"
+              }
+            },
+            "nodeType": "UsingForDirective",
+            "src": "463:36:21",
+            "typeName": {
+              "baseType": {
+                "id": 3331,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "489:7:21",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "id": 3332,
+              "length": null,
+              "nodeType": "ArrayTypeName",
+              "src": "489:9:21",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_bytes32_$dyn_storage_ptr",
+                "typeString": "bytes32[]"
+              }
+            }
+          },
+          {
+            "anonymous": false,
+            "documentation": "@notice This event is emitted when a new company is created.\n@param thisContract this smart contract address.\n@param companyAddress the new company address created.\n@param createdAt the timestamp when company was created.\n@param creator who created the company.",
+            "id": 3343,
+            "name": "NewCompanyCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3342,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3335,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3343,
+                  "src": "875:28:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3334,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "875:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3337,
+                  "indexed": false,
+                  "name": "companyAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3343,
+                  "src": "913:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3336,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "913:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3339,
+                  "indexed": false,
+                  "name": "createdAt",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3343,
+                  "src": "945:14:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3338,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "945:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3341,
+                  "indexed": false,
+                  "name": "creator",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3343,
+                  "src": "969:15:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3340,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "969:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "865:125:21"
+            },
+            "src": "842:149:21"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It creates a compamy in the platform.\n@dev It is created using a company factory.\n@param _id id associated to the company.\n@param _name name associated to the company.\n@param _website website URL associated to the company.\n@param _description description associated to the company.\n@return the new company address created.",
+            "id": 3356,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createCompany",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3352,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3345,
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3356,
+                  "src": "1445:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3344,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1445:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3347,
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3356,
+                  "src": "1458:13:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3346,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1458:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3349,
+                  "name": "_website",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3356,
+                  "src": "1473:16:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3348,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1473:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3351,
+                  "name": "_description",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3356,
+                  "src": "1491:20:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3350,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1491:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1444:68:21"
+            },
+            "returnParameters": {
+              "id": 3355,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3354,
+                  "name": "companyAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3356,
+                  "src": "1531:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3353,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1531:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1530:24:21"
+            },
+            "scope": 3364,
+            "src": "1422:133:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It gets the company address associated to a specific id.\n@return the company address for a specific id.",
+            "id": 3363,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCompany",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3359,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3358,
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3363,
+                  "src": "1930:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3357,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1930:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1929:13:21"
+            },
+            "returnParameters": {
+              "id": 3362,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3361,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3363,
+                  "src": "1964:7:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "contractScope": null,
+                      "id": 3358,
+                      "name": "ZalarifyCommon.Company",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 5019,
+                      "src": "1725:22:21",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Company_$5019_storage_ptr",
+                        "typeString": "struct ZalarifyCommon.Company"
+                      }
+                    },
+                    "id": 3360,
+                    "length": null,
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1964:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    },
+                    "name": "address",
+                    "stateMutability": "nonpayable"
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1963:9:21"
+            },
+            "scope": 3364,
+            "src": "1910:63:21",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It gets the company address associated to a specific id.\n@return the company address for a specific id.",
+            "id": 3369,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCompany",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3365,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3364,
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3369,
+                  "src": "1928:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 3363,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1928:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1927:13:21"
+            },
+            "returnParameters": {
+              "id": 3368,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3367,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3369,
+                  "src": "1962:7:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3366,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1962:7:21",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1961:9:21"
+            },
+            "scope": 3370,
+            "src": "1908:63:21",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3365,
+        "src": "406:1569:21"
+      }
+    ],
+    "src": "0:1975:21"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.3+commit.10d17f24.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.9",
+  "updatedAt": "2019-07-23T20:56:26.695Z",
+  "devdoc": {
+    "author": "Guillermo Salazar",
+    "methods": {
+      "createCompany(bytes32,bytes32,bytes32,bytes32)": {
+        "details": "It is created using a company factory.",
+        "params": {
+          "_description": "description associated to the company.",
+          "_id": "id associated to the company.",
+          "_name": "name associated to the company.",
+          "_website": "website URL associated to the company."
+        },
+        "return": "the new company address created."
+      },
+      "getCompanies()": {
+        "return": "a list of companies."
+      },
+      "getCompany(bytes32)": {
+        "return": "the company address for a specific id."
+      }
+    },
+    "title": "This is one of the main smart contract for the platform. This is the entry point to create companies."
+  },
+  "userdoc": {
+    "methods": {
+      "createCompany(bytes32,bytes32,bytes32,bytes32)": {
+        "notice": "It creates a compamy in the platform."
+      },
+      "getCompanies()": {
+        "notice": "Get all the companies registered in the platform."
+      },
+      "getCompany(bytes32)": {
+        "notice": "It gets the company address associated to a specific id."
+      }
+    },
+    "notice": "It creates companies using a factory instance called IZalarifyCompanyFactory."
+  }
+}

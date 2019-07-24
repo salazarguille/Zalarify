@@ -1,0 +1,1394 @@
+{
+  "contractName": "IReceiptRegistry",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "thisContract",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "company",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "employee",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "receiptHash",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "name": "path",
+          "type": "string"
+        }
+      ],
+      "name": "NewReceiptCreated",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_company",
+          "type": "address"
+        },
+        {
+          "name": "_employee",
+          "type": "address"
+        },
+        {
+          "name": "_path",
+          "type": "string"
+        },
+        {
+          "name": "_receiptHash",
+          "type": "string"
+        }
+      ],
+      "name": "createReceipt",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_company",
+          "type": "address"
+        },
+        {
+          "name": "_employee",
+          "type": "address"
+        }
+      ],
+      "name": "hasReceipts",
+      "outputs": [
+        {
+          "components": [
+            {
+              "name": "createdAt",
+              "type": "uint256"
+            },
+            {
+              "name": "path",
+              "type": "string"
+            },
+            {
+              "name": "ipfsHash",
+              "type": "string"
+            }
+          ],
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_company",
+          "type": "address"
+        },
+        {
+          "name": "_employee",
+          "type": "address"
+        }
+      ],
+      "name": "hasReceipts",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity 0.5.3;\npragma experimental ABIEncoderV2;\n\nimport \"../util/ZalarifyCommon.sol\";\n\n/**\n    @notice This is a receipt registry abstraction.\n    @author Guillermo Salazar.\n */\ncontract IReceiptRegistry {\n\n    /** Events */\n\n    /**\n        @notice This event is emitted when a new receipt is created.\n        @param thisContract the current smart contract address.\n        @param company the company address.\n        @param employee the employee address.\n        @param receiptHash the receipt hash created on IPFS.\n        @param path the path created on IPFS.\n     */\n    event NewReceiptCreated(\n        address indexed thisContract,\n        address company,\n        address employee,\n        string receiptHash,\n        string path\n    );\n\n    /** Functions */\n    \n    /**\n        @notice It creates a receipt payment associated to a company and employee.\n        @dev It can be invoked only by the company owner/creator.\n        @dev The receipt parameter values must be not empty.\n\n        @param _company the company address where the employee works.\n        @param _employee the employee address who receives the receipt payment.\n        @param _path the IPFS path where the receipt was stored.\n        @param _receiptHash the IPFS hash from the receipt document.\n     */\n    function createReceipt(address _company, address _employee, string memory _path, string memory _receiptHash) \n        public\n        returns (bool);\n\n    /**\n        @notice It gets all the receipt payments for a specific company and employee relation.\n        @param _company the company where the employee got the receipts.\n        @param _employee the employee address who owns the receipts.\n        @return It returns a list of receipt payments for a specific company/employee relation.\n     */\n    // function getReceipts(address _company, address _employee)\n    //     public\n    //     view\n    //     returns (ZalarifyCommon.Receipt[] memory);\n\n    /**\n        @notice It tests whether a company and employee relation has receipts.\n        @param _company the company where the employee got the receipts.\n        @param _employee the employee address who owns the receipts.\n        @return true if the employee has receipt payments in the company. Otherwise it returns false.\n     */\n    function hasReceipts(address _company, address _employee)\n        public\n        view\n        returns (bool);\n}",
+  "sourcePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
+  "ast": {
+    "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
+    "exportedSymbols": {
+      "IReceiptRegistry": [
+        3039
+      ]
+    },
+    "id": 3040,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3002,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".3"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:16"
+      },
+      {
+        "id": 3003,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "23:33:16"
+      },
+      {
+        "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
+        "file": "../util/ZalarifyCommon.sol",
+        "id": 3004,
+        "nodeType": "ImportDirective",
+        "scope": 3040,
+        "sourceUnit": 5018,
+        "src": "58:36:16",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@notice This is a receipt registry abstraction.\n@author Guillermo Salazar.",
+        "fullyImplemented": false,
+        "id": 3039,
+        "linearizedBaseContracts": [
+          3039
+        ],
+        "name": "IReceiptRegistry",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@notice This event is emitted when a new receipt is created.\n@param thisContract the current smart contract address.\n@param company the company address.\n@param employee the employee address.\n@param receiptHash the receipt hash created on IPFS.\n@param path the path created on IPFS.",
+            "id": 3016,
+            "name": "NewReceiptCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3015,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3006,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3016,
+                  "src": "618:28:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3005,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "618:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3008,
+                  "indexed": false,
+                  "name": "company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3016,
+                  "src": "656:15:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3007,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "656:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3010,
+                  "indexed": false,
+                  "name": "employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3016,
+                  "src": "681:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3009,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "681:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3012,
+                  "indexed": false,
+                  "name": "receiptHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3016,
+                  "src": "707:18:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3011,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "707:6:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3014,
+                  "indexed": false,
+                  "name": "path",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3016,
+                  "src": "735:11:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3013,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "735:6:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "608:144:16"
+            },
+            "src": "585:168:16"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It creates a receipt payment associated to a company and employee.\n@dev It can be invoked only by the company owner/creator.\n@dev The receipt parameter values must be not empty.\n@param _company the company address where the employee works.\n@param _employee the employee address who receives the receipt payment.\n@param _path the IPFS path where the receipt was stored.\n@param _receiptHash the IPFS hash from the receipt document.",
+            "id": 3029,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createReceipt",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3025,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3018,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3029,
+                  "src": "1319:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3017,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1319:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3020,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3029,
+                  "src": "1337:17:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3019,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1337:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3022,
+                  "name": "_path",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3029,
+                  "src": "1356:19:16",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3021,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1356:6:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3024,
+                  "name": "_receiptHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3029,
+                  "src": "1377:26:16",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3023,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1377:6:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1318:86:16"
+            },
+            "returnParameters": {
+              "id": 3028,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3027,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3029,
+                  "src": "1438:4:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3026,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1438:4:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1437:6:16"
+            },
+            "scope": 3039,
+            "src": "1296:148:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It tests whether a company and employee relation has receipts.\n@param _company the company where the employee got the receipts.\n@param _employee the employee address who owns the receipts.\n@return true if the employee has receipt payments in the company. Otherwise it returns false.",
+            "id": 3038,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hasReceipts",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3034,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3031,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3038,
+                  "src": "2313:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3030,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2313:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3033,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3038,
+                  "src": "2331:17:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3032,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2331:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2312:37:16"
+            },
+            "returnParameters": {
+              "id": 3037,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3036,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3038,
+                  "src": "2395:4:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "contractScope": null,
+                      "id": 3052,
+                      "name": "ZalarifyCommon.Receipt",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 5026,
+                      "src": "1902:22:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Receipt_$5026_storage_ptr",
+                        "typeString": "struct ZalarifyCommon.Receipt"
+                      }
+                    },
+                    "id": 3035,
+                    "length": null,
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2395:4:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "name": "bool"
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2394:6:16"
+            },
+            "scope": 3039,
+            "src": "2292:109:16",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It tests whether a company and employee relation has receipts.\n@param _company the company where the employee got the receipts.\n@param _employee the employee address who owns the receipts.\n@return true if the employee has receipt payments in the company. Otherwise it returns false.",
+            "id": 3065,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hasReceipts",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3061,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3058,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3065,
+                  "src": "2301:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3057,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2301:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3060,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3065,
+                  "src": "2319:17:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3059,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2319:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2300:37:16"
+            },
+            "returnParameters": {
+              "id": 3064,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3063,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3065,
+                  "src": "2383:4:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3062,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2383:4:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2382:6:16"
+            },
+            "scope": 3066,
+            "src": "2280:109:16",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3040,
+        "src": "187:2216:16"
+      }
+    ],
+    "src": "0:2403:16"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/interface/IReceiptRegistry.sol",
+    "exportedSymbols": {
+      "IReceiptRegistry": [
+        3039
+      ]
+    },
+    "id": 3040,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3002,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".3"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:16"
+      },
+      {
+        "id": 3003,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "23:33:16"
+      },
+      {
+        "absolutePath": "/Users/guillesalazar/Repos/Personal/ConsenSysBootcampAcademy/zalarify/contracts/util/ZalarifyCommon.sol",
+        "file": "../util/ZalarifyCommon.sol",
+        "id": 3004,
+        "nodeType": "ImportDirective",
+        "scope": 3040,
+        "sourceUnit": 5018,
+        "src": "58:36:16",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@notice This is a receipt registry abstraction.\n@author Guillermo Salazar.",
+        "fullyImplemented": false,
+        "id": 3039,
+        "linearizedBaseContracts": [
+          3039
+        ],
+        "name": "IReceiptRegistry",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@notice This event is emitted when a new receipt is created.\n@param thisContract the current smart contract address.\n@param company the company address.\n@param employee the employee address.\n@param receiptHash the receipt hash created on IPFS.\n@param path the path created on IPFS.",
+            "id": 3016,
+            "name": "NewReceiptCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3015,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3006,
+                  "indexed": true,
+                  "name": "thisContract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3016,
+                  "src": "618:28:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3005,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "618:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3008,
+                  "indexed": false,
+                  "name": "company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3016,
+                  "src": "656:15:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3007,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "656:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3010,
+                  "indexed": false,
+                  "name": "employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3016,
+                  "src": "681:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3009,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "681:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3012,
+                  "indexed": false,
+                  "name": "receiptHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3016,
+                  "src": "707:18:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3011,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "707:6:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3014,
+                  "indexed": false,
+                  "name": "path",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3016,
+                  "src": "735:11:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3013,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "735:6:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "608:144:16"
+            },
+            "src": "585:168:16"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It creates a receipt payment associated to a company and employee.\n@dev It can be invoked only by the company owner/creator.\n@dev The receipt parameter values must be not empty.\n@param _company the company address where the employee works.\n@param _employee the employee address who receives the receipt payment.\n@param _path the IPFS path where the receipt was stored.\n@param _receiptHash the IPFS hash from the receipt document.",
+            "id": 3029,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createReceipt",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3025,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3018,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3029,
+                  "src": "1319:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3017,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1319:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3020,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3029,
+                  "src": "1337:17:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3019,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1337:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3022,
+                  "name": "_path",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3029,
+                  "src": "1356:19:16",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3021,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1356:6:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3024,
+                  "name": "_receiptHash",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3029,
+                  "src": "1377:26:16",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3023,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1377:6:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1318:86:16"
+            },
+            "returnParameters": {
+              "id": 3028,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3027,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3029,
+                  "src": "1438:4:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3026,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1438:4:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1437:6:16"
+            },
+            "scope": 3039,
+            "src": "1296:148:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It tests whether a company and employee relation has receipts.\n@param _company the company where the employee got the receipts.\n@param _employee the employee address who owns the receipts.\n@return true if the employee has receipt payments in the company. Otherwise it returns false.",
+            "id": 3038,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hasReceipts",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3034,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3031,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3038,
+                  "src": "2313:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3030,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2313:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3033,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3038,
+                  "src": "2331:17:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3032,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2331:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2312:37:16"
+            },
+            "returnParameters": {
+              "id": 3037,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3036,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3038,
+                  "src": "2395:4:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "contractScope": null,
+                      "id": 3052,
+                      "name": "ZalarifyCommon.Receipt",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 5026,
+                      "src": "1902:22:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Receipt_$5026_storage_ptr",
+                        "typeString": "struct ZalarifyCommon.Receipt"
+                      }
+                    },
+                    "id": 3035,
+                    "length": null,
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2395:4:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "name": "bool"
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2394:6:16"
+            },
+            "scope": 3039,
+            "src": "2292:109:16",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@notice It tests whether a company and employee relation has receipts.\n@param _company the company where the employee got the receipts.\n@param _employee the employee address who owns the receipts.\n@return true if the employee has receipt payments in the company. Otherwise it returns false.",
+            "id": 3065,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "hasReceipts",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3061,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3058,
+                  "name": "_company",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3065,
+                  "src": "2301:16:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3057,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2301:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3060,
+                  "name": "_employee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3065,
+                  "src": "2319:17:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3059,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2319:7:16",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2300:37:16"
+            },
+            "returnParameters": {
+              "id": 3064,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3063,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3065,
+                  "src": "2383:4:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3062,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2383:4:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2382:6:16"
+            },
+            "scope": 3066,
+            "src": "2280:109:16",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3040,
+        "src": "187:2216:16"
+      }
+    ],
+    "src": "0:2403:16"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.3+commit.10d17f24.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.9",
+  "updatedAt": "2019-07-23T21:04:01.593Z",
+  "devdoc": {
+    "author": "Guillermo Salazar.",
+    "methods": {
+      "createReceipt(address,address,string,string)": {
+        "details": "It can be invoked only by the company owner/creator.The receipt parameter values must be not empty.",
+        "params": {
+          "_company": "the company address where the employee works.",
+          "_employee": "the employee address who receives the receipt payment.",
+          "_path": "the IPFS path where the receipt was stored.",
+          "_receiptHash": "the IPFS hash from the receipt document."
+        }
+      },
+      "getReceipts(address,address)": {
+        "params": {
+          "_company": "the company where the employee got the receipts.",
+          "_employee": "the employee address who owns the receipts."
+        },
+        "return": "It returns a list of receipt payments for a specific company/employee relation."
+      },
+      "hasReceipts(address,address)": {
+        "params": {
+          "_company": "the company where the employee got the receipts.",
+          "_employee": "the employee address who owns the receipts."
+        },
+        "return": "true if the employee has receipt payments in the company. Otherwise it returns false."
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {
+      "createReceipt(address,address,string,string)": {
+        "notice": "It creates a receipt payment associated to a company and employee."
+      },
+      "getReceipts(address,address)": {
+        "notice": "It gets all the receipt payments for a specific company and employee relation."
+      },
+      "hasReceipts(address,address)": {
+        "notice": "It tests whether a company and employee relation has receipts."
+      }
+    },
+    "notice": "This is a receipt registry abstraction."
+  }
+}

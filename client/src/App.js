@@ -7,6 +7,7 @@ import EmployeeDetails from './components/employee/EmployeeDetails';
 import CompanyDetails from './components/company/CompanyDetails';
 import Home from './components/home/Home';
 import Integration from './components/home/Integration';
+import Events from './components/home/Events';
 import WithWeb3 from './ethereum/web3/hoc/WithWeb3';
 
 import { getCurrentConfig } from './config';
@@ -44,6 +45,10 @@ class App extends Component {
                 <Route
                   path="/integration"
                   render={ () => <Integration {...props} config={this.state.config}/>}
+                />
+                <Route
+                  path="/events"
+                  render={ () => <Events {...props} config={this.state.config}/>}
                 />
                 <Route
                   path="/companies/"

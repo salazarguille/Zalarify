@@ -1,0 +1,64 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: contracts
+    network: ropsten
+    source:
+      address: "0x34fEC398d86e10d266153DaC9E3e38845182a6F7"
+      abi: IZalarify
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - NewCompanyCreated
+      abis:
+        - name: IZalarify
+          file: ./abis/IZalarify.json
+      eventHandlers:
+        - event: NewCompanyCreated(indexed address,address,uint256,address)
+          handler: handleNewCompanyCreated
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: contracts
+    network: ropsten
+    source:
+      address: "0xB245dF8eF71839d84D06a87206aC54Cb4034511d"
+      abi: IReceiptRegistry
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - NewReceiptCreated
+      abis:
+        - name: IReceiptRegistry
+          file: ./abis/IReceiptRegistry.json
+      eventHandlers:
+        - event: NewReceiptCreated(indexed address,address,address,string,string)
+          handler: handleNewReceiptCreated
+      file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: contracts
+    network: ropsten
+    source:
+      address: "0x1A9A13321Edadf208921CCC82f6BB31214B21029"
+      abi: ISettings
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - PlatformPaused
+        - PlatformUnpaused
+      abis:
+        - name: ISettings
+          file: ./abis/ISettings.json
+      eventHandlers:
+        - event: PlatformPaused(indexed address,string)
+          handler: handlePlatformPaused
+        - event: PlatformUnpaused(indexed address,string)
+          handler: handlePlatformUnpaused
+      file: ./src/mapping.ts

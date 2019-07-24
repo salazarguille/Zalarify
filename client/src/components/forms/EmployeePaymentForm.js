@@ -402,6 +402,9 @@ class EmployeePaymentForm extends React.Component {
           <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic>
             The payment must be made in two steps. First allow to Zalarify to use the tokens you selected, and finally make the payment.
           </Text>
+          <Text width={1} p={2} mr={5} textAlign="left" fontSize="14px" italic color="red">
+            Remember to increase the gas fee in the payment transaction in order to decrease the processing time. 
+          </Text>
         </Flex>
         {renderProcessing}
         {ownerMessage}

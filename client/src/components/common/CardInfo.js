@@ -16,15 +16,20 @@ class CardInfo extends React.Component {
       secondaryTooltip = undefined,
       secondaryText = undefined,
       onSecondaryClick = e => console.log(e),
+
+      viewButtons = true,
     } = this.props;
 
-    const primaryButtonRender = onPrimaryLink === undefined ? <Button mr={3} onClick={onPrimaryClick}>
+    let primaryButtonRender = '';
+    if(viewButtons) {
+      primaryButtonRender = onPrimaryLink === undefined ? <Button mr={3} onClick={onPrimaryClick}>
                                                                 {primaryText}
                                                               </Button>:
                                                               <Button mr={3} as="a" href={onPrimaryLink}>
                                                                 {primaryText}
                                                               </Button>
                                                               ;
+    }
 
     const secondaryActionRender = secondaryText === undefined ? '' : (
         <Tooltip message={secondaryTooltip} placement="top">

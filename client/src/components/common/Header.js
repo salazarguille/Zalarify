@@ -106,6 +106,7 @@ class Header extends React.Component {
                     <MenuButton width="25vw" text="Home" value="home" link="/" onClick={this.onClickMenuButton} />
                     <MenuButton width="25vw" text="Companies" value="company" link="/companies" onClick={this.onClickMenuButton} />
                     <MenuButton width="25vw" text="Integration" value="integration" link="/integration" onClick={this.onClickMenuButton} />
+                    <MenuButton width="25vw" text="Events" value="event" link="/events" onClick={this.onClickMenuButton} />
                     <Flex flexDirection="column" justifyContent="center" height={'100%'}>
                         <Flex flexDirection="row" justifyContent="center" height={'100%'} p="1">
                             <Tooltip message={`You are using the account: ${info.selectedAddress}`}>
