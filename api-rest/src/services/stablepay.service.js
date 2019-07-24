@@ -15,11 +15,11 @@ import {
 import {
     DEFAULT_DECIMALS,
     PROVIDER_REGISTRY,
+    KYBER_NETWORK_PROVIDER_KEY,
 } from '../util/constants';
 
 const { utils } = new Web3();
 
-const toBN = amount => new BigNumber(amount);
 const BNFY = amount => ethers.utils.bigNumberify(amount.dp(0).toString());
 
 export const getTokens = async (network) => {
@@ -51,27 +51,16 @@ export const getExpectedRates = async (
 
     const targetAmountBaseAmount = toBaseAmount(targetAmount, targetTokenDecimals);
 
-    const expectedRates = await contract.getExpectedRates(
+    const kyberRate = await contract.getExpectedRate(
+        KYBER_NETWORK_PROVIDER_KEY,
         sourceToken,
         targetToken,
         BNFY(targetAmountBaseAmount),
     );
-
-    const rates = expectedRates.map((expectedRate) => {
-        console.log(expectedRate);
-        const minRateBigNumber = BigNumber(expectedRate.minRate.toString());
-        const maxRateBigNumber = BigNumber(expectedRate.maxRate.toString());
-        const diffRateBigNumber = maxRateBigNumber.minus(minRateBigNumber);
-        const median = minRateBigNumber.plus(diffRateBigNumber.div(2));
-        return {
-            ...expectedRate,
-            median,
-        };
-    });
-
-    const ratesSortByMedian = rates.sort((rate1, rate2) => rate1.median > rate2.median);
-    const bestRate = ratesSortByMedian[0];
-    console.log(bestRate);
+    const bestRate = {
+        ...kyberRate,
+        providerKey: KYBER_NETWORK_PROVIDER_KEY,
+    };
     const {
         minRate,
         maxRate,
