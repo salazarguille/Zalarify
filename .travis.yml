@@ -3,7 +3,6 @@ node_js:
   - "8"
 
 install:
-  - npm install -g codecov
   - npm install
 
 script:
@@ -18,4 +17,3 @@ before_script:
 after_script:
   - "travis_wait 30 sleep 1800 &"
   - npm run test:coverage
-  - codecov

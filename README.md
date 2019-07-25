@@ -50,7 +50,7 @@ $ npm install ganache-cli -g
 
 ---
 
-### Configure Modules
+### Configure Modules (to start app using Ganache)
 
 Once you have installed Truffle and Ganache CLI, you need to configure each module.
 
@@ -63,13 +63,19 @@ The Truffle module needs some env variables to be configured properly. In order 
 
 Once the file was created, it needs to setup some values. Please, follow the instruction to setup these values before executing any command.
 
-###### Infura (required)
+###### Infura (optional)
+
+> This value is not required if you will use Ganache. You can leave the current value.
 
 The **INFURA_KEY** key is needed to execute smart contracts in a testnet or mainnet. To get a key, just visit [Infura.net](https://infura.net), and signup.
 
-###### Mnemonic (required)
+###### Mnemonic (optional)
 
- The **MNEMONIC_KEY** key is used to get/create the ethereum addresses.
+> This current value in the .env.template must NOT be modified. That pre-configured mnemonic contains accounts with enough ether and tokens balances to interact with Zalarify. If you change it, you will not able to use Zalarify. Verify the value is "**gesture rather obey video awake genuine patient base soon parrot upset lounge**".
+
+The **MNEMONIC_KEY** key is used to get/create the ethereum addresses.
+
+> **IMPORTANT NOTE: Don't use that mnemonic in a production environment.**
 
 ###### Etherscan API Key (optional)
 
