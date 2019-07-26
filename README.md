@@ -93,11 +93,11 @@ $ npm install
 
 #### Rest API Module
 
-The API module needs some env variables to be configured properly. In order to configure them, create a `.env` file based on the `.env.template` file located at `api-rest` folder (copy `api-rest/.env.template` file to `api-rest/.env`).
+The API module needs some env variables to be configured properly. In order to configure them, create a `.env` file based on the `.env.example` file located at `api-rest` folder (copy `api-rest/.env.example` file to `api-rest/.env`).
 
 ##### Setup Environment Variables
 
-The values in the `api-rest/.env.template` file are valid to run the application using Ganache. So, you don't need to modify it.
+The values in the `api-rest/.env.example` file are valid to run the application using Ganache. So, you don't need to modify it.
 
 > In case you need to run the application pointing to Ropsten, just modify the variable value DEFAULT_ETHEREUM_NETWORK to `ropsten`.
 
