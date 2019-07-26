@@ -182,11 +182,9 @@ class Events extends React.Component {
         const value = e.target.value;
         if( value !== '') {
             const { config } = this.props;
-            console.log(config.urls);
             try {
                 const { itemsPerPage } = this.state;
                 const getEventsResult = await axios.get(`${config.urls.backend}/events?eventName=${value}&itemsPerPage=${itemsPerPage}`);
-                console.log(getEventsResult);
                 if (this._isMounted) {
                     this.setState({
                         ...this.state,
@@ -196,7 +194,6 @@ class Events extends React.Component {
                     });
                 }
             } catch (reason) {
-                console.log(reason);
                 this.setState({
                     errorMessage: `Error getting data: ${reason.toString()}`,
                 });
@@ -227,7 +224,7 @@ class Events extends React.Component {
                         <strong>Contract:</strong> {item.thisContract} <strong>Company Address:</strong> {item.companyAddress}
                     </Text>
                     <Text width={1} p={'0'} mr={4} textAlign="center" fontSize="15px">
-                        <strong>Created At:</strong> {new Date(parseInt(item.createdAt)).toLocaleString()}
+                        <strong>Created At:</strong> {new Date(parseInt(item.createdAt) * 1000).toLocaleString()}
                     </Text>
                     <Text width={1} p={'0'} mr={4} textAlign="center" fontSize="15px">
                         <strong>Creator:</strong> 
