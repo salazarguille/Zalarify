@@ -32,7 +32,7 @@ Using [Zalarify](http://zalarify.io) you can:
 ### Checkout the repository
 
 ```sh
-$ git checkout https://github.com/salazarguille/Zalarify.git
+$ git clone https://github.com/salazarguille/Zalarify.git ./zalarify
 ```
 
 ### Requirements
