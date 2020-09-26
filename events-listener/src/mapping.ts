@@ -1,13 +1,13 @@
 import {
   NewCompanyCreated as NewCompanyCreatedEvent,
-} from "../generated/contracts/IZalarify"
+} from "../generated/IZalarify/IZalarify"
 import {
   NewReceiptCreated as NewReceiptCreatedEvent,
-} from "../generated/contracts/IReceiptRegistry"
+} from "../generated/IReceiptRegistry/IReceiptRegistry"
 import {
   PlatformPaused as PlatformPausedEvent,
   PlatformUnpaused as PlatformUnpausedEvent,
-} from "../generated/contracts/ISettings"
+} from "../generated/ISettings/ISettings"
 import {
   NewCompanyCreated,
   NewReceiptCreated,

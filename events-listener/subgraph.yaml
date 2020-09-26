@@ -1,16 +1,16 @@
-specVersion: 0.0.1
+specVersion: 0.0.3
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: contracts
+    name: IZalarify
     network: ropsten
     source:
       address: "0x89F03b7C3C87d39Fd89Af82F210DfBFB0B48FF58"
       abi: IZalarify
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - NewCompanyCreated
@@ -22,14 +22,14 @@ dataSources:
           handler: handleNewCompanyCreated
       file: ./src/mapping.ts
   - kind: ethereum/contract
-    name: contracts
+    name: IReceiptRegistry
     network: ropsten
     source:
       address: "0xeA847b506999639d451C38a8a3F01F9251C6FCa8"
       abi: IReceiptRegistry
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - NewReceiptCreated
@@ -41,14 +41,14 @@ dataSources:
           handler: handleNewReceiptCreated
       file: ./src/mapping.ts
   - kind: ethereum/contract
-    name: contracts
+    name: ISettings
     network: ropsten
     source:
       address: "0xD97098907D591A6524F8765b9830DE9989549C3a"
       abi: ISettings
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - PlatformPaused
