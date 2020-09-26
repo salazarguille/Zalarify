@@ -29,10 +29,21 @@ Using [Zalarify](http://zalarify.io) you can:
 
 ## Get Started
 
+### Pre-Requirements
+
+The platform uses NodeJS and NPM. So, you need to install the following versions:
+
+* NodeJS +10.15.3
+* NPM: +6.4.1
+
+If your SO is Ubuntu 18.04 LTS, you can follow this guide to install NodeJS (it includes NPM):
+
+https://joshtronic.com/2018/05/08/how-to-install-nodejs-10-on-ubuntu-1804-lts/
+
 ### Checkout the repository
 
 ```sh
-$ git checkout https://github.com/salazarguille/Zalarify.git
+$ git clone https://github.com/salazarguille/Zalarify.git ./zalarify
 ```
 
 ### Requirements
